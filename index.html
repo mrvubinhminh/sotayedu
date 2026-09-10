@@ -69,13 +69,10 @@
             <i class="fas fa-graduation-cap text-2xl md:text-3xl mr-2 md:mr-3 text-indigo-400 drop-shadow-md"></i>
             <h1 class="text-base md:text-xl font-bold tracking-wider leading-tight">SMART ED<br class="hidden md:block"><span class="hidden md:inline text-xs font-normal text-indigo-300">Quản Lý Trường Học</span></h1>
         </div>
-        <!-- Đồng hồ thời gian thực (Thu gọn trên mobile) -->
-        <div class="bg-indigo-900/80 rounded-lg p-1.5 md:p-3 text-right md:text-center shadow-inner border border-indigo-800/50 flex flex-col md:block">
-            <div id="clockTime" class="text-sm md:text-2xl font-bold text-white md:tracking-widest leading-none">00:00:00</div>
-            <div class="flex items-center space-x-2 mt-1 justify-end md:justify-center">
-                <div id="clockSolar" class="text-[10px] md:text-xs text-indigo-200">--/--/----</div>
-                <div id="clockLunar" class="hidden md:inline-block text-[10px] md:text-[11px] text-amber-300 font-semibold bg-indigo-950/50 rounded py-0.5 px-2">Âm lịch: --/--</div>
-            </div>
+        <!-- Ngày tháng (Thu gọn trên mobile) -->
+        <div class="bg-indigo-900/80 rounded-lg p-1.5 md:p-3 text-right md:text-center shadow-inner border border-indigo-800/50 flex flex-col justify-center">
+            <div id="clockSolar" class="text-xs md:text-base font-bold text-white mb-0.5 md:mb-1">--/--/----</div>
+            <div id="clockLunar" class="inline-block text-[10px] md:text-xs text-amber-300 font-semibold bg-indigo-950/50 rounded py-0.5 px-2">Âm lịch: --/--</div>
         </div>
     </header>
 
@@ -125,6 +122,12 @@
                 <div class="hidden md:block px-4 text-[10px] font-bold text-indigo-400 uppercase tracking-wider mb-2 mt-2 border-t border-indigo-800/50 pt-3">Công việc & Tiện ích</div>
                 <ul class="flex flex-row md:flex-col space-x-1 md:space-x-0 md:space-y-1 pr-2 md:pr-0">
                     <li class="flex-shrink-0 md:w-full md:px-3">
+                        <button onclick="switchTab('reminder')" id="btn-tab-reminder" class="w-[72px] md:w-full h-14 md:h-auto flex flex-col md:flex-row items-center justify-center md:justify-start px-1 md:px-3 py-1 md:py-2.5 rounded-lg text-indigo-200 hover:bg-indigo-800 hover:text-white font-medium transition-colors">
+                            <i class="fas fa-bell w-full md:w-6 text-center text-red-400 text-lg md:text-base mb-1 md:mb-0 md:mr-2"></i> 
+                            <span class="text-[9px] md:text-sm leading-tight text-center md:text-left line-clamp-1">Nhắc Nhở</span>
+                        </button>
+                    </li>
+                    <li class="flex-shrink-0 md:w-full md:px-3">
                         <button onclick="switchTab('schedule')" id="btn-tab-schedule" class="w-[72px] md:w-full h-14 md:h-auto flex flex-col md:flex-row items-center justify-center md:justify-start px-1 md:px-3 py-1 md:py-2.5 rounded-lg text-indigo-200 hover:bg-indigo-800 hover:text-white font-medium transition-colors">
                             <i class="far fa-calendar-check w-full md:w-6 text-center text-sky-400 text-lg md:text-base mb-1 md:mb-0 md:mr-2"></i> 
                             <span class="text-[9px] md:text-sm leading-tight text-center md:text-left line-clamp-1">Lịch Tuần</span>
@@ -134,12 +137,6 @@
                         <button onclick="switchTab('note')" id="btn-tab-note" class="w-[72px] md:w-full h-14 md:h-auto flex flex-col md:flex-row items-center justify-center md:justify-start px-1 md:px-3 py-1 md:py-2.5 rounded-lg text-indigo-200 hover:bg-indigo-800 hover:text-white font-medium transition-colors">
                             <i class="fas fa-book-open w-full md:w-6 text-center text-amber-400 text-lg md:text-base mb-1 md:mb-0 md:mr-2"></i> 
                             <span class="text-[9px] md:text-sm leading-tight text-center md:text-left line-clamp-1">Sổ Tay</span>
-                        </button>
-                    </li>
-                    <li class="flex-shrink-0 md:w-full md:px-3">
-                        <button onclick="switchTab('reminder')" id="btn-tab-reminder" class="w-[72px] md:w-full h-14 md:h-auto flex flex-col md:flex-row items-center justify-center md:justify-start px-1 md:px-3 py-1 md:py-2.5 rounded-lg text-indigo-200 hover:bg-indigo-800 hover:text-white font-medium transition-colors">
-                            <i class="fas fa-bell w-full md:w-6 text-center text-red-400 text-lg md:text-base mb-1 md:mb-0 md:mr-2"></i> 
-                            <span class="text-[9px] md:text-sm leading-tight text-center md:text-left line-clamp-1">Nhắc Nhở</span>
                         </button>
                     </li>
                 </ul>
@@ -487,6 +484,12 @@
                         <button onclick="document.getElementById('schExcelInput').click()" class="flex-1 md:flex-none px-3 py-2 bg-sky-500 text-white rounded-lg text-xs md:text-sm font-bold shadow-sm justify-center flex items-center"><i class="fas fa-file-excel mr-1"></i> Nhập Excel</button>
                         <input type="file" id="schExcelInput" accept=".xlsx, .xls" class="hidden" onchange="handleSchExcelUpload(event)">
                         
+                        <!-- Nút View Toggle Kanban/Timeline -->
+                        <div class="flex bg-gray-200/70 p-1 rounded-lg shrink-0">
+                            <button onclick="setScheduleView('kanban')" id="btn-view-kanban" class="px-3 py-1.5 text-xs font-bold rounded bg-white text-sky-600 shadow-sm transition-all"><i class="fas fa-columns"></i></button>
+                            <button onclick="setScheduleView('timeline')" id="btn-view-timeline" class="px-3 py-1.5 text-xs font-bold rounded text-gray-500 transition-all"><i class="fas fa-list-ul"></i></button>
+                        </div>
+                        
                         <label class="flex-1 md:flex-none flex justify-center items-center text-xs md:text-sm font-semibold text-gray-600 bg-white border border-gray-200 px-3 py-2 rounded-lg">
                             <input type="checkbox" id="toggleCompletedSch" checked onchange="renderSchedule()" class="mr-2 h-4 w-4 rounded text-sky-500"> Đã xong
                         </label>
@@ -500,10 +503,20 @@
                     </div>
                 </div>
                 
-                <!-- KANBAN GIRD: Áp dụng Snap-x cho Mobile vuốt mượt mà -->
-                <div class="flex-1 overflow-x-auto overflow-y-hidden custom-scrollbar pb-2">
-                    <div class="flex space-x-3 md:space-x-4 min-w-max h-full items-start snap-x snap-mandatory pr-4 md:pr-0" id="weeklyScheduleGrid">
-                        <!-- Javascript generates Columns here -->
+                <!-- VIEW CONTAINERS -->
+                <div class="flex-1 overflow-hidden relative flex flex-col">
+                    <!-- KANBAN GIRD: Áp dụng Snap-x cho Mobile vuốt mượt mà -->
+                    <div id="kanbanViewContainer" class="flex-1 overflow-x-auto overflow-y-hidden custom-scrollbar pb-2">
+                        <div class="flex space-x-3 md:space-x-4 min-w-max h-full items-start snap-x snap-mandatory pr-4 md:pr-0" id="weeklyScheduleGrid">
+                            <!-- Javascript generates Columns here -->
+                        </div>
+                    </div>
+                    
+                    <!-- TIMELINE VIEW: Nhỏ gọn, bao quát cả tuần trên 1 luồng dọc -->
+                    <div id="timelineViewContainer" class="hidden flex-1 overflow-y-auto custom-scrollbar pb-4 bg-white rounded-xl border border-gray-100 p-3 md:p-4">
+                        <div id="timelineScheduleList" class="flex flex-col gap-5 relative">
+                            <!-- Javascript generates Timeline here -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -750,15 +763,28 @@
         document.getElementById('confirmBtn').addEventListener('click', () => { if(confirmActionCallback) confirmActionCallback(); closeConfirmModal(); });
 
         function startClock() {
-            setInterval(() => {
+            function updateDate() {
                 const now = new Date();
-                document.getElementById('clockTime').innerText = now.toLocaleTimeString('vi-VN', {hour12: false});
-                document.getElementById('clockSolar').innerText = now.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
-                if (typeof Lunar !== 'undefined') {
+                const solarEl = document.getElementById('clockSolar');
+                const lunarEl = document.getElementById('clockLunar');
+                
+                if (solarEl) solarEl.innerText = now.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
+                
+                if (typeof Lunar !== 'undefined' && lunarEl) {
                     const lunar = Lunar.fromDate(now);
-                    document.getElementById('clockLunar').innerText = `ÂL: ${lunar.getDay()}/${lunar.getMonth()} ${lunar.getYear()}`;
+                    const lDay = lunar.getDay();
+                    let indicator = '';
+                    
+                    // Thêm ký hiệu mùng 1 và 15
+                    if (lDay === 1) indicator = ' 🌑 (Mùng 1)';
+                    else if (lDay === 15) indicator = ' 🌕 (Rằm)';
+                    
+                    lunarEl.innerHTML = `Âm lịch: ${lDay}/${lunar.getMonth()} ${lunar.getYear()} <span class="text-yellow-300 font-bold ml-1 tracking-wide">${indicator}</span>`;
                 }
-            }, 1000);
+            }
+            updateDate(); // Chạy ngay lần đầu
+            // Cập nhật mỗi phút thay vì mỗi giây do không còn đồng hồ kim giây, giúp tối ưu hiệu suất
+            setInterval(updateDate, 60000); 
         }
 
         function saveToStorage() {
@@ -776,281 +802,23 @@
         };
         window.deleteDataFn = async (colName, id) => { window[colName] = window[colName].filter(item => item.id !== id); saveToStorage(); renderCurrentTab(); };
 
-        // --- Teacher Logic ---
-        function addCustomField(key = '', val = '') {
-            document.getElementById('customFieldsContainer').innerHTML += `
-                <div class="flex space-x-2 custom-field-row mb-2">
-                    <input type="text" placeholder="Tên (VD: Tôn giáo)" value="${escapeHTML(key)}" class="custom-key w-1/3 px-2 py-2 border border-gray-300 rounded-lg text-sm bg-white">
-                    <input type="text" placeholder="Nội dung" value="${escapeHTML(val)}" class="custom-val w-full px-2 py-2 border border-gray-300 rounded-lg text-sm bg-white">
-                    <button type="button" onclick="this.parentElement.remove()" class="text-red-500 px-2 active:bg-red-50 rounded"><i class="fas fa-trash"></i></button>
-                </div>`;
-        }
-        function resetForm() {
-            document.getElementById('profileForm').reset(); document.getElementById('profileId').value = '';
-            document.getElementById('customFieldsContainer').innerHTML = ''; addCustomField();
-            document.getElementById('formTitle').innerText = 'Tạo Sơ Yếu Lý Lịch';
-            document.getElementById('formModeBadge').innerText = 'Chế độ: Thêm mới'; document.getElementById('formModeBadge').className = 'w-fit text-xs font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full uppercase tracking-wide';
-        }
-
-        function saveProfile(e) {
-            e.preventDefault();
-            const id = document.getElementById('profileId').value || 'GV_' + Date.now();
-            const cf = []; 
-            document.querySelectorAll('.custom-field-row').forEach(row => {
-                const k = row.querySelector('.custom-key').value.trim(), v = row.querySelector('.custom-val').value.trim();
-                if(k && v) cf.push({key: k, val: v});
-            });
-            let nameStr = document.getElementById('fullName').value.trim().toLowerCase();
-            let name = nameStr.split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.substring(1)).join(' ');
-
-            const data = {
-                id, fullName: name, alias: document.getElementById('alias').value, dob: document.getElementById('dob').value, gender: document.getElementById('gender').value,
-                cccd: document.getElementById('cccd').value, cccdDate: document.getElementById('cccdDate').value, cccdPlace: document.getElementById('cccdPlace').value,
-                hometown: document.getElementById('hometown').value, permanentAddress: document.getElementById('permanentAddress').value, currentAddress: document.getElementById('currentAddress').value,
-                phone: document.getElementById('phone').value, familyDetails: document.getElementById('familyDetails').value, generalEd: document.getElementById('generalEd').value, degree: document.getElementById('degree').value, major: document.getElementById('major').value, certificates: document.getElementById('certificates').value,
-                position: document.getElementById('position').value, startDate: document.getElementById('startDate').value, salaryCode: document.getElementById('salaryCode').value, salaryLevel: document.getElementById('salaryLevel').value, salaryCoef: document.getElementById('salaryCoef').value, customFields: cf
-            };
-            window.saveDataFn('teachers', data); showToast('Lưu hồ sơ thành công!', 'success'); resetForm(); switchTab('list');
-        }
-
-        function editProfile(id) {
-            const p = teachers.find(x => x.id === id); if(!p) return;
-            document.getElementById('profileId').value = p.id;
-            const fields = ['fullName','alias','dob','gender','cccd','cccdDate','cccdPlace','hometown','permanentAddress','currentAddress','phone','familyDetails','generalEd','degree','major','certificates','position','startDate','salaryCode','salaryLevel','salaryCoef'];
-            fields.forEach(key => { if(document.getElementById(key)) document.getElementById(key).value = p[key] || ''; });
-            document.getElementById('customFieldsContainer').innerHTML = '';
-            if(p.customFields && p.customFields.length > 0) p.customFields.forEach(cf => addCustomField(cf.key, cf.val)); else addCustomField();
-            document.getElementById('formTitle').innerText = `Sửa: ${p.fullName}`;
-            document.getElementById('formModeBadge').innerText = 'Chế độ: Cập nhật'; document.getElementById('formModeBadge').className = 'w-fit text-xs font-bold text-amber-700 bg-amber-100 px-3 py-1 rounded-full uppercase tracking-wide';
-            closeModal('detailModal'); switchTab('form');
-        }
-
-        function renderTeacherList() {
-            const tbody = document.getElementById('profilesTable'); const emptyState = document.getElementById('emptyTeacherState');
-            const search = document.getElementById('searchTeacherInput').value.toLowerCase();
-            const filtered = teachers.filter(t => t.fullName.toLowerCase().includes(search) || t.cccd.includes(search) || (t.position && t.position.toLowerCase().includes(search)));
-            
-            if(filtered.length === 0) { tbody.parentElement.classList.add('hidden'); emptyState.classList.remove('hidden'); } 
-            else {
-                tbody.parentElement.classList.remove('hidden'); emptyState.classList.add('hidden');
-                tbody.innerHTML = filtered.map(t => `
-                <tr class="active:bg-indigo-50/50 md:hover:bg-indigo-50/50 transition-colors">
-                    <td class="px-4 py-3">
-                        <div class="flex items-center">
-                            <div class="h-9 w-9 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center shrink-0 border border-indigo-200 text-sm">${t.fullName.charAt(0)}</div>
-                            <div class="ml-2.5">
-                                <div class="font-bold text-gray-800 text-sm line-clamp-1">${escapeHTML(t.fullName)}</div>
-                                <div class="text-[10px] text-gray-500 mt-0.5">${escapeHTML(t.cccd)}</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="px-4 py-3 whitespace-nowrap text-xs text-gray-700">
-                        ${t.dob ? t.dob.split('-').reverse().join('/') : ''}
-                        <span class="px-1.5 py-0.5 ml-1 inline-block text-[9px] font-bold rounded ${t.gender === 'Nam' ? 'bg-sky-100 text-sky-700' : 'bg-pink-100 text-pink-700'}">${t.gender}</span>
-                    </td>
-                    <td class="px-4 py-3 text-xs text-gray-700 hidden sm:table-cell truncate max-w-[120px]">${escapeHTML(t.position)}</td>
-                    <td class="px-4 py-3 text-right text-sm">
-                        <button onclick="viewTeacher('${t.id}')" class="text-indigo-600 p-2"><i class="fas fa-eye"></i></button>
-                        <button onclick="editProfile('${t.id}')" class="text-amber-500 p-2"><i class="fas fa-edit"></i></button>
-                        <button onclick="confirmDeleteData('teachers', '${t.id}')" class="text-red-500 p-2"><i class="fas fa-trash-alt"></i></button>
-                    </td>
-                </tr>`).join('');
-            }
-        }
-
-        function viewTeacher(id) {
-            const p = teachers.find(x => x.id === id); if(!p) return;
-            let ageStr = 'N/A', retireBadge = '';
-            if(p.dob) {
-                const birthY = parseInt(p.dob.split('-')[0]); const currentY = new Date().getFullYear(); const age = currentY - birthY; ageStr = `${age} tuổi`;
-                const retireY = birthY + (p.gender === 'Nữ' ? 60 : 62); const remain = retireY - currentY;
-                if (remain <= 0) retireBadge = `<span class="bg-red-100 text-red-700 text-[10px] px-2 py-0.5 rounded font-bold border border-red-200">Đã hưu</span>`;
-                else if (remain <= 3) retireBadge = `<span class="bg-orange-100 text-orange-700 text-[10px] px-2 py-0.5 rounded font-bold border border-orange-200">Sắp hưu (${remain} năm)</span>`;
-                else retireBadge = `<span class="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-0.5 rounded font-bold border border-emerald-200">Hưu: ${retireY}</span>`;
-            }
-            let customFieldsHTML = '';
-            if(p.customFields && p.customFields.length > 0) {
-                customFieldsHTML = p.customFields.map(cf => `<div class="sm:col-span-1 border-b border-dashed border-gray-200 pb-2"><dt class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">${escapeHTML(cf.key)}</dt><dd class="mt-1 text-sm text-gray-900 font-medium">${safeVal(cf.val)}</dd></div>`).join('');
-                customFieldsHTML = `<h4 class="text-xs font-bold text-gray-800 mt-5 mb-2 col-span-full border-b-2 border-gray-100 pb-1 uppercase">IV. THÔNG TIN BỔ SUNG</h4>` + customFieldsHTML;
-            }
-
-            document.getElementById('modalMainTitle').innerText = "SƠ YẾU LÝ LỊCH"; document.getElementById('printHeader').classList.remove('hidden');
-            document.getElementById('modalBody').innerHTML = `
-                <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-4">
-                    <h4 class="text-xs font-bold text-indigo-700 mb-0 col-span-full border-b-2 border-indigo-100 pb-1 uppercase">I. THÔNG TIN CÁ NHÂN</h4>
-                    <div class="sm:col-span-1 lg:col-span-2 border-b border-dashed border-gray-200 pb-2"><dt class="text-[10px] font-bold text-gray-400 uppercase">Họ và Tên</dt><dd class="mt-0.5 text-base text-gray-900 font-black uppercase">${escapeHTML(p.fullName)}</dd></div>
-                    <div class="sm:col-span-1 border-b border-dashed border-gray-200 pb-2"><dt class="text-[10px] font-bold text-gray-400 uppercase">Ngày sinh</dt><dd class="mt-0.5 text-sm text-gray-900 font-bold flex flex-wrap gap-1 items-center">${p.dob ? p.dob.split('-').reverse().join('/') : ''} (${ageStr}) ${retireBadge}</dd></div>
-                    <div class="sm:col-span-1 border-b border-dashed border-gray-200 pb-2"><dt class="text-[10px] font-bold text-gray-400 uppercase">Số CCCD</dt><dd class="mt-0.5 text-sm text-gray-900 font-bold">${escapeHTML(p.cccd)}</dd></div>
-                    <div class="sm:col-span-3 border-b border-dashed border-gray-200 pb-2"><dt class="text-[10px] font-bold text-gray-400 uppercase">Chỗ ở hiện nay</dt><dd class="mt-0.5 text-sm text-gray-900 font-medium">${safeVal(p.currentAddress)}</dd></div>
-                    <h4 class="text-xs font-bold text-indigo-700 mt-3 mb-0 col-span-full border-b-2 border-indigo-100 pb-1 uppercase">II. TRÌNH ĐỘ & CÔNG TÁC</h4>
-                    <div class="sm:col-span-1 border-b border-dashed border-gray-200 pb-2"><dt class="text-[10px] font-bold text-gray-400 uppercase">CM cao nhất</dt><dd class="mt-0.5 text-sm text-gray-900 font-bold">${escapeHTML(p.degree)}</dd></div>
-                    <div class="sm:col-span-2 border-b border-dashed border-gray-200 pb-2"><dt class="text-[10px] font-bold text-gray-400 uppercase">Chức vụ hiện tại</dt><dd class="mt-0.5 text-sm text-indigo-700 font-bold">${escapeHTML(p.position)}</dd></div>
-                    <div class="sm:col-span-3 border-b border-dashed border-gray-200 pb-2 bg-gray-50 p-2 rounded"><dt class="text-[10px] font-bold text-gray-400 uppercase mb-1">Lương</dt><dd class="text-xs text-gray-900 flex space-x-4"><span>Mã: <b>${safeVal(p.salaryCode)}</b></span><span>Bậc: <b>${safeVal(p.salaryLevel)}</b></span><span>HS: <b>${safeVal(p.salaryCoef)}</b></span></dd></div>
-                    ${customFieldsHTML}
-                </dl>
-            `;
-            const editBtn = document.getElementById('modalEditBtn'); editBtn.classList.remove('hidden'); editBtn.onclick = () => editProfile(p.id);
-            showModal('detailModal');
-        }
-
-        // --- Student Excel ---
-        function downloadExcelTemplate() {
-            const ws = XLSX.utils.aoa_to_sheet([["STT", "Mã HS", "Họ Tên", "Ngày Sinh", "Giới Tính", "SĐT", "Điểm Toán"], [1, "HS_001", "Nguyễn Văn A", "15/05/2008", "Nam", "0901234567", 8.5]]);
-            const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "DanhSachHocSinh"); XLSX.writeFile(wb, "Mau_Hoc_Sinh.xlsx");
-        }
-        const dropZone = document.getElementById('dropZone');
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eName => dropZone.addEventListener(eName, e => { e.preventDefault(); e.stopPropagation(); }, false));
-        ['dragenter', 'dragover'].forEach(eName => dropZone.addEventListener(eName, () => dropZone.classList.add('dragover'), false));
-        ['dragleave', 'drop'].forEach(eName => dropZone.addEventListener(eName, () => dropZone.classList.remove('dragover'), false));
-        dropZone.addEventListener('drop', (e) => { const files = e.dataTransfer.files; if(files.length > 0) { document.getElementById('excelFileInput').files = files; handleExcelUpload({target: {files: files}}); }});
-
-        function handleExcelUpload(e) {
-            const file = e.target.files[0]; if(!file) return;
-            if(!document.getElementById('importYear').value.trim()) { showToast('Nhập "Năm học" trước!', 'error'); e.target.value = ''; return; }
-            document.getElementById('fileName').innerText = file.name; document.getElementById('fileInfo').classList.remove('hidden');
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                try {
-                    const wb = XLSX.read(evt.target.result, {type: 'binary'});
-                    const rawData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" });
-                    if(rawData.length > 0) { importTempData = rawData; renderExcelPreview(rawData); } else showToast('File trống!', 'error');
-                } catch(error) { showToast('Định dạng không hợp lệ!', 'error'); }
-            };
-            reader.readAsBinaryString(file);
-        }
-
-        function renderExcelPreview(data) {
-            const container = document.getElementById('previewContainer'); document.getElementById('previewCount').innerText = data.length;
-            const thead = document.getElementById('previewHeader'); const tbody = document.getElementById('previewBody');
-            container.classList.remove('hidden'); thead.innerHTML = ''; tbody.innerHTML = '';
-            const headers = Object.keys(data[0]); let trHead = document.createElement('tr');
-            headers.forEach(h => trHead.innerHTML += `<th class="px-3 py-2 text-left font-bold text-gray-600 border-b border-gray-200 whitespace-nowrap">${escapeHTML(h)}</th>`);
-            thead.appendChild(trHead);
-            for(let i=0; i < Math.min(data.length, 3); i++) {
-                let tr = document.createElement('tr');
-                headers.forEach(h => tr.innerHTML += `<td class="px-3 py-1.5 text-gray-700 whitespace-nowrap truncate max-w-[150px]">${escapeHTML(data[i][h])}</td>`);
-                tbody.appendChild(tr);
-            }
-        }
-
-        function cancelImport() { document.getElementById('excelFileInput').value=''; document.getElementById('fileInfo').classList.add('hidden'); document.getElementById('previewContainer').classList.add('hidden'); importTempData = []; }
-        function confirmImport() {
-            const year = document.getElementById('importYear').value.trim(); const classInput = document.getElementById('importClass').value.trim();
-            if(importTempData.length === 0) return;
-            const keys = Object.keys(importTempData[0]); const nameKey = keys.find(k => k.toLowerCase().includes('tên')) || keys[0]; const classKey = keys.find(k => k.toLowerCase().includes('lớp'));
-            let count = 0;
-            importTempData.forEach(row => {
-                let sClass = classInput || (classKey ? row[classKey] : 'Chung'); let sName = row[nameKey] || 'Chưa xác định';
-                window.saveDataFn('students', { id: 'HS_' + Date.now() + Math.random().toString(36).substr(2, 5), year, className: sClass, name: sName, data: row }); count++;
-            });
-            showToast(`Đã nhập ${count} học sinh!`, 'success'); cancelImport(); switchTab('student-list');
-        }
-
-        function updateClassFilter() {
-            const fYear = document.getElementById('filterYear').value; const fClass = document.getElementById('filterClass'); fClass.innerHTML = '<option value="">-- Tất cả --</option>';
-            const classes = new Set(); students.forEach(s => { if(fYear === '' || s.year === fYear) classes.add(s.className); });
-            [...classes].sort().forEach(c => fClass.innerHTML += `<option value="${c}">${c}</option>`);
-        }
-
-        function renderStudentList() {
-            const fySelect = document.getElementById('filterYear');
-            if(fySelect.options.length <= 1) { const years = [...new Set(students.map(s => s.year))].sort().reverse(); years.forEach(y => fySelect.innerHTML += `<option value="${y}">${y}</option>`); updateClassFilter(); }
-            const fYear = document.getElementById('filterYear').value, fClass = document.getElementById('filterClass').value, term = document.getElementById('searchStudentInput').value.toLowerCase();
-            const tbody = document.getElementById('studentTableBody'), thead = document.getElementById('studentTableHead'), emptyState = document.getElementById('emptyStudentState');
-            
-            let filtered = students.filter(s => (fYear === '' || s.year === fYear) && (fClass === '' || s.className === fClass) && (term === '' || s.name.toLowerCase().includes(term) || JSON.stringify(s.data).toLowerCase().includes(term)));
-
-            if(filtered.length === 0) emptyState.classList.remove('hidden'); else {
-                emptyState.classList.add('hidden');
-                const sampleData = filtered[0].data; const dynamicKeys = Object.keys(sampleData).filter(k => !k.toLowerCase().includes('tên') && !['Lớp', 'Năm', 'STT'].includes(k)).slice(0, 3);
-                let headHtml = `<tr><th class="px-4 py-3 text-left text-xs font-bold text-gray-600 uppercase whitespace-nowrap">Thông Tin</th>`;
-                dynamicKeys.forEach(k => headHtml += `<th class="px-4 py-3 text-left text-[10px] font-bold text-gray-600 uppercase whitespace-nowrap hidden sm:table-cell">${escapeHTML(k)}</th>`);
-                headHtml += `<th class="px-4 py-3 text-right text-xs font-bold text-gray-600 uppercase sticky right-0 bg-indigo-50">Tác vụ</th></tr>`;
-                thead.innerHTML = headHtml;
-
-                tbody.innerHTML = filtered.map(s => {
-                    let rowHtml = `<tr class="active:bg-blue-50/50 md:hover:bg-blue-50/50 border-b border-gray-100"><td class="px-4 py-3 max-w-[150px]"><div class="font-bold text-gray-800 text-sm truncate">${escapeHTML(s.name)}</div><div class="mt-0.5 text-[9px] uppercase font-bold text-indigo-600"><span class="bg-indigo-100 px-1.5 py-0.5 rounded">Lớp ${escapeHTML(s.className)}</span></div></td>`;
-                    dynamicKeys.forEach(k => { let val = s.data[k] !== undefined ? s.data[k] : '-'; let styling = (!isNaN(val) && parseFloat(val) < 5) ? 'text-red-500 font-bold' : 'text-gray-600'; rowHtml += `<td class="px-4 py-3 text-xs ${styling} hidden sm:table-cell">${escapeHTML(String(val))}</td>`; });
-                    rowHtml += `<td class="px-4 py-3 text-right sticky right-0 bg-white/90 backdrop-blur"><button onclick="viewStudentDetail('${s.id}')" class="text-indigo-500 p-2"><i class="fas fa-file-alt"></i></button><button onclick="confirmDeleteData('students', '${s.id}')" class="text-red-400 p-2"><i class="fas fa-trash"></i></button></td></tr>`;
-                    return rowHtml;
-                }).join('');
-            }
-        }
-
-        function viewStudentDetail(id) {
-            const s = students.find(x => x.id === id); if(!s) return;
-            document.getElementById('modalMainTitle').innerText = `Hồ Sơ Học Sinh`; document.getElementById('printHeader').classList.remove('hidden');
-            let html = `<div class="bg-indigo-50 p-3 md:p-4 rounded-lg mb-4 text-center md:text-left"><h2 class="text-lg md:text-xl font-black text-indigo-900 uppercase">${escapeHTML(s.name)}</h2><p class="text-xs font-semibold text-indigo-600 mt-1">Lớp: ${escapeHTML(s.className)} | NH: ${escapeHTML(s.year)}</p></div><div class="border border-gray-200 rounded-lg overflow-hidden bg-white"><table class="min-w-full divide-y divide-gray-200"><tbody class="divide-y divide-gray-200">`;
-            for (const [key, value] of Object.entries(s.data)) {
-                let valStyling = (!isNaN(value) && value !== '') ? (parseFloat(value) < 5 ? 'text-red-600 font-bold' : 'text-emerald-700 font-bold') : '';
-                html += `<tr><td class="px-4 py-2.5 whitespace-nowrap text-[10px] font-bold text-gray-500 uppercase bg-gray-50 w-1/3">${escapeHTML(key)}</td><td class="px-4 py-2.5 text-xs md:text-sm text-gray-900 font-medium ${valStyling}">${value !== undefined && value !== '' ? escapeHTML(String(value)) : '-'}</td></tr>`;
-            }
-            html += `</tbody></table></div>`; document.getElementById('modalBody').innerHTML = html; document.getElementById('modalEditBtn').classList.add('hidden'); showModal('detailModal');
-        }
-        function requestClearStudents() { openConfirmModal("Xóa toàn bộ?", "Hành động này sẽ xóa sạch danh sách học sinh.", () => { students = []; saveToStorage(); renderStudentList(); showToast('Đã xóa!'); }); }
-        function confirmDeleteData(col, id) { openConfirmModal("Xóa dữ liệu?", "Không thể hoàn tác.", () => { window.deleteDataFn(col, id); showToast('Đã xóa.', 'success'); }); }
-
-        // --- Smart Notes ---
-        function openNoteModal(id = null) {
-            document.getElementById('noteTitle').value = ''; document.getElementById('noteContent').value = ''; document.getElementById('noteManualTags').value = ''; document.getElementById('noteId').value = ''; document.getElementById('noteModalTitle').innerText = 'Thêm Ghi Chú';
-            if(id) { const n = notes.find(x => x.id === id); if(n) { document.getElementById('noteId').value = n.id; document.getElementById('noteTitle').value = n.title; document.getElementById('noteContent').value = n.content; if(n.manualTags) document.getElementById('noteManualTags').value = n.manualTags.join(', '); document.getElementById('noteModalTitle').innerText = 'Chỉnh sửa'; } }
-            showModal('noteModal'); 
-        }
-        function insertTag(tag) { const el = document.getElementById('noteContent'); el.value += (el.value.endsWith(' ') || el.value === '' ? '' : ' ') + tag + ' '; el.focus(); }
-        function extractHashtags(text) { const matches = text.match(/#[\w_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+/g); return matches ? [...new Set(matches.map(t => t.substring(1).toLowerCase().replace(/\s+/g, '_')))] : []; }
-        function saveNote() {
-            const title = document.getElementById('noteTitle').value.trim(), content = document.getElementById('noteContent').value.trim(); if(!content) return showToast("Nội dung trống!", "error");
-            const tags1 = extractHashtags(content), tags2Input = document.getElementById('noteManualTags').value.trim(); let tags2 = [];
-            if(tags2Input) tags2 = tags2Input.split(',').map(t => t.trim().replace(/^#+/, '').replace(/\s+/g, '_')).filter(t => t !== '');
-            const allTags = [...new Set([...tags1, ...tags2])];
-            window.saveDataFn('notes', { id: document.getElementById('noteId').value || 'NOTE_' + Date.now(), title, content, tags: allTags, manualTags: tags2, updatedAt: new Date().toISOString() });
-            closeModal('noteModal'); showToast("Đã lưu!");
-        }
-        function highlightFuzzy(text, queryWords) {
-            if(!queryWords || queryWords.length === 0) return escapeHTML(text); let eText = escapeHTML(text);
-            queryWords.forEach(w => { if(!w.startsWith('#')) { const regex = new RegExp(`(${w.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi'); eText = eText.replace(regex, '<mark>$1</mark>'); } }); return eText;
-        }
-        const TAG_COLORS = ['bg-indigo-100 text-indigo-700', 'bg-emerald-100 text-emerald-700', 'bg-amber-100 text-amber-700', 'bg-rose-100 text-rose-700', 'bg-sky-100 text-sky-700'];
-        function getTagStyle(tag) { let hash = 0; for (let i = 0; i < tag.length; i++) hash = tag.charCodeAt(i) + ((hash << 5) - hash); return TAG_COLORS[Math.abs(hash) % TAG_COLORS.length]; }
-
-        function renderNotes(forceTag = null) {
-            const searchInput = document.getElementById('noteSearchInput'); if(forceTag) searchInput.value = `#${forceTag}`;
-            const queryWords = searchInput.value.toLowerCase().trim().split(' ').filter(w => w);
-            const grid = document.getElementById('notesGrid'), emptyState = document.getElementById('emptyNoteState'), filterContainer = document.getElementById('noteTagsFilter'); filterContainer.innerHTML = '';
-            
-            if(queryWords.length > 0) filterContainer.innerHTML += `<button onclick="document.getElementById('noteSearchInput').value=''; renderNotes();" class="px-2 py-1 text-[9px] font-bold rounded bg-gray-200 text-gray-600 uppercase mr-1"><i class="fas fa-times mr-1"></i>Bỏ lọc</button>`;
-            [...new Set(notes.flatMap(n => n.tags))].sort().forEach(t => {
-                const isSelected = queryWords.includes(`#${t}`);
-                filterContainer.innerHTML += `<button onclick="renderNotes('${t}')" class="px-2 py-1 text-[9px] font-bold uppercase rounded ${getTagStyle(t)} ${isSelected ? 'ring-1 ring-amber-400' : 'opacity-70'} transition-all shrink-0">#${t}</button>`;
-            });
-
-            let filtered = notes.filter(n => queryWords.length === 0 || queryWords.every(w => `${n.title} ${n.content} ${n.tags.map(t=>`#${t}`).join(' ')}`.toLowerCase().includes(w)));
-            if(filtered.length === 0) { grid.classList.add('hidden'); emptyState.classList.remove('hidden', 'flex'); emptyState.classList.add('flex'); } 
-            else {
-                grid.classList.remove('hidden'); emptyState.classList.remove('flex'); emptyState.classList.add('hidden');
-                grid.innerHTML = filtered.sort((a,b) => new Date(b.updatedAt) - new Date(a.updatedAt)).map(n => {
-                    const snippet = n.content.length > 150 ? n.content.substring(0, 150) + '...' : n.content;
-                    const dDate = new Date(n.updatedAt);
-                    return `
-                    <div class="bg-white p-4 rounded-xl border border-gray-100 flex flex-col justify-between active:scale-[0.98] transition-transform cursor-pointer shadow-sm relative overflow-hidden" onclick="openNoteModal('${n.id}')">
-                        <div class="absolute top-0 left-0 w-1 h-full bg-amber-400"></div>
-                        <div>
-                            <h4 class="font-bold text-gray-800 text-base mb-1.5 leading-tight pr-6">${highlightFuzzy(n.title, queryWords) || '<i>(Không tên)</i>'}</h4>
-                            <p class="text-xs text-gray-600 mb-3 whitespace-pre-wrap font-mono line-clamp-3">${highlightFuzzy(snippet, queryWords)}</p>
-                            <div class="flex flex-wrap gap-1">${n.tags.map(t => `<span class="px-1.5 py-0.5 text-[8px] font-bold rounded ${getTagStyle(t)} uppercase">#${t}</span>`).join('')}</div>
-                        </div>
-                        <div class="mt-3 pt-2 border-t border-gray-50 flex justify-between items-center opacity-70">
-                            <span class="text-[10px] font-semibold text-gray-400"><i class="far fa-clock"></i> ${dDate.getDate()}/${dDate.getMonth()+1} - ${dDate.getHours()}:${dDate.getMinutes().toString().padStart(2, '0')}</span>
-                            <button onclick="event.stopPropagation(); confirmDeleteData('notes', '${n.id}')" class="text-red-400 p-1"><i class="fas fa-trash-alt text-[10px]"></i></button>
-                        </div>
-                    </div>`;
-                }).join('');
-            }
-        }
-
-        // --- Schedule (Kanban) ---
+        // --- Schedule (Kanban & Timeline) ---
         const WEEK_DAYS = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'CN'];
+        let schViewMode = 'kanban';
         function removeAccents(str) { return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D'); }
+
+        function setScheduleView(mode) {
+            schViewMode = mode;
+            document.getElementById('btn-view-kanban').className = mode === 'kanban' ? 'px-3 py-1.5 text-xs font-bold rounded bg-white text-sky-600 shadow-sm transition-all' : 'px-3 py-1.5 text-xs font-bold rounded text-gray-500 transition-all';
+            document.getElementById('btn-view-timeline').className = mode === 'timeline' ? 'px-3 py-1.5 text-xs font-bold rounded bg-white text-sky-600 shadow-sm transition-all' : 'px-3 py-1.5 text-xs font-bold rounded text-gray-500 transition-all';
+            
+            if(mode === 'kanban') {
+                document.getElementById('kanbanViewContainer').classList.remove('hidden'); document.getElementById('timelineViewContainer').classList.add('hidden');
+            } else {
+                document.getElementById('kanbanViewContainer').classList.add('hidden'); document.getElementById('timelineViewContainer').classList.remove('hidden');
+            }
+            renderSchedule();
+        }
 
         function initSchedule() { const grid = document.getElementById('weeklyScheduleGrid'); if (grid.children.length === 0) renderScheduleColumns(); renderSchedule(); }
         function renderScheduleColumns() {
@@ -1090,6 +858,50 @@
                         </div>
                         ${t.tags?.length > 0 ? `<div class="ml-6 mt-1 flex flex-wrap gap-1">${t.tags.map(tag => `<span class="text-[8px] font-bold px-1.5 py-0.5 rounded uppercase ${t.isCompleted ? 'bg-gray-200 text-gray-400' : 'bg-sky-100 text-sky-700'}">${tag}</span>`).join('')}</div>` : ''}
                     </div>`).join('');
+            }
+
+            // Render Timeline View
+            const timelineList = document.getElementById('timelineScheduleList');
+            if(timelineList) {
+                let timelineHtml = '<div class="absolute left-[15px] top-2 bottom-2 w-0.5 bg-gray-200 z-0 hidden md:block"></div>';
+                const cd = new Date().getDay(); const currentDayIndex = cd === 0 ? 6 : cd - 1;
+                
+                let hasTasks = false;
+                for(let i=0; i<7; i++) {
+                    let dayTasks = schedules.filter(s => s.day === i && (showCompleted || !s.isCompleted));
+                    if (queryWordsNoAccents.length > 0) dayTasks = dayTasks.filter(s => queryWordsNoAccents.every(qw => removeAccents(s.text.toLowerCase()).includes(qw) || (s.tags && s.tags.some(t => removeAccents(t.toLowerCase()).replace('#', '').includes(qw)))));
+                    dayTasks.sort((a, b) => (a.isCompleted === b.isCompleted) ? 0 : a.isCompleted ? 1 : -1);
+                    
+                    if(dayTasks.length > 0 || i === currentDayIndex) {
+                        hasTasks = true;
+                        const isToday = i === currentDayIndex;
+                        timelineHtml += `
+                        <div class="relative z-10 flex flex-col md:flex-row gap-2 md:gap-4 items-start">
+                            <div class="w-auto md:w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs md:text-[10px] shrink-0 md:border-2 ${isToday ? 'md:bg-sky-500 md:border-sky-200 text-sky-600 md:text-white md:shadow-md' : 'md:bg-white md:border-gray-300 text-gray-700 md:text-gray-500'}">
+                                <span class="md:hidden mr-2"><i class="far fa-calendar-alt"></i></span>${WEEK_DAYS[i]}
+                            </div>
+                            <div class="flex-1 w-full bg-gray-50 rounded-xl p-3 md:p-4 border ${isToday ? 'border-sky-200 shadow-sm' : 'border-gray-100'}">
+                                <h4 class="text-xs font-bold ${isToday ? 'text-sky-600' : 'text-gray-600'} mb-3 flex justify-between uppercase tracking-wider hidden md:flex">${WEEK_DAYS[i]} ${isToday ? '<span class="px-2 py-0.5 bg-sky-100 text-sky-700 rounded-md text-[9px]">HÔM NAY</span>' : ''}</h4>
+                                <div class="flex flex-col gap-2.5">
+                                    ${dayTasks.length === 0 ? '<p class="text-xs text-gray-400 italic">Chưa có công việc</p>' : dayTasks.map(t => `
+                                        <div class="flex items-start justify-between border-b border-gray-200/70 last:border-0 pb-2.5 last:pb-0">
+                                            <div class="flex items-start gap-2.5 pr-3">
+                                                <button onclick="toggleScheduleCompletion('${t.id}')" class="mt-0.5 outline-none p-0.5 transform active:scale-90 transition-transform"><i class="far ${t.isCompleted ? 'text-emerald-500 fa-check-circle' : 'text-gray-300 fa-circle'} text-base md:text-sm"></i></button>
+                                                <div>
+                                                    <p class="${t.isCompleted ? 'line-through text-gray-400' : 'text-gray-800'} text-[13px] md:text-xs font-medium leading-relaxed">${escapeHTML(t.text)}</p>
+                                                    ${t.tags?.length > 0 ? `<div class="mt-1.5 flex flex-wrap gap-1.5">${t.tags.map(tag => `<span class="text-[9px] md:text-[8px] font-bold px-1.5 py-0.5 rounded uppercase ${t.isCompleted ? 'bg-gray-200 text-gray-400' : 'bg-sky-100 text-sky-700'}">${tag}</span>`).join('')}</div>` : ''}
+                                                </div>
+                                            </div>
+                                            <button onclick="deleteDataFn('schedules', '${t.id}')" class="text-gray-300 hover:text-red-400 p-1"><i class="fas fa-times text-[11px]"></i></button>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>`;
+                    }
+                }
+                if(!hasTasks) timelineHtml += '<div class="pl-2 md:pl-12 text-xs text-gray-400 italic py-4">Tuần này trống, chưa có lịch trình nào.</div>';
+                timelineList.innerHTML = timelineHtml;
             }
         }
         function toggleScheduleCompletion(id) { const idx = schedules.findIndex(s => s.id === id); if(idx > -1) { schedules[idx].isCompleted = !schedules[idx].isCompleted; window.saveDataFn('schedules', schedules[idx]); } }
@@ -1167,7 +979,7 @@
         }
 
         // --- INIT ---
-        document.addEventListener('DOMContentLoaded', () => { startClock(); initFirebase(); switchTab('list'); });
+        document.addEventListener('DOMContentLoaded', () => { startClock(); initFirebase(); switchTab('reminder'); });
     </script>
 </body>
 </html>
