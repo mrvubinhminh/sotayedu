@@ -1247,20 +1247,20 @@ function doGet(e) {
                 const isToday = index === currentDayIndex;
                 const qtHtml = quickTags.map(tag => `<button onclick="document.getElementById('sch-tag-${index}').value += '${tag} '; document.getElementById('sch-in-${index}').focus();" class="px-1.5 py-0.5 bg-white text-gray-500 border border-gray-200 text-[9px] rounded font-bold uppercase shrink-0">#${tag}</button>`).join('');
                 return `
-                <div class="w-[85vw] md:w-[280px] flex-shrink-0 flex flex-col h-[65vh] md:h-full bg-gray-100/80 rounded-xl border ${isToday ? 'border-sky-400 shadow-md ring-1 ring-sky-400' : 'border-gray-200'}">
-                    <div class="p-2 md:p-3 border-b border-gray-200 font-bold text-gray-700 flex justify-between items-center ${isToday ? 'bg-sky-500 text-white rounded-t-xl' : 'bg-gray-200/50 rounded-t-xl'}">
+                <div class="w-[85vw] md:w-[280px] flex-shrink-0 flex flex-col h-[75vh] md:h-full max-h-full bg-gray-100/80 rounded-xl border ${isToday ? 'border-sky-400 shadow-md ring-1 ring-sky-400' : 'border-gray-200'} overflow-hidden">
+                    <div class="p-2 md:p-3 border-b border-gray-200 font-bold text-gray-700 flex justify-between items-center ${isToday ? 'bg-sky-500 text-white' : 'bg-gray-200/50'} shrink-0 z-20">
                         ${day} ${isToday ? '<span class="text-[9px] bg-white text-sky-600 px-1.5 py-0.5 rounded uppercase font-black">Hôm nay</span>' : ''}
                     </div>
-                    <div class="p-2 flex flex-col gap-2 flex-1 overflow-y-auto custom-scrollbar" id="sch-col-${index}"></div>
-                    <div class="p-2 border-t bg-white rounded-b-xl flex flex-col gap-2 shrink-0">
+                    <div class="p-2 border-b border-gray-200 bg-white flex flex-col gap-2 shrink-0 z-10 shadow-sm relative">
                         <div class="flex overflow-x-auto gap-1 custom-scrollbar pb-1">${qtHtml}</div>
-                        <input type="text" id="sch-in-${index}" placeholder="Nội dung việc..." class="w-full text-xs py-1.5 px-2 border-b-2 border-gray-100 focus:border-sky-400 outline-none" onkeydown="if(event.key==='Enter') processAddSchedule(${index})">
+                        <input type="text" id="sch-in-${index}" placeholder="Nội dung việc..." class="w-full text-xs py-1.5 px-2 border-b-2 border-gray-100 focus:border-sky-400 outline-none font-medium" onkeydown="if(event.key==='Enter') processAddSchedule(${index})">
                         <div class="flex items-center bg-gray-50 rounded px-2 border focus-within:border-sky-400">
                             <span class="text-sky-400 text-xs font-bold mr-1">#</span>
                             <input type="text" id="sch-tag-${index}" placeholder="Nhãn phụ..." class="w-full text-[10px] py-1.5 bg-transparent outline-none" onkeydown="if(event.key==='Enter') processAddSchedule(${index})">
                             <button onclick="processAddSchedule(${index})" class="text-sky-500 p-1"><i class="fas fa-paper-plane"></i></button>
                         </div>
                     </div>
+                    <div class="p-2 flex flex-col gap-2 flex-1 overflow-y-auto custom-scrollbar relative z-0" id="sch-col-${index}"></div>
                 </div>`;
             }).join('');
         }
