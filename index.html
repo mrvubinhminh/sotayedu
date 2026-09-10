@@ -69,13 +69,10 @@
             <i class="fas fa-graduation-cap text-2xl md:text-3xl mr-2 md:mr-3 text-indigo-400 drop-shadow-md"></i>
             <h1 class="text-base md:text-xl font-bold tracking-wider leading-tight">SMART ED<br class="hidden md:block"><span class="hidden md:inline text-xs font-normal text-indigo-300">Quản Lý Trường Học</span></h1>
         </div>
-        <!-- Đồng hồ thời gian thực (Thu gọn trên mobile) -->
-        <div class="bg-indigo-900/80 rounded-lg p-1.5 md:p-3 text-right md:text-center shadow-inner border border-indigo-800/50 flex flex-col md:block">
-            <div id="clockTime" class="text-sm md:text-2xl font-bold text-white md:tracking-widest leading-none">00:00:00</div>
-            <div class="flex items-center space-x-2 mt-1 justify-end md:justify-center">
-                <div id="clockSolar" class="text-[10px] md:text-xs text-indigo-200">--/--/----</div>
-                <div id="clockLunar" class="hidden md:inline-block text-[10px] md:text-[11px] text-amber-300 font-semibold bg-indigo-950/50 rounded py-0.5 px-2">Âm lịch: --/--</div>
-            </div>
+        <!-- Ngày tháng (Thu gọn trên mobile) -->
+        <div class="bg-indigo-900/80 rounded-lg p-1.5 md:p-3 text-right md:text-center shadow-inner border border-indigo-800/50 flex flex-col justify-center">
+            <div id="clockSolar" class="text-xs md:text-base font-bold text-white mb-0.5 md:mb-1">--/--/----</div>
+            <div id="clockLunar" class="inline-block text-[10px] md:text-xs text-amber-300 font-semibold bg-indigo-950/50 rounded py-0.5 px-2">Âm lịch: --/--</div>
         </div>
     </header>
 
@@ -125,6 +122,12 @@
                 <div class="hidden md:block px-4 text-[10px] font-bold text-indigo-400 uppercase tracking-wider mb-2 mt-2 border-t border-indigo-800/50 pt-3">Công việc & Tiện ích</div>
                 <ul class="flex flex-row md:flex-col space-x-1 md:space-x-0 md:space-y-1 pr-2 md:pr-0">
                     <li class="flex-shrink-0 md:w-full md:px-3">
+                        <button onclick="switchTab('reminder')" id="btn-tab-reminder" class="w-[72px] md:w-full h-14 md:h-auto flex flex-col md:flex-row items-center justify-center md:justify-start px-1 md:px-3 py-1 md:py-2.5 rounded-lg text-indigo-200 hover:bg-indigo-800 hover:text-white font-medium transition-colors">
+                            <i class="fas fa-bell w-full md:w-6 text-center text-red-400 text-lg md:text-base mb-1 md:mb-0 md:mr-2"></i> 
+                            <span class="text-[9px] md:text-sm leading-tight text-center md:text-left line-clamp-1">Nhắc Nhở</span>
+                        </button>
+                    </li>
+                    <li class="flex-shrink-0 md:w-full md:px-3">
                         <button onclick="switchTab('schedule')" id="btn-tab-schedule" class="w-[72px] md:w-full h-14 md:h-auto flex flex-col md:flex-row items-center justify-center md:justify-start px-1 md:px-3 py-1 md:py-2.5 rounded-lg text-indigo-200 hover:bg-indigo-800 hover:text-white font-medium transition-colors">
                             <i class="far fa-calendar-check w-full md:w-6 text-center text-sky-400 text-lg md:text-base mb-1 md:mb-0 md:mr-2"></i> 
                             <span class="text-[9px] md:text-sm leading-tight text-center md:text-left line-clamp-1">Lịch Tuần</span>
@@ -134,12 +137,6 @@
                         <button onclick="switchTab('note')" id="btn-tab-note" class="w-[72px] md:w-full h-14 md:h-auto flex flex-col md:flex-row items-center justify-center md:justify-start px-1 md:px-3 py-1 md:py-2.5 rounded-lg text-indigo-200 hover:bg-indigo-800 hover:text-white font-medium transition-colors">
                             <i class="fas fa-book-open w-full md:w-6 text-center text-amber-400 text-lg md:text-base mb-1 md:mb-0 md:mr-2"></i> 
                             <span class="text-[9px] md:text-sm leading-tight text-center md:text-left line-clamp-1">Sổ Tay</span>
-                        </button>
-                    </li>
-                    <li class="flex-shrink-0 md:w-full md:px-3">
-                        <button onclick="switchTab('reminder')" id="btn-tab-reminder" class="w-[72px] md:w-full h-14 md:h-auto flex flex-col md:flex-row items-center justify-center md:justify-start px-1 md:px-3 py-1 md:py-2.5 rounded-lg text-indigo-200 hover:bg-indigo-800 hover:text-white font-medium transition-colors">
-                            <i class="fas fa-bell w-full md:w-6 text-center text-red-400 text-lg md:text-base mb-1 md:mb-0 md:mr-2"></i> 
-                            <span class="text-[9px] md:text-sm leading-tight text-center md:text-left line-clamp-1">Nhắc Nhở</span>
                         </button>
                     </li>
                 </ul>
@@ -484,8 +481,15 @@
                         <h2 class="text-lg md:text-2xl font-bold text-gray-800"><i class="far fa-calendar-check text-sky-500 mr-2"></i>Lịch Công Tác</h2>
                     </div>
                     <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
+                        <button onclick="downloadSchTemplate()" class="flex-1 md:flex-none px-3 py-2 bg-white text-sky-600 border border-sky-200 rounded-lg hover:bg-sky-50 text-xs md:text-sm font-semibold shadow-sm justify-center flex items-center transition-colors"><i class="fas fa-download mr-1"></i> Mẫu Excel</button>
                         <button onclick="document.getElementById('schExcelInput').click()" class="flex-1 md:flex-none px-3 py-2 bg-sky-500 text-white rounded-lg text-xs md:text-sm font-bold shadow-sm justify-center flex items-center"><i class="fas fa-file-excel mr-1"></i> Nhập Excel</button>
                         <input type="file" id="schExcelInput" accept=".xlsx, .xls" class="hidden" onchange="handleSchExcelUpload(event)">
+                        
+                        <!-- Nút View Toggle Kanban/Timeline -->
+                        <div class="flex bg-gray-200/70 p-1 rounded-lg shrink-0">
+                            <button onclick="setScheduleView('kanban')" id="btn-view-kanban" class="px-3 py-1.5 text-xs font-bold rounded bg-white text-sky-600 shadow-sm transition-all"><i class="fas fa-columns"></i></button>
+                            <button onclick="setScheduleView('timeline')" id="btn-view-timeline" class="px-3 py-1.5 text-xs font-bold rounded text-gray-500 transition-all"><i class="fas fa-list-ul"></i></button>
+                        </div>
                         
                         <label class="flex-1 md:flex-none flex justify-center items-center text-xs md:text-sm font-semibold text-gray-600 bg-white border border-gray-200 px-3 py-2 rounded-lg">
                             <input type="checkbox" id="toggleCompletedSch" checked onchange="renderSchedule()" class="mr-2 h-4 w-4 rounded text-sky-500"> Đã xong
@@ -500,10 +504,20 @@
                     </div>
                 </div>
                 
-                <!-- KANBAN GIRD: Áp dụng Snap-x cho Mobile vuốt mượt mà -->
-                <div class="flex-1 overflow-x-auto overflow-y-hidden custom-scrollbar pb-2">
-                    <div class="flex space-x-3 md:space-x-4 min-w-max h-full items-start snap-x snap-mandatory pr-4 md:pr-0" id="weeklyScheduleGrid">
-                        <!-- Javascript generates Columns here -->
+                <!-- VIEW CONTAINERS -->
+                <div class="flex-1 overflow-hidden relative flex flex-col">
+                    <!-- KANBAN GIRD: Áp dụng Snap-x cho Mobile vuốt mượt mà -->
+                    <div id="kanbanViewContainer" class="flex-1 overflow-x-auto overflow-y-hidden custom-scrollbar pb-2">
+                        <div class="flex space-x-3 md:space-x-4 min-w-max h-full items-start snap-x snap-mandatory pr-4 md:pr-0" id="weeklyScheduleGrid">
+                            <!-- Javascript generates Columns here -->
+                        </div>
+                    </div>
+                    
+                    <!-- TIMELINE VIEW: Nhỏ gọn, bao quát cả tuần trên 1 luồng dọc -->
+                    <div id="timelineViewContainer" class="hidden flex-1 overflow-y-auto custom-scrollbar pb-4 bg-white rounded-xl border border-gray-100 p-3 md:p-4">
+                        <div id="timelineScheduleList" class="flex flex-col gap-5 relative">
+                            <!-- Javascript generates Timeline here -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -671,15 +685,23 @@
     </div>
 
     <script>
-        // --- TẤT CẢ JAVASCRIPT ĐƯỢC GIỮ NGUYÊN HOÀN TOÀN TỪ BẢN GỐC ---
-        // (Chỉ sửa CSS Transform trong Modal Function cho Mobile swipe-up effect)
+        // --- GLOBAL STATE ---
+        window.teachers = [];
+        window.students = [];
+        window.notes = [];
+        window.schedules = [];
+        window.reminders = [];
         
-        window.teachers = []; window.students = []; window.notes = []; window.schedules = []; window.reminders = [];
-        let currentTab = 'list'; let activeNoteTag = null; let importTempData = [];
+        let currentTab = 'reminder'; 
+        let activeNoteTag = null;
+        let importTempData = [];
+        let schViewMode = 'kanban';
         
+        // --- UTILS & CORE ---
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`${tabId}-tab`).classList.remove('hidden');
+            const target = document.getElementById(`${tabId}-tab`);
+            if(target) target.classList.remove('hidden');
             
             const menus = ['list', 'form', 'student-list', 'student-import', 'note', 'schedule', 'reminder'];
             menus.forEach(m => {
@@ -695,7 +717,8 @@
                 activeBtn.classList.add('bg-indigo-700', 'text-white', 'shadow-sm');
             }
             
-            currentTab = tabId; renderCurrentTab();
+            currentTab = tabId;
+            renderCurrentTab();
         }
 
         function renderCurrentTab() {
@@ -711,85 +734,143 @@
 
         function showToast(msg, type = 'success') {
             const container = document.getElementById('toastContainer');
+            if(!container) return;
             const toast = document.createElement('div');
-            const style = type === 'success' ? 'bg-green-50 border-green-500 text-green-800' : (type === 'error' ? 'bg-red-50 border-red-500 text-red-800' : 'bg-amber-50 border-amber-500 text-amber-800');
+            const style = type === 'success' ? 'bg-green-50 border-green-500 text-green-800' 
+                        : (type === 'error' ? 'bg-red-50 border-red-500 text-red-800' 
+                        : 'bg-amber-50 border-amber-500 text-amber-800');
             const icon = type === 'success' ? 'fa-check-circle text-green-500' : (type === 'error' ? 'fa-exclamation-circle text-red-500' : 'fa-info-circle text-amber-500');
+            
             toast.className = `p-3 md:p-4 border-l-4 rounded-lg shadow-lg toast-enter ${style} flex items-center text-sm md:text-base font-medium`;
             toast.innerHTML = `<i class="fas ${icon} text-lg md:text-xl mr-2 md:mr-3"></i> <span>${msg}</span>`;
             container.appendChild(toast);
-            setTimeout(() => { toast.classList.replace('toast-enter', 'toast-exit'); setTimeout(() => toast.remove(), 300); }, 3500);
+            setTimeout(() => { 
+                toast.classList.replace('toast-enter', 'toast-exit'); 
+                setTimeout(() => toast.remove(), 300); 
+            }, 3500);
         }
 
         function escapeHTML(str) { return str ? String(str).replace(/[&<>'"]/g, tag => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[tag])) : ''; }
         function safeVal(str) { return str ? escapeHTML(String(str)) : '<i class="text-gray-400 font-normal">Trống</i>'; }
+        function removeAccents(str) { return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D'); }
 
-        // Modal Logic updated for mobile slide-up translation
+        // --- MODALS (Mobile Swipe-up support) ---
         function closeModal(id) { 
             const el = document.getElementById(id); if(!el) return;
             el.classList.add('opacity-0', 'pointer-events-none'); 
             const container = el.querySelector('.modal-container');
-            container.classList.remove('md:scale-100', 'translate-y-0');
-            container.classList.add('md:scale-95', 'translate-y-full', 'md:translate-y-0');
+            if(container) {
+                container.classList.remove('md:scale-100', 'translate-y-0');
+                container.classList.add('md:scale-95', 'translate-y-full', 'md:translate-y-0');
+            }
             document.body.classList.remove('modal-active'); 
         }
         function showModal(id) { 
             const el = document.getElementById(id); if(!el) return;
             el.classList.remove('opacity-0', 'pointer-events-none'); 
             const container = el.querySelector('.modal-container');
-            container.classList.remove('md:scale-95', 'translate-y-full');
-            container.classList.add('md:scale-100', 'translate-y-0');
+            if(container) {
+                container.classList.remove('md:scale-95', 'translate-y-full');
+                container.classList.add('md:scale-100', 'translate-y-0');
+            }
             document.body.classList.add('modal-active'); 
         }
 
         let confirmActionCallback = null;
         function openConfirmModal(title, message, callback) {
-            document.getElementById('confirmTitle').innerText = title; document.getElementById('confirmMessage').innerText = message;
-            confirmActionCallback = callback; showModal('confirmModal');
+            document.getElementById('confirmTitle').innerText = title;
+            document.getElementById('confirmMessage').innerText = message;
+            confirmActionCallback = callback;
+            showModal('confirmModal');
         }
-        function closeConfirmModal() { closeModal('confirmModal'); confirmActionCallback = null; }
-        document.getElementById('confirmBtn').addEventListener('click', () => { if(confirmActionCallback) confirmActionCallback(); closeConfirmModal(); });
+        function closeConfirmModal() {
+            closeModal('confirmModal');
+            confirmActionCallback = null;
+        }
+        const confirmBtnEl = document.getElementById('confirmBtn');
+        if(confirmBtnEl) {
+            confirmBtnEl.addEventListener('click', () => {
+                if(confirmActionCallback) confirmActionCallback();
+                closeConfirmModal();
+            });
+        }
+        function confirmDeleteData(col, id) {
+            openConfirmModal("Xóa dữ liệu?", "Dữ liệu này sẽ bị xóa vĩnh viễn.", () => {
+                window.deleteDataFn(col, id);
+                showToast('Đã xóa dữ liệu thành công.', 'success');
+            });
+        }
 
+        // --- CLOCK ---
         function startClock() {
-            setInterval(() => {
+            function updateDate() {
                 const now = new Date();
-                document.getElementById('clockTime').innerText = now.toLocaleTimeString('vi-VN', {hour12: false});
-                document.getElementById('clockSolar').innerText = now.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
-                if (typeof Lunar !== 'undefined') {
+                const solarEl = document.getElementById('clockSolar');
+                const lunarEl = document.getElementById('clockLunar');
+                
+                if (solarEl) solarEl.innerText = now.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
+                
+                if (typeof Lunar !== 'undefined' && lunarEl) {
                     const lunar = Lunar.fromDate(now);
-                    document.getElementById('clockLunar').innerText = `ÂL: ${lunar.getDay()}/${lunar.getMonth()} ${lunar.getYear()}`;
+                    const lDay = lunar.getDay();
+                    let indicator = '';
+                    if (lDay === 1) indicator = ' 🌑 (Mùng 1)';
+                    else if (lDay === 15) indicator = ' 🌕 (Rằm)';
+                    
+                    lunarEl.innerHTML = `Âm lịch: ${lDay}/${lunar.getMonth()} ${lunar.getYear()} <span class="text-yellow-300 font-bold ml-1 tracking-wide">${indicator}</span>`;
                 }
-            }, 1000);
+            }
+            updateDate();
+            setInterval(updateDate, 60000); 
         }
 
+        // --- STORAGE & SYNC ---
         function saveToStorage() {
-            localStorage.setItem('SMART_TEACHERS', JSON.stringify(teachers)); localStorage.setItem('SMART_STUDENTS', JSON.stringify(students));
-            localStorage.setItem('SMART_NOTES', JSON.stringify(notes)); localStorage.setItem('SMART_SCHEDULES', JSON.stringify(schedules)); localStorage.setItem('SMART_REMINDERS', JSON.stringify(reminders));
+            localStorage.setItem('SMART_TEACHERS', JSON.stringify(teachers));
+            localStorage.setItem('SMART_STUDENTS', JSON.stringify(students));
+            localStorage.setItem('SMART_NOTES', JSON.stringify(notes));
+            localStorage.setItem('SMART_SCHEDULES', JSON.stringify(schedules));
+            localStorage.setItem('SMART_REMINDERS', JSON.stringify(reminders));
         }
         function loadFromStorage() {
-            teachers = JSON.parse(localStorage.getItem('SMART_TEACHERS') || '[]'); students = JSON.parse(localStorage.getItem('SMART_STUDENTS') || '[]');
-            notes = JSON.parse(localStorage.getItem('SMART_NOTES') || '[]'); schedules = JSON.parse(localStorage.getItem('SMART_SCHEDULES') || '[]'); reminders = JSON.parse(localStorage.getItem('SMART_REMINDERS') || '[]');
+            teachers = JSON.parse(localStorage.getItem('SMART_TEACHERS') || '[]');
+            students = JSON.parse(localStorage.getItem('SMART_STUDENTS') || '[]');
+            notes = JSON.parse(localStorage.getItem('SMART_NOTES') || '[]');
+            schedules = JSON.parse(localStorage.getItem('SMART_SCHEDULES') || '[]');
+            reminders = JSON.parse(localStorage.getItem('SMART_REMINDERS') || '[]');
         }
 
         window.saveDataFn = async (colName, data) => {
-            const arr = window[colName]; const idx = arr.findIndex(item => item.id === data.id);
-            if (idx >= 0) arr[idx] = data; else arr.unshift(data); saveToStorage(); renderCurrentTab();
+            const arr = window[colName];
+            const idx = arr.findIndex(item => item.id === data.id);
+            if (idx >= 0) arr[idx] = data; else arr.unshift(data);
+            saveToStorage();
+            renderCurrentTab();
         };
-        window.deleteDataFn = async (colName, id) => { window[colName] = window[colName].filter(item => item.id !== id); saveToStorage(); renderCurrentTab(); };
+        window.deleteDataFn = async (colName, id) => {
+            window[colName] = window[colName].filter(item => item.id !== id);
+            saveToStorage();
+            renderCurrentTab();
+        };
 
-        // --- Teacher Logic ---
+        // --- TEACHER ---
         function addCustomField(key = '', val = '') {
             document.getElementById('customFieldsContainer').innerHTML += `
                 <div class="flex space-x-2 custom-field-row mb-2">
-                    <input type="text" placeholder="Tên (VD: Tôn giáo)" value="${escapeHTML(key)}" class="custom-key w-1/3 px-2 py-2 border border-gray-300 rounded-lg text-sm bg-white">
-                    <input type="text" placeholder="Nội dung" value="${escapeHTML(val)}" class="custom-val w-full px-2 py-2 border border-gray-300 rounded-lg text-sm bg-white">
-                    <button type="button" onclick="this.parentElement.remove()" class="text-red-500 px-2 active:bg-red-50 rounded"><i class="fas fa-trash"></i></button>
+                    <input type="text" placeholder="Tên thông tin (VD: Tôn giáo)" value="${escapeHTML(key)}" class="custom-key w-1/3 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 bg-white text-sm">
+                    <input type="text" placeholder="Nội dung" value="${escapeHTML(val)}" class="custom-val w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 bg-white text-sm">
+                    <button type="button" onclick="this.parentElement.remove()" class="text-red-500 px-3 hover:bg-red-50 rounded-lg transition"><i class="fas fa-trash"></i></button>
                 </div>`;
         }
+        
         function resetForm() {
-            document.getElementById('profileForm').reset(); document.getElementById('profileId').value = '';
-            document.getElementById('customFieldsContainer').innerHTML = ''; addCustomField();
+            document.getElementById('profileForm').reset(); 
+            document.getElementById('profileId').value = '';
+            document.getElementById('customFieldsContainer').innerHTML = ''; 
+            addCustomField();
             document.getElementById('formTitle').innerText = 'Tạo Sơ Yếu Lý Lịch';
-            document.getElementById('formModeBadge').innerText = 'Chế độ: Thêm mới'; document.getElementById('formModeBadge').className = 'w-fit text-xs font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full uppercase tracking-wide';
+            document.getElementById('formModeBadge').innerText = 'Chế độ: Thêm mới';
+            document.getElementById('formModeBadge').className = 'w-fit text-xs font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full uppercase tracking-wide';
         }
 
         function saveProfile(e) {
@@ -800,178 +881,359 @@
                 const k = row.querySelector('.custom-key').value.trim(), v = row.querySelector('.custom-val').value.trim();
                 if(k && v) cf.push({key: k, val: v});
             });
+            
             let nameStr = document.getElementById('fullName').value.trim().toLowerCase();
             let name = nameStr.split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.substring(1)).join(' ');
 
             const data = {
-                id, fullName: name, alias: document.getElementById('alias').value, dob: document.getElementById('dob').value, gender: document.getElementById('gender').value,
+                id: id,
+                fullName: name, alias: document.getElementById('alias').value,
+                dob: document.getElementById('dob').value, gender: document.getElementById('gender').value,
                 cccd: document.getElementById('cccd').value, cccdDate: document.getElementById('cccdDate').value, cccdPlace: document.getElementById('cccdPlace').value,
                 hometown: document.getElementById('hometown').value, permanentAddress: document.getElementById('permanentAddress').value, currentAddress: document.getElementById('currentAddress').value,
-                phone: document.getElementById('phone').value, familyDetails: document.getElementById('familyDetails').value, generalEd: document.getElementById('generalEd').value, degree: document.getElementById('degree').value, major: document.getElementById('major').value, certificates: document.getElementById('certificates').value,
-                position: document.getElementById('position').value, startDate: document.getElementById('startDate').value, salaryCode: document.getElementById('salaryCode').value, salaryLevel: document.getElementById('salaryLevel').value, salaryCoef: document.getElementById('salaryCoef').value, customFields: cf
+                phone: document.getElementById('phone').value, familyDetails: document.getElementById('familyDetails').value,
+                generalEd: document.getElementById('generalEd').value, degree: document.getElementById('degree').value, major: document.getElementById('major').value, certificates: document.getElementById('certificates').value,
+                position: document.getElementById('position').value, startDate: document.getElementById('startDate').value,
+                salaryCode: document.getElementById('salaryCode').value, salaryLevel: document.getElementById('salaryLevel').value, salaryCoef: document.getElementById('salaryCoef').value,
+                customFields: cf
             };
-            window.saveDataFn('teachers', data); showToast('Lưu hồ sơ thành công!', 'success'); resetForm(); switchTab('list');
+            
+            window.saveDataFn('teachers', data);
+            showToast('Lưu hồ sơ Giáo viên thành công!', 'success');
+            resetForm(); switchTab('list');
         }
 
         function editProfile(id) {
             const p = teachers.find(x => x.id === id); if(!p) return;
             document.getElementById('profileId').value = p.id;
+            
             const fields = ['fullName','alias','dob','gender','cccd','cccdDate','cccdPlace','hometown','permanentAddress','currentAddress','phone','familyDetails','generalEd','degree','major','certificates','position','startDate','salaryCode','salaryLevel','salaryCoef'];
             fields.forEach(key => { if(document.getElementById(key)) document.getElementById(key).value = p[key] || ''; });
+
             document.getElementById('customFieldsContainer').innerHTML = '';
-            if(p.customFields && p.customFields.length > 0) p.customFields.forEach(cf => addCustomField(cf.key, cf.val)); else addCustomField();
-            document.getElementById('formTitle').innerText = `Sửa: ${p.fullName}`;
-            document.getElementById('formModeBadge').innerText = 'Chế độ: Cập nhật'; document.getElementById('formModeBadge').className = 'w-fit text-xs font-bold text-amber-700 bg-amber-100 px-3 py-1 rounded-full uppercase tracking-wide';
-            closeModal('detailModal'); switchTab('form');
+            if(p.customFields && p.customFields.length > 0) p.customFields.forEach(cf => addCustomField(cf.key, cf.val));
+            else addCustomField();
+
+            document.getElementById('formTitle').innerText = `Sửa Hồ Sơ: ${p.fullName}`;
+            document.getElementById('formModeBadge').innerText = 'Chế độ: Cập nhật';
+            document.getElementById('formModeBadge').className = 'w-fit text-xs font-bold text-amber-700 bg-amber-100 px-3 py-1 rounded-full uppercase tracking-wide';
+            
+            closeModal('detailModal');
+            switchTab('form');
         }
 
         function renderTeacherList() {
-            const tbody = document.getElementById('profilesTable'); const emptyState = document.getElementById('emptyTeacherState');
-            const search = document.getElementById('searchTeacherInput').value.toLowerCase();
-            const filtered = teachers.filter(t => t.fullName.toLowerCase().includes(search) || t.cccd.includes(search) || (t.position && t.position.toLowerCase().includes(search)));
+            const tbody = document.getElementById('profilesTable');
+            const emptyState = document.getElementById('emptyTeacherState');
+            const searchEl = document.getElementById('searchTeacherInput');
+            const search = searchEl ? searchEl.value.toLowerCase() : '';
             
-            if(filtered.length === 0) { tbody.parentElement.classList.add('hidden'); emptyState.classList.remove('hidden'); } 
-            else {
-                tbody.parentElement.classList.remove('hidden'); emptyState.classList.add('hidden');
-                tbody.innerHTML = filtered.map(t => `
-                <tr class="active:bg-indigo-50/50 md:hover:bg-indigo-50/50 transition-colors">
-                    <td class="px-4 py-3">
-                        <div class="flex items-center">
-                            <div class="h-9 w-9 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center shrink-0 border border-indigo-200 text-sm">${t.fullName.charAt(0)}</div>
-                            <div class="ml-2.5">
-                                <div class="font-bold text-gray-800 text-sm line-clamp-1">${escapeHTML(t.fullName)}</div>
-                                <div class="text-[10px] text-gray-500 mt-0.5">${escapeHTML(t.cccd)}</div>
+            const filtered = teachers.filter(t => t.fullName.toLowerCase().includes(search) || (t.cccd && t.cccd.includes(search)) || (t.position && t.position.toLowerCase().includes(search)));
+            
+            if(filtered.length === 0) {
+                if(tbody) tbody.parentElement.classList.add('hidden');
+                if(emptyState) emptyState.classList.remove('hidden');
+            } else {
+                if(tbody) {
+                    tbody.parentElement.classList.remove('hidden');
+                    tbody.innerHTML = filtered.map(t => `
+                    <tr class="hover:bg-indigo-50/50 transition-colors">
+                        <td class="px-4 py-3">
+                            <div class="flex items-center">
+                                <div class="h-8 w-8 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center shadow-sm shrink-0 uppercase border border-indigo-200 text-xs">${t.fullName.charAt(0)}</div>
+                                <div class="ml-2">
+                                    <div class="font-bold text-gray-800 text-sm">${escapeHTML(t.fullName)}</div>
+                                    <div class="text-[10px] font-medium text-gray-500 mt-0.5"><i class="fas fa-id-card text-gray-400 mr-1"></i>${escapeHTML(t.cccd)}</div>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td class="px-4 py-3 whitespace-nowrap text-xs text-gray-700">
-                        ${t.dob ? t.dob.split('-').reverse().join('/') : ''}
-                        <span class="px-1.5 py-0.5 ml-1 inline-block text-[9px] font-bold rounded ${t.gender === 'Nam' ? 'bg-sky-100 text-sky-700' : 'bg-pink-100 text-pink-700'}">${t.gender}</span>
-                    </td>
-                    <td class="px-4 py-3 text-xs text-gray-700 hidden sm:table-cell truncate max-w-[120px]">${escapeHTML(t.position)}</td>
-                    <td class="px-4 py-3 text-right text-sm">
-                        <button onclick="viewTeacher('${t.id}')" class="text-indigo-600 p-2"><i class="fas fa-eye"></i></button>
-                        <button onclick="editProfile('${t.id}')" class="text-amber-500 p-2"><i class="fas fa-edit"></i></button>
-                        <button onclick="confirmDeleteData('teachers', '${t.id}')" class="text-red-500 p-2"><i class="fas fa-trash-alt"></i></button>
-                    </td>
-                </tr>`).join('');
+                        </td>
+                        <td class="px-4 py-3 whitespace-nowrap text-xs font-medium text-gray-700">
+                            ${t.dob ? t.dob.split('-').reverse().join('/') : ''}
+                            <span class="px-1.5 py-0.5 ml-1 inline-flex text-[9px] leading-4 font-bold rounded-full ${t.gender === 'Nam' ? 'bg-sky-100 text-sky-700' : 'bg-pink-100 text-pink-700'}">${t.gender}</span>
+                        </td>
+                        <td class="px-4 py-3 text-xs text-gray-700 font-medium hidden sm:table-cell">${escapeHTML(t.position)}</td>
+                        <td class="px-4 py-3 whitespace-nowrap text-right text-xs font-medium sticky right-0 bg-white shadow-[-5px_0_10px_-5px_rgba(0,0,0,0.05)]">
+                            <button onclick="viewTeacher('${t.id}')" class="text-indigo-600 hover:text-indigo-900 mr-2 p-1 bg-white rounded shadow-sm border border-gray-100" title="Xem Chi Tiết"><i class="fas fa-eye"></i></button>
+                            <button onclick="editProfile('${t.id}')" class="text-amber-500 hover:text-amber-600 mr-2 p-1 bg-white rounded shadow-sm border border-gray-100" title="Sửa"><i class="fas fa-edit"></i></button>
+                            <button onclick="confirmDeleteData('teachers', '${t.id}')" class="text-red-400 hover:text-red-600 p-1 bg-white rounded shadow-sm border border-gray-100" title="Xóa"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>`).join('');
+                }
+                if(emptyState) emptyState.classList.add('hidden');
             }
         }
 
         function viewTeacher(id) {
             const p = teachers.find(x => x.id === id); if(!p) return;
+            
             let ageStr = 'N/A', retireBadge = '';
             if(p.dob) {
-                const birthY = parseInt(p.dob.split('-')[0]); const currentY = new Date().getFullYear(); const age = currentY - birthY; ageStr = `${age} tuổi`;
-                const retireY = birthY + (p.gender === 'Nữ' ? 60 : 62); const remain = retireY - currentY;
-                if (remain <= 0) retireBadge = `<span class="bg-red-100 text-red-700 text-[10px] px-2 py-0.5 rounded font-bold border border-red-200">Đã hưu</span>`;
-                else if (remain <= 3) retireBadge = `<span class="bg-orange-100 text-orange-700 text-[10px] px-2 py-0.5 rounded font-bold border border-orange-200">Sắp hưu (${remain} năm)</span>`;
-                else retireBadge = `<span class="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-0.5 rounded font-bold border border-emerald-200">Hưu: ${retireY}</span>`;
-            }
-            let customFieldsHTML = '';
-            if(p.customFields && p.customFields.length > 0) {
-                customFieldsHTML = p.customFields.map(cf => `<div class="sm:col-span-1 border-b border-dashed border-gray-200 pb-2"><dt class="text-[10px] font-bold text-gray-400 uppercase tracking-wide">${escapeHTML(cf.key)}</dt><dd class="mt-1 text-sm text-gray-900 font-medium">${safeVal(cf.val)}</dd></div>`).join('');
-                customFieldsHTML = `<h4 class="text-xs font-bold text-gray-800 mt-5 mb-2 col-span-full border-b-2 border-gray-100 pb-1 uppercase">IV. THÔNG TIN BỔ SUNG</h4>` + customFieldsHTML;
+                const birthY = parseInt(p.dob.split('-')[0]); 
+                const currentY = new Date().getFullYear();
+                const age = currentY - birthY;
+                ageStr = `${age} tuổi`;
+                
+                const retireAge = (p.gender === 'Nữ' ? 60 : 62);
+                const retireY = birthY + retireAge;
+                const remain = retireY - currentY;
+                
+                if (remain <= 0) retireBadge = `<span class="bg-red-100 text-red-700 text-[10px] px-2 py-1 rounded ml-2 font-bold border border-red-200 print:border-none print:text-black">Đã đến tuổi hưu</span>`;
+                else if (remain <= 3) retireBadge = `<span class="bg-orange-100 text-orange-700 text-[10px] px-2 py-1 rounded ml-2 font-bold border border-orange-200 print:border-none print:text-black">Sắp hưu (${remain} năm)</span>`;
+                else retireBadge = `<span class="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-1 rounded ml-2 font-bold border border-emerald-200 print:border-none print:text-black">Dự kiến hưu: ${retireY}</span>`;
             }
 
-            document.getElementById('modalMainTitle').innerText = "SƠ YẾU LÝ LỊCH"; document.getElementById('printHeader').classList.remove('hidden');
+            let customFieldsHTML = '';
+            if(p.customFields && p.customFields.length > 0) {
+                customFieldsHTML = p.customFields.map(cf => `
+                    <div class="sm:col-span-1 border-b border-dashed border-gray-200 pb-2">
+                        <dt class="text-xs font-bold text-gray-400 uppercase tracking-wide">${escapeHTML(cf.key)}</dt>
+                        <dd class="mt-1 text-sm text-gray-900 font-medium">${safeVal(cf.val)}</dd>
+                    </div>
+                `).join('');
+                customFieldsHTML = `<h4 class="text-sm font-bold text-gray-800 mt-6 mb-3 col-span-full border-b-2 border-gray-100 pb-1 uppercase print:border-black">IV. THÔNG TIN BỔ SUNG</h4>` + customFieldsHTML;
+            }
+
+            document.getElementById('modalMainTitle').innerText = "SƠ YẾU LÝ LỊCH VIÊN CHỨC";
+            document.getElementById('printHeader').classList.remove('hidden'); 
+
             document.getElementById('modalBody').innerHTML = `
-                <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-4">
-                    <h4 class="text-xs font-bold text-indigo-700 mb-0 col-span-full border-b-2 border-indigo-100 pb-1 uppercase">I. THÔNG TIN CÁ NHÂN</h4>
-                    <div class="sm:col-span-1 lg:col-span-2 border-b border-dashed border-gray-200 pb-2"><dt class="text-[10px] font-bold text-gray-400 uppercase">Họ và Tên</dt><dd class="mt-0.5 text-base text-gray-900 font-black uppercase">${escapeHTML(p.fullName)}</dd></div>
-                    <div class="sm:col-span-1 border-b border-dashed border-gray-200 pb-2"><dt class="text-[10px] font-bold text-gray-400 uppercase">Ngày sinh</dt><dd class="mt-0.5 text-sm text-gray-900 font-bold flex flex-wrap gap-1 items-center">${p.dob ? p.dob.split('-').reverse().join('/') : ''} (${ageStr}) ${retireBadge}</dd></div>
-                    <div class="sm:col-span-1 border-b border-dashed border-gray-200 pb-2"><dt class="text-[10px] font-bold text-gray-400 uppercase">Số CCCD</dt><dd class="mt-0.5 text-sm text-gray-900 font-bold">${escapeHTML(p.cccd)}</dd></div>
-                    <div class="sm:col-span-3 border-b border-dashed border-gray-200 pb-2"><dt class="text-[10px] font-bold text-gray-400 uppercase">Chỗ ở hiện nay</dt><dd class="mt-0.5 text-sm text-gray-900 font-medium">${safeVal(p.currentAddress)}</dd></div>
-                    <h4 class="text-xs font-bold text-indigo-700 mt-3 mb-0 col-span-full border-b-2 border-indigo-100 pb-1 uppercase">II. TRÌNH ĐỘ & CÔNG TÁC</h4>
-                    <div class="sm:col-span-1 border-b border-dashed border-gray-200 pb-2"><dt class="text-[10px] font-bold text-gray-400 uppercase">CM cao nhất</dt><dd class="mt-0.5 text-sm text-gray-900 font-bold">${escapeHTML(p.degree)}</dd></div>
-                    <div class="sm:col-span-2 border-b border-dashed border-gray-200 pb-2"><dt class="text-[10px] font-bold text-gray-400 uppercase">Chức vụ hiện tại</dt><dd class="mt-0.5 text-sm text-indigo-700 font-bold">${escapeHTML(p.position)}</dd></div>
-                    <div class="sm:col-span-3 border-b border-dashed border-gray-200 pb-2 bg-gray-50 p-2 rounded"><dt class="text-[10px] font-bold text-gray-400 uppercase mb-1">Lương</dt><dd class="text-xs text-gray-900 flex space-x-4"><span>Mã: <b>${safeVal(p.salaryCode)}</b></span><span>Bậc: <b>${safeVal(p.salaryLevel)}</b></span><span>HS: <b>${safeVal(p.salaryCoef)}</b></span></dd></div>
+                <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-5">
+                    <h4 class="text-sm font-bold text-indigo-700 mb-1 col-span-full border-b-2 border-indigo-100 pb-1 uppercase print:border-black print:text-black">I. THÔNG TIN CÁ NHÂN</h4>
+                    
+                    <div class="sm:col-span-1 lg:col-span-2 border-b border-dashed border-gray-200 pb-2">
+                        <dt class="text-xs font-bold text-gray-400 uppercase tracking-wide">Họ và Tên (Khai sinh)</dt>
+                        <dd class="mt-1 text-lg text-gray-900 font-black uppercase">${escapeHTML(p.fullName)}</dd>
+                    </div>
+                    <div class="sm:col-span-1 border-b border-dashed border-gray-200 pb-2 flex flex-col justify-end">
+                        <dt class="text-xs font-bold text-gray-400 uppercase tracking-wide">Bí danh / Tên khác</dt>
+                        <dd class="mt-1 text-sm text-gray-900 font-medium">${safeVal(p.alias)}</dd>
+                    </div>
+                    
+                    <div class="sm:col-span-1 border-b border-dashed border-gray-200 pb-2">
+                        <dt class="text-xs font-bold text-gray-400 uppercase tracking-wide">Ngày sinh / Tuổi</dt>
+                        <dd class="mt-1 text-sm text-gray-900 font-bold flex items-center flex-wrap gap-1">
+                            ${p.dob ? p.dob.split('-').reverse().join('/') : ''} (${ageStr}) ${retireBadge}
+                        </dd>
+                    </div>
+                    <div class="sm:col-span-1 border-b border-dashed border-gray-200 pb-2">
+                        <dt class="text-xs font-bold text-gray-400 uppercase tracking-wide">Số CCCD</dt>
+                        <dd class="mt-1 text-sm text-gray-900 font-bold">${escapeHTML(p.cccd)}</dd>
+                    </div>
+                    <div class="sm:col-span-1 border-b border-dashed border-gray-200 pb-2">
+                        <dt class="text-xs font-bold text-gray-400 uppercase tracking-wide">Nơi cấp / Ngày cấp</dt>
+                        <dd class="mt-1 text-sm text-gray-900 font-medium">${safeVal(p.cccdPlace)} - ${p.cccdDate ? p.cccdDate.split('-').reverse().join('/') : ''}</dd>
+                    </div>
+
+                    <div class="sm:col-span-3 border-b border-dashed border-gray-200 pb-2">
+                        <dt class="text-xs font-bold text-gray-400 uppercase tracking-wide">Nơi ở hiện nay</dt>
+                        <dd class="mt-1 text-sm text-gray-900 font-medium">${safeVal(p.currentAddress)}</dd>
+                    </div>
+                    
+                    <h4 class="text-sm font-bold text-indigo-700 mt-4 mb-1 col-span-full border-b-2 border-indigo-100 pb-1 uppercase print:border-black print:text-black">II. TRÌNH ĐỘ CHUYÊN MÔN & CÔNG TÁC</h4>
+
+                    <div class="sm:col-span-1 border-b border-dashed border-gray-200 pb-2">
+                        <dt class="text-xs font-bold text-gray-400 uppercase tracking-wide">Trình độ CM cao nhất</dt>
+                        <dd class="mt-1 text-sm text-gray-900 font-bold">${escapeHTML(p.degree)}</dd>
+                    </div>
+                    <div class="sm:col-span-2 border-b border-dashed border-gray-200 pb-2">
+                        <dt class="text-xs font-bold text-gray-400 uppercase tracking-wide">Chức vụ / Chức danh hiện tại</dt>
+                        <dd class="mt-1 text-sm text-gray-900 font-bold text-indigo-700 print:text-black">${escapeHTML(p.position)}</dd>
+                    </div>
+                    
+                    <div class="sm:col-span-3 border-b border-dashed border-gray-200 pb-2 bg-gray-50/50 p-2 rounded">
+                        <dt class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-1">Diễn biến lương hiện hưởng</dt>
+                        <dd class="text-sm text-gray-900 flex space-x-6">
+                            <span>Mã ngạch: <b class="font-bold">${safeVal(p.salaryCode)}</b></span>
+                            <span>Bậc: <b class="font-bold">${safeVal(p.salaryLevel)}</b></span>
+                            <span>Hệ số: <b class="font-bold">${safeVal(p.salaryCoef)}</b></span>
+                        </dd>
+                    </div>
+
                     ${customFieldsHTML}
                 </dl>
             `;
-            const editBtn = document.getElementById('modalEditBtn'); editBtn.classList.remove('hidden'); editBtn.onclick = () => editProfile(p.id);
+            
+            const editBtn = document.getElementById('modalEditBtn');
+            if(editBtn) {
+                editBtn.classList.remove('hidden');
+                editBtn.onclick = () => editProfile(p.id);
+            }
             showModal('detailModal');
         }
 
-        // --- Student Excel ---
+        // --- STUDENT ---
         function downloadExcelTemplate() {
-            const ws = XLSX.utils.aoa_to_sheet([["STT", "Mã HS", "Họ Tên", "Ngày Sinh", "Giới Tính", "SĐT", "Điểm Toán"], [1, "HS_001", "Nguyễn Văn A", "15/05/2008", "Nam", "0901234567", 8.5]]);
-            const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "DanhSachHocSinh"); XLSX.writeFile(wb, "Mau_Hoc_Sinh.xlsx");
+            const ws = XLSX.utils.aoa_to_sheet([
+                ["STT", "Mã HS", "Họ Tên", "Ngày Sinh", "Giới Tính", "SĐT Phụ Huynh", "Email/Gmail", "Điểm Toán", "Điểm Văn", "Ghi Chú"],
+                [1, "HS_001", "Nguyễn Văn A", "15/05/2008", "Nam", "0901234567", "nguyenvana@gmail.com", 8.5, 9.0, "Lớp trưởng"],
+                [2, "HS_002", "Trần Thị B", "22/10/2008", "Nữ", "0987654321", "tranthib@gmail.com", 7.0, 8.5, ""]
+            ]);
+            ws['!cols'] = [{wch:5}, {wch:12}, {wch:25}, {wch:12}, {wch:10}, {wch:15}, {wch:25}, {wch:10}, {wch:10}, {wch:20}];
+            const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "DanhSachHocSinh");
+            XLSX.writeFile(wb, "Mau_Nhap_Hoc_Sinh.xlsx");
         }
+
         const dropZone = document.getElementById('dropZone');
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eName => dropZone.addEventListener(eName, e => { e.preventDefault(); e.stopPropagation(); }, false));
-        ['dragenter', 'dragover'].forEach(eName => dropZone.addEventListener(eName, () => dropZone.classList.add('dragover'), false));
-        ['dragleave', 'drop'].forEach(eName => dropZone.addEventListener(eName, () => dropZone.classList.remove('dragover'), false));
-        dropZone.addEventListener('drop', (e) => { const files = e.dataTransfer.files; if(files.length > 0) { document.getElementById('excelFileInput').files = files; handleExcelUpload({target: {files: files}}); }});
+        if(dropZone) {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eName => dropZone.addEventListener(eName, e => { e.preventDefault(); e.stopPropagation(); }, false));
+            ['dragenter', 'dragover'].forEach(eName => dropZone.addEventListener(eName, () => dropZone.classList.add('dragover'), false));
+            ['dragleave', 'drop'].forEach(eName => dropZone.addEventListener(eName, () => dropZone.classList.remove('dragover'), false));
+            dropZone.addEventListener('drop', (e) => {
+                const files = e.dataTransfer.files;
+                if(files.length > 0) {
+                    document.getElementById('excelFileInput').files = files;
+                    handleExcelUpload({target: {files: files}});
+                }
+            });
+        }
 
         function handleExcelUpload(e) {
             const file = e.target.files[0]; if(!file) return;
-            if(!document.getElementById('importYear').value.trim()) { showToast('Nhập "Năm học" trước!', 'error'); e.target.value = ''; return; }
-            document.getElementById('fileName').innerText = file.name; document.getElementById('fileInfo').classList.remove('hidden');
+            const yearInput = document.getElementById('importYear').value.trim();
+            if(!yearInput) {
+                showToast('Vui lòng nhập "Năm học" trước khi chọn file!', 'error');
+                e.target.value = ''; return;
+            }
+
+            document.getElementById('fileName').innerText = file.name;
+            document.getElementById('fileInfo').classList.remove('hidden');
+
             const reader = new FileReader();
             reader.onload = function(evt) {
                 try {
                     const wb = XLSX.read(evt.target.result, {type: 'binary'});
                     const rawData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" });
-                    if(rawData.length > 0) { importTempData = rawData; renderExcelPreview(rawData); } else showToast('File trống!', 'error');
-                } catch(error) { showToast('Định dạng không hợp lệ!', 'error'); }
+                    if(rawData.length > 0) {
+                        importTempData = rawData;
+                        renderExcelPreview(rawData);
+                    } else showToast('File Excel trống!', 'error');
+                } catch(error) { showToast('Định dạng file không hợp lệ!', 'error'); }
             };
             reader.readAsBinaryString(file);
         }
 
         function renderExcelPreview(data) {
-            const container = document.getElementById('previewContainer'); document.getElementById('previewCount').innerText = data.length;
-            const thead = document.getElementById('previewHeader'); const tbody = document.getElementById('previewBody');
-            container.classList.remove('hidden'); thead.innerHTML = ''; tbody.innerHTML = '';
-            const headers = Object.keys(data[0]); let trHead = document.createElement('tr');
-            headers.forEach(h => trHead.innerHTML += `<th class="px-3 py-2 text-left font-bold text-gray-600 border-b border-gray-200 whitespace-nowrap">${escapeHTML(h)}</th>`);
+            const container = document.getElementById('previewContainer');
+            document.getElementById('previewCount').innerText = data.length;
+            const thead = document.getElementById('previewHeader');
+            const tbody = document.getElementById('previewBody');
+            
+            container.classList.remove('hidden');
+            thead.innerHTML = ''; tbody.innerHTML = '';
+
+            const headers = Object.keys(data[0]);
+            let trHead = document.createElement('tr');
+            headers.forEach(h => trHead.innerHTML += `<th class="px-4 py-3 text-left font-bold text-gray-600 border-b border-gray-200">${escapeHTML(h)}</th>`);
             thead.appendChild(trHead);
-            for(let i=0; i < Math.min(data.length, 3); i++) {
+
+            const displayCount = Math.min(data.length, 3);
+            for(let i=0; i < displayCount; i++) {
                 let tr = document.createElement('tr');
-                headers.forEach(h => tr.innerHTML += `<td class="px-3 py-1.5 text-gray-700 whitespace-nowrap truncate max-w-[150px]">${escapeHTML(data[i][h])}</td>`);
+                headers.forEach(h => tr.innerHTML += `<td class="px-4 py-2 text-gray-700 whitespace-nowrap">${escapeHTML(data[i][h])}</td>`);
                 tbody.appendChild(tr);
             }
         }
 
-        function cancelImport() { document.getElementById('excelFileInput').value=''; document.getElementById('fileInfo').classList.add('hidden'); document.getElementById('previewContainer').classList.add('hidden'); importTempData = []; }
+        function cancelImport() {
+            document.getElementById('excelFileInput').value = '';
+            document.getElementById('fileInfo').classList.add('hidden');
+            document.getElementById('previewContainer').classList.add('hidden');
+            importTempData = [];
+        }
+
         function confirmImport() {
-            const year = document.getElementById('importYear').value.trim(); const classInput = document.getElementById('importClass').value.trim();
+            const year = document.getElementById('importYear').value.trim();
+            const classInput = document.getElementById('importClass').value.trim();
             if(importTempData.length === 0) return;
-            const keys = Object.keys(importTempData[0]); const nameKey = keys.find(k => k.toLowerCase().includes('tên')) || keys[0]; const classKey = keys.find(k => k.toLowerCase().includes('lớp'));
+
+            const keys = Object.keys(importTempData[0]);
+            const nameKey = keys.find(k => k.toLowerCase().includes('tên')) || keys[0]; 
+            const classKey = keys.find(k => k.toLowerCase().includes('lớp'));
+
             let count = 0;
             importTempData.forEach(row => {
-                let sClass = classInput || (classKey ? row[classKey] : 'Chung'); let sName = row[nameKey] || 'Chưa xác định';
-                window.saveDataFn('students', { id: 'HS_' + Date.now() + Math.random().toString(36).substr(2, 5), year, className: sClass, name: sName, data: row }); count++;
+                let sClass = classInput || (classKey ? row[classKey] : 'Chung');
+                let sName = row[nameKey] || 'Chưa xác định';
+                window.saveDataFn('students', { 
+                    id: 'HS_' + Date.now() + Math.random().toString(36).substr(2, 5), 
+                    year: year, className: sClass, name: sName, data: row 
+                });
+                count++;
             });
-            showToast(`Đã nhập ${count} học sinh!`, 'success'); cancelImport(); switchTab('student-list');
+
+            showToast(`Nhập thành công ${count} hồ sơ học sinh!`, 'success');
+            cancelImport(); switchTab('student-list');
         }
 
         function updateClassFilter() {
-            const fYear = document.getElementById('filterYear').value; const fClass = document.getElementById('filterClass'); fClass.innerHTML = '<option value="">-- Tất cả --</option>';
-            const classes = new Set(); students.forEach(s => { if(fYear === '' || s.year === fYear) classes.add(s.className); });
+            const fYear = document.getElementById('filterYear').value;
+            const fClass = document.getElementById('filterClass');
+            fClass.innerHTML = '<option value="">-- Tất cả --</option>';
+            const classes = new Set();
+            students.forEach(s => { if(fYear === '' || s.year === fYear) classes.add(s.className); });
             [...classes].sort().forEach(c => fClass.innerHTML += `<option value="${c}">${c}</option>`);
         }
 
         function renderStudentList() {
             const fySelect = document.getElementById('filterYear');
-            if(fySelect.options.length <= 1) { const years = [...new Set(students.map(s => s.year))].sort().reverse(); years.forEach(y => fySelect.innerHTML += `<option value="${y}">${y}</option>`); updateClassFilter(); }
-            const fYear = document.getElementById('filterYear').value, fClass = document.getElementById('filterClass').value, term = document.getElementById('searchStudentInput').value.toLowerCase();
-            const tbody = document.getElementById('studentTableBody'), thead = document.getElementById('studentTableHead'), emptyState = document.getElementById('emptyStudentState');
-            
-            let filtered = students.filter(s => (fYear === '' || s.year === fYear) && (fClass === '' || s.className === fClass) && (term === '' || s.name.toLowerCase().includes(term) || JSON.stringify(s.data).toLowerCase().includes(term)));
+            if(fySelect.options.length <= 1) {
+                const years = [...new Set(students.map(s => s.year))].sort().reverse();
+                years.forEach(y => fySelect.innerHTML += `<option value="${y}">${y}</option>`);
+                updateClassFilter();
+            }
 
-            if(filtered.length === 0) emptyState.classList.remove('hidden'); else {
+            const fYear = document.getElementById('filterYear').value;
+            const fClass = document.getElementById('filterClass').value;
+            const term = document.getElementById('searchStudentInput').value.toLowerCase();
+
+            const tbody = document.getElementById('studentTableBody');
+            const thead = document.getElementById('studentTableHead');
+            const emptyState = document.getElementById('emptyStudentState');
+            
+            let filtered = students.filter(s => {
+                const matchY = fYear === '' || s.year === fYear;
+                const matchC = fClass === '' || s.className === fClass;
+                const matchT = term === '' || s.name.toLowerCase().includes(term) || JSON.stringify(s.data).toLowerCase().includes(term);
+                return matchY && matchC && matchT;
+            });
+
+            if(filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+                if(thead) thead.innerHTML = '';
+                if(tbody) tbody.innerHTML = '';
+            } else {
                 emptyState.classList.add('hidden');
-                const sampleData = filtered[0].data; const dynamicKeys = Object.keys(sampleData).filter(k => !k.toLowerCase().includes('tên') && !['Lớp', 'Năm', 'STT'].includes(k)).slice(0, 3);
-                let headHtml = `<tr><th class="px-4 py-3 text-left text-xs font-bold text-gray-600 uppercase whitespace-nowrap">Thông Tin</th>`;
-                dynamicKeys.forEach(k => headHtml += `<th class="px-4 py-3 text-left text-[10px] font-bold text-gray-600 uppercase whitespace-nowrap hidden sm:table-cell">${escapeHTML(k)}</th>`);
-                headHtml += `<th class="px-4 py-3 text-right text-xs font-bold text-gray-600 uppercase sticky right-0 bg-indigo-50">Tác vụ</th></tr>`;
+                
+                const sampleData = filtered[0].data;
+                const excludeKeys = ['Lớp', 'Năm', 'STT'];
+                const dynamicKeys = Object.keys(sampleData).filter(k => !k.toLowerCase().includes('tên') && !excludeKeys.includes(k)).slice(0, 4);
+                
+                let headHtml = `<tr>
+                    <th class="px-4 py-3 text-left text-xs font-bold text-gray-600 uppercase whitespace-nowrap">Thông Tin Cơ Bản</th>`;
+                dynamicKeys.forEach(k => headHtml += `<th class="px-4 py-3 text-left text-xs font-bold text-gray-600 uppercase whitespace-nowrap">${escapeHTML(k)}</th>`);
+                headHtml += `<th class="px-4 py-3 text-right text-xs font-bold text-gray-600 uppercase sticky right-0 bg-indigo-50 shadow-[-5px_0_10px_-5px_rgba(0,0,0,0.05)]">Thao tác</th></tr>`;
                 thead.innerHTML = headHtml;
 
                 tbody.innerHTML = filtered.map(s => {
-                    let rowHtml = `<tr class="active:bg-blue-50/50 md:hover:bg-blue-50/50 border-b border-gray-100"><td class="px-4 py-3 max-w-[150px]"><div class="font-bold text-gray-800 text-sm truncate">${escapeHTML(s.name)}</div><div class="mt-0.5 text-[9px] uppercase font-bold text-indigo-600"><span class="bg-indigo-100 px-1.5 py-0.5 rounded">Lớp ${escapeHTML(s.className)}</span></div></td>`;
-                    dynamicKeys.forEach(k => { let val = s.data[k] !== undefined ? s.data[k] : '-'; let styling = (!isNaN(val) && parseFloat(val) < 5) ? 'text-red-500 font-bold' : 'text-gray-600'; rowHtml += `<td class="px-4 py-3 text-xs ${styling} hidden sm:table-cell">${escapeHTML(String(val))}</td>`; });
-                    rowHtml += `<td class="px-4 py-3 text-right sticky right-0 bg-white/90 backdrop-blur"><button onclick="viewStudentDetail('${s.id}')" class="text-indigo-500 p-2"><i class="fas fa-file-alt"></i></button><button onclick="confirmDeleteData('students', '${s.id}')" class="text-red-400 p-2"><i class="fas fa-trash"></i></button></td></tr>`;
+                    let rowHtml = `<tr class="hover:bg-blue-50/50 transition-colors border-b border-gray-100 last:border-0">
+                        <td class="px-4 py-3 whitespace-nowrap">
+                            <div class="font-bold text-gray-800 text-sm">${escapeHTML(s.name)}</div>
+                            <div class="mt-0.5 flex items-center text-[9px] uppercase font-bold text-indigo-600">
+                                <span class="bg-indigo-100 px-1.5 py-0.5 rounded mr-1">Lớp ${escapeHTML(s.className)}</span>
+                                <span class="bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded">${escapeHTML(s.year)}</span>
+                            </div>
+                        </td>`;
+                    
+                    dynamicKeys.forEach(k => {
+                        let val = s.data[k] !== undefined ? s.data[k] : '-';
+                        let styling = (!isNaN(val) && parseFloat(val) < 5) ? 'text-red-500 font-bold' : 'text-gray-600';
+                        rowHtml += `<td class="px-4 py-3 text-xs font-medium whitespace-nowrap ${styling}">${escapeHTML(String(val))}</td>`;
+                    });
+
+                    rowHtml += `<td class="px-4 py-3 text-right sticky right-0 bg-white/95 backdrop-blur shadow-[-5px_0_10px_-5px_rgba(0,0,0,0.05)] whitespace-nowrap">
+                            <button onclick="viewStudentDetail('${s.id}')" class="text-indigo-500 hover:text-indigo-800 mr-2 p-1 bg-white rounded shadow-sm border border-gray-100"><i class="fas fa-file-alt"></i></button>
+                            <button onclick="confirmDeleteData('students', '${s.id}')" class="text-red-400 hover:text-red-600 p-1 bg-white rounded shadow-sm border border-gray-100"><i class="fas fa-trash"></i></button>
+                        </td></tr>`;
                     return rowHtml;
                 }).join('');
             }
@@ -979,100 +1241,240 @@
 
         function viewStudentDetail(id) {
             const s = students.find(x => x.id === id); if(!s) return;
-            document.getElementById('modalMainTitle').innerText = `Hồ Sơ Học Sinh`; document.getElementById('printHeader').classList.remove('hidden');
-            let html = `<div class="bg-indigo-50 p-3 md:p-4 rounded-lg mb-4 text-center md:text-left"><h2 class="text-lg md:text-xl font-black text-indigo-900 uppercase">${escapeHTML(s.name)}</h2><p class="text-xs font-semibold text-indigo-600 mt-1">Lớp: ${escapeHTML(s.className)} | NH: ${escapeHTML(s.year)}</p></div><div class="border border-gray-200 rounded-lg overflow-hidden bg-white"><table class="min-w-full divide-y divide-gray-200"><tbody class="divide-y divide-gray-200">`;
+            document.getElementById('modalMainTitle').innerText = `Hồ Sơ Học Sinh`;
+            document.getElementById('printHeader').classList.remove('hidden');
+            
+            let html = `
+                <div class="bg-indigo-50 border border-indigo-100 p-4 rounded-lg mb-6 flex flex-col md:flex-row justify-between items-center print:bg-white print:border-black">
+                    <div>
+                        <h2 class="text-xl md:text-2xl font-black text-indigo-900 uppercase tracking-wide print:text-black">${escapeHTML(s.name)}</h2>
+                        <p class="text-xs md:text-sm font-semibold text-indigo-600 mt-1 print:text-gray-700">Mã định danh: ${s.id}</p>
+                    </div>
+                    <div class="flex gap-2 mt-3 md:mt-0">
+                        <span class="bg-white border border-indigo-200 text-indigo-800 px-3 py-1 rounded-full text-xs md:text-sm font-bold shadow-sm print:border-black">Lớp: ${escapeHTML(s.className)}</span>
+                        <span class="bg-white border border-gray-200 text-gray-800 px-3 py-1 rounded-full text-xs md:text-sm font-bold shadow-sm print:border-black">NH: ${escapeHTML(s.year)}</span>
+                    </div>
+                </div>
+                <div class="border border-gray-200 rounded-lg overflow-x-auto bg-white shadow-sm print:border-black custom-scrollbar">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <tbody class="divide-y divide-gray-200">
+            `;
+            
             for (const [key, value] of Object.entries(s.data)) {
-                let valStyling = (!isNaN(value) && value !== '') ? (parseFloat(value) < 5 ? 'text-red-600 font-bold' : 'text-emerald-700 font-bold') : '';
-                html += `<tr><td class="px-4 py-2.5 whitespace-nowrap text-[10px] font-bold text-gray-500 uppercase bg-gray-50 w-1/3">${escapeHTML(key)}</td><td class="px-4 py-2.5 text-xs md:text-sm text-gray-900 font-medium ${valStyling}">${value !== undefined && value !== '' ? escapeHTML(String(value)) : '-'}</td></tr>`;
+                let valStyling = '';
+                if(!isNaN(value) && value !== '') {
+                    valStyling = parseFloat(value) < 5 ? 'text-red-600 font-bold' : 'text-emerald-700 font-bold';
+                }
+                html += `<tr>
+                            <td class="px-4 py-2.5 whitespace-nowrap text-xs font-bold text-gray-500 uppercase bg-gray-50 w-1/3 print:border-r print:border-black">${escapeHTML(key)}</td>
+                            <td class="px-4 py-2.5 whitespace-nowrap text-sm text-gray-900 font-medium ${valStyling}">${value !== undefined && value !== '' ? escapeHTML(String(value)) : '<i class="text-gray-400">Trống</i>'}</td>
+                        </tr>`;
             }
-            html += `</tbody></table></div>`; document.getElementById('modalBody').innerHTML = html; document.getElementById('modalEditBtn').classList.add('hidden'); showModal('detailModal');
+            html += `</tbody></table></div>`;
+            
+            document.getElementById('modalBody').innerHTML = html;
+            const editBtn = document.getElementById('modalEditBtn');
+            if(editBtn) editBtn.classList.add('hidden');
+            showModal('detailModal');
         }
-        function requestClearStudents() { openConfirmModal("Xóa toàn bộ?", "Hành động này sẽ xóa sạch danh sách học sinh.", () => { students = []; saveToStorage(); renderStudentList(); showToast('Đã xóa!'); }); }
-        function confirmDeleteData(col, id) { openConfirmModal("Xóa dữ liệu?", "Không thể hoàn tác.", () => { window.deleteDataFn(col, id); showToast('Đã xóa.', 'success'); }); }
 
-        // --- Smart Notes ---
+        function requestClearStudents() {
+            openConfirmModal("Xóa toàn bộ hồ sơ?", "Hành động này sẽ xóa sạch danh sách học sinh hiện tại và không thể hoàn tác.", () => {
+                students = [];
+                saveToStorage();
+                renderStudentList();
+                showToast('Đã xóa toàn bộ hồ sơ học sinh!', 'success');
+            });
+        }
+
+        // --- NOTE ---
         function openNoteModal(id = null) {
-            document.getElementById('noteTitle').value = ''; document.getElementById('noteContent').value = ''; document.getElementById('noteManualTags').value = ''; document.getElementById('noteId').value = ''; document.getElementById('noteModalTitle').innerText = 'Thêm Ghi Chú';
-            if(id) { const n = notes.find(x => x.id === id); if(n) { document.getElementById('noteId').value = n.id; document.getElementById('noteTitle').value = n.title; document.getElementById('noteContent').value = n.content; if(n.manualTags) document.getElementById('noteManualTags').value = n.manualTags.join(', '); document.getElementById('noteModalTitle').innerText = 'Chỉnh sửa'; } }
+            document.getElementById('noteTitle').value = ''; 
+            document.getElementById('noteContent').value = '';
+            document.getElementById('noteManualTags').value = '';
+            document.getElementById('noteId').value = '';
+            document.getElementById('noteModalTitle').innerText = 'Thêm Ghi Chú';
+            
+            if(id) {
+                const n = notes.find(x => x.id === id);
+                if(n) {
+                    document.getElementById('noteId').value = n.id;
+                    document.getElementById('noteTitle').value = n.title;
+                    document.getElementById('noteContent').value = n.content;
+                    if(n.manualTags) document.getElementById('noteManualTags').value = n.manualTags.join(', ');
+                    document.getElementById('noteModalTitle').innerText = 'Chỉnh sửa Ghi Chú';
+                }
+            }
             showModal('noteModal'); 
         }
-        function insertTag(tag) { const el = document.getElementById('noteContent'); el.value += (el.value.endsWith(' ') || el.value === '' ? '' : ' ') + tag + ' '; el.focus(); }
-        function extractHashtags(text) { const matches = text.match(/#[\w_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+/g); return matches ? [...new Set(matches.map(t => t.substring(1).toLowerCase().replace(/\s+/g, '_')))] : []; }
+
+        function insertTag(tag) { 
+            const el = document.getElementById('noteContent');
+            el.value += (el.value.endsWith(' ') || el.value === '' ? '' : ' ') + tag + ' '; 
+            el.focus(); 
+        }
+
+        function extractHashtags(text) {
+            const regex = /#[\w_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+/g;
+            const matches = text.match(regex);
+            if (!matches) return [];
+            return [...new Set(matches.map(tag => tag.substring(1).toLowerCase().replace(/\s+/g, '_')))];
+        }
+
         function saveNote() {
-            const title = document.getElementById('noteTitle').value.trim(), content = document.getElementById('noteContent').value.trim(); if(!content) return showToast("Nội dung trống!", "error");
-            const tags1 = extractHashtags(content), tags2Input = document.getElementById('noteManualTags').value.trim(); let tags2 = [];
-            if(tags2Input) tags2 = tags2Input.split(',').map(t => t.trim().replace(/^#+/, '').replace(/\s+/g, '_')).filter(t => t !== '');
-            const allTags = [...new Set([...tags1, ...tags2])];
-            window.saveDataFn('notes', { id: document.getElementById('noteId').value || 'NOTE_' + Date.now(), title, content, tags: allTags, manualTags: tags2, updatedAt: new Date().toISOString() });
-            closeModal('noteModal'); showToast("Đã lưu!");
+            const title = document.getElementById('noteTitle').value.trim();
+            const content = document.getElementById('noteContent').value.trim();
+            if(!content) return showToast("Nội dung không được để trống!", "error");
+            
+            const contentTags = extractHashtags(content);
+            const manualTagsInput = document.getElementById('noteManualTags').value.trim();
+            let manualTags = [];
+            if(manualTagsInput) {
+                manualTags = manualTagsInput.split(',')
+                    .map(t => t.trim().replace(/^#+/, '').replace(/\s+/g, '_'))
+                    .filter(t => t !== '');
+            }
+            const allTags = [...new Set([...contentTags, ...manualTags])];
+
+            const id = document.getElementById('noteId').value || 'NOTE_' + Date.now();
+            window.saveDataFn('notes', { id, title, content, tags: allTags, manualTags: manualTags, updatedAt: new Date().toISOString() });
+            closeModal('noteModal'); showToast("Đã lưu ghi chú thành công!");
         }
+
         function highlightFuzzy(text, queryWords) {
-            if(!queryWords || queryWords.length === 0) return escapeHTML(text); let eText = escapeHTML(text);
-            queryWords.forEach(w => { if(!w.startsWith('#')) { const regex = new RegExp(`(${w.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi'); eText = eText.replace(regex, '<mark>$1</mark>'); } }); return eText;
+            if(!queryWords || queryWords.length === 0) return escapeHTML(text);
+            let escapedText = escapeHTML(text);
+            queryWords.forEach(word => {
+                if(!word.startsWith('#')) {
+                    const safeWord = word.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                    const regex = new RegExp(`(${safeWord})`, 'gi');
+                    escapedText = escapedText.replace(regex, '<mark>$1</mark>');
+                }
+            });
+            return escapedText;
         }
-        const TAG_COLORS = ['bg-indigo-100 text-indigo-700', 'bg-emerald-100 text-emerald-700', 'bg-amber-100 text-amber-700', 'bg-rose-100 text-rose-700', 'bg-sky-100 text-sky-700'];
-        function getTagStyle(tag) { let hash = 0; for (let i = 0; i < tag.length; i++) hash = tag.charCodeAt(i) + ((hash << 5) - hash); return TAG_COLORS[Math.abs(hash) % TAG_COLORS.length]; }
+
+        const TAG_COLORS = ['bg-indigo-100 text-indigo-700', 'bg-emerald-100 text-emerald-700', 'bg-amber-100 text-amber-700', 'bg-rose-100 text-rose-700', 'bg-fuchsia-100 text-fuchsia-700', 'bg-sky-100 text-sky-700'];
+        function getTagStyle(tag) {
+            let hash = 0; for (let i = 0; i < tag.length; i++) hash = tag.charCodeAt(i) + ((hash << 5) - hash);
+            return TAG_COLORS[Math.abs(hash) % TAG_COLORS.length];
+        }
 
         function renderNotes(forceTag = null) {
-            const searchInput = document.getElementById('noteSearchInput'); if(forceTag) searchInput.value = `#${forceTag}`;
-            const queryWords = searchInput.value.toLowerCase().trim().split(' ').filter(w => w);
-            const grid = document.getElementById('notesGrid'), emptyState = document.getElementById('emptyNoteState'), filterContainer = document.getElementById('noteTagsFilter'); filterContainer.innerHTML = '';
+            const searchInput = document.getElementById('noteSearchInput');
+            if(forceTag) searchInput.value = `#${forceTag}`;
             
-            if(queryWords.length > 0) filterContainer.innerHTML += `<button onclick="document.getElementById('noteSearchInput').value=''; renderNotes();" class="px-2 py-1 text-[9px] font-bold rounded bg-gray-200 text-gray-600 uppercase mr-1"><i class="fas fa-times mr-1"></i>Bỏ lọc</button>`;
-            [...new Set(notes.flatMap(n => n.tags))].sort().forEach(t => {
-                const isSelected = queryWords.includes(`#${t}`);
-                filterContainer.innerHTML += `<button onclick="renderNotes('${t}')" class="px-2 py-1 text-[9px] font-bold uppercase rounded ${getTagStyle(t)} ${isSelected ? 'ring-1 ring-amber-400' : 'opacity-70'} transition-all shrink-0">#${t}</button>`;
+            const queryStr = searchInput.value.toLowerCase().trim();
+            const queryWords = queryStr.split(' ').filter(w => w);
+            const grid = document.getElementById('notesGrid');
+            const emptyState = document.getElementById('emptyNoteState');
+            
+            const allTags = [...new Set(notes.flatMap(n => n.tags))].sort();
+            const filterContainer = document.getElementById('noteTagsFilter');
+            if(filterContainer) {
+                filterContainer.innerHTML = '';
+                if(queryStr) {
+                     filterContainer.innerHTML += `<button onclick="document.getElementById('noteSearchInput').value=''; renderNotes();" class="px-2 py-1.5 text-[9px] font-bold rounded bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors uppercase flex-shrink-0"><i class="fas fa-times mr-1"></i>Bỏ lọc</button>`;
+                }
+                allTags.forEach(t => {
+                    const isSelected = queryWords.includes(`#${t}`);
+                    const style = getTagStyle(t);
+                    const activeClasses = isSelected ? 'ring-2 ring-offset-1 ring-amber-400 scale-105 shadow-sm' : 'opacity-70 hover:opacity-100';
+                    filterContainer.innerHTML += `<button onclick="renderNotes('${t}')" class="px-2 py-1.5 text-[9px] font-bold uppercase rounded flex-shrink-0 ${style} ${activeClasses} transition-all">#${t}</button>`;
+                });
+            }
+
+            let filtered = notes.filter(n => {
+                if(queryWords.length === 0) return true;
+                const searchSpace = `${n.title} ${n.content} ${n.tags.map(t=>`#${t}`).join(' ')}`.toLowerCase();
+                return queryWords.every(word => searchSpace.includes(word));
             });
 
-            let filtered = notes.filter(n => queryWords.length === 0 || queryWords.every(w => `${n.title} ${n.content} ${n.tags.map(t=>`#${t}`).join(' ')}`.toLowerCase().includes(w)));
-            if(filtered.length === 0) { grid.classList.add('hidden'); emptyState.classList.remove('hidden', 'flex'); emptyState.classList.add('flex'); } 
-            else {
-                grid.classList.remove('hidden'); emptyState.classList.remove('flex'); emptyState.classList.add('hidden');
+            if(filtered.length === 0) {
+                grid.classList.add('hidden');
+                emptyState.classList.remove('hidden', 'flex'); emptyState.classList.add('flex');
+            } else {
+                grid.classList.remove('hidden');
+                emptyState.classList.remove('flex'); emptyState.classList.add('hidden');
+                
                 grid.innerHTML = filtered.sort((a,b) => new Date(b.updatedAt) - new Date(a.updatedAt)).map(n => {
-                    const snippet = n.content.length > 150 ? n.content.substring(0, 150) + '...' : n.content;
-                    const dDate = new Date(n.updatedAt);
+                    const snippet = n.content.length > 250 ? n.content.substring(0, 250) + '...' : n.content;
+                    const displayContent = highlightFuzzy(snippet, queryWords).replace(/\n/g, '<br>');
+                    const displayTitle = highlightFuzzy(n.title, queryWords) || '<i>Ghi chú không tên</i>';
+                    
+                    const tagsHtml = n.tags.map(t => {
+                        const style = getTagStyle(t);
+                        const isMatch = queryWords.includes(`#${t}`) ? 'ring-1 ring-amber-400 font-black' : '';
+                        return `<span onclick="renderNotes('${t}'); event.stopPropagation();" class="inline-block px-1.5 py-0.5 text-[9px] font-bold rounded ${style} ${isMatch} mr-1 mt-1 cursor-pointer uppercase transition-transform hover:scale-110">#${t}</span>`;
+                    }).join('');
+                    
+                    const dateObj = new Date(n.updatedAt);
+                    const dateStr = `${dateObj.getDate().toString().padStart(2, '0')}/${(dateObj.getMonth()+1).toString().padStart(2, '0')} - ${dateObj.getHours()}:${dateObj.getMinutes().toString().padStart(2, '0')}`;
+
                     return `
-                    <div class="bg-white p-4 rounded-xl border border-gray-100 flex flex-col justify-between active:scale-[0.98] transition-transform cursor-pointer shadow-sm relative overflow-hidden" onclick="openNoteModal('${n.id}')">
-                        <div class="absolute top-0 left-0 w-1 h-full bg-amber-400"></div>
+                    <div class="bg-white p-4 md:p-5 rounded-xl border border-gray-100 flex flex-col justify-between group hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden active:scale-95" onclick="openNoteModal('${n.id}')">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         <div>
-                            <h4 class="font-bold text-gray-800 text-base mb-1.5 leading-tight pr-6">${highlightFuzzy(n.title, queryWords) || '<i>(Không tên)</i>'}</h4>
-                            <p class="text-xs text-gray-600 mb-3 whitespace-pre-wrap font-mono line-clamp-3">${highlightFuzzy(snippet, queryWords)}</p>
-                            <div class="flex flex-wrap gap-1">${n.tags.map(t => `<span class="px-1.5 py-0.5 text-[8px] font-bold rounded ${getTagStyle(t)} uppercase">#${t}</span>`).join('')}</div>
+                            <h4 class="font-bold text-gray-800 text-base md:text-lg mb-2 leading-tight pr-6">${displayTitle}</h4>
+                            <p class="text-xs md:text-sm text-gray-600 mb-4 whitespace-pre-wrap font-mono leading-relaxed">${displayContent}</p>
+                            <div class="flex flex-wrap">${tagsHtml}</div>
                         </div>
-                        <div class="mt-3 pt-2 border-t border-gray-50 flex justify-between items-center opacity-70">
-                            <span class="text-[10px] font-semibold text-gray-400"><i class="far fa-clock"></i> ${dDate.getDate()}/${dDate.getMonth()+1} - ${dDate.getHours()}:${dDate.getMinutes().toString().padStart(2, '0')}</span>
-                            <button onclick="event.stopPropagation(); confirmDeleteData('notes', '${n.id}')" class="text-red-400 p-1"><i class="fas fa-trash-alt text-[10px]"></i></button>
+                        <div class="mt-4 pt-3 border-t border-gray-50 flex justify-between items-center opacity-70 group-hover:opacity-100 transition-opacity">
+                            <span class="text-[10px] md:text-xs font-semibold text-gray-400"><i class="far fa-clock mr-1"></i> ${dateStr}</span>
+                            <button onclick="event.stopPropagation(); confirmDeleteData('notes', '${n.id}')" class="text-gray-300 hover:text-red-500 bg-gray-50 hover:bg-white shadow-sm border border-gray-100 rounded-full w-7 h-7 flex items-center justify-center transition-colors" title="Xóa"><i class="fas fa-trash-alt text-xs"></i></button>
                         </div>
                     </div>`;
                 }).join('');
             }
         }
 
-        // --- Schedule (Kanban) ---
+        // --- SCHEDULE ---
         const WEEK_DAYS = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'CN'];
-        function removeAccents(str) { return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D'); }
+        function setScheduleView(mode) {
+            schViewMode = mode;
+            const btnK = document.getElementById('btn-view-kanban');
+            const btnT = document.getElementById('btn-view-timeline');
+            if(btnK) btnK.className = mode === 'kanban' ? 'px-3 py-1.5 text-xs font-bold rounded bg-white text-sky-600 shadow-sm transition-all' : 'px-3 py-1.5 text-xs font-bold rounded text-gray-500 transition-all';
+            if(btnT) btnT.className = mode === 'timeline' ? 'px-3 py-1.5 text-xs font-bold rounded bg-white text-sky-600 shadow-sm transition-all' : 'px-3 py-1.5 text-xs font-bold rounded text-gray-500 transition-all';
+            
+            if(mode === 'kanban') {
+                document.getElementById('kanbanViewContainer').classList.remove('hidden'); document.getElementById('timelineViewContainer').classList.add('hidden');
+            } else {
+                document.getElementById('kanbanViewContainer').classList.add('hidden'); document.getElementById('timelineViewContainer').classList.remove('hidden');
+            }
+            renderSchedule();
+        }
 
-        function initSchedule() { const grid = document.getElementById('weeklyScheduleGrid'); if (grid.children.length === 0) renderScheduleColumns(); renderSchedule(); }
+        function initSchedule() { 
+            const grid = document.getElementById('weeklyScheduleGrid'); 
+            if (grid && grid.children.length === 0) renderScheduleColumns(); 
+            renderSchedule(); 
+        }
+
         function renderScheduleColumns() {
-            const grid = document.getElementById('weeklyScheduleGrid'); const cd = new Date().getDay(); const cdi = cd === 0 ? 6 : cd - 1;
+            const grid = document.getElementById('weeklyScheduleGrid');
+            if(!grid) return;
+            const cd = new Date().getDay(); const cdi = cd === 0 ? 6 : cd - 1;
             grid.innerHTML = WEEK_DAYS.map((day, i) => `
                 <div class="w-[85vw] md:w-[280px] flex-shrink-0 flex flex-col h-auto md:h-full bg-gray-100/80 rounded-xl border snap-center ${i === cdi ? 'border-sky-400 ring-1 ring-sky-400' : 'border-gray-200'}">
                     <div class="p-2.5 font-bold text-sm flex justify-between items-center ${i === cdi ? 'bg-sky-500 text-white rounded-t-xl' : 'bg-gray-200/50 text-gray-700 rounded-t-xl'}">
-                        ${day} ${i === cdi ? '<span class="text-[9px] bg-white text-sky-600 px-1.5 py-0.5 rounded-full uppercase">Hôm nay</span>' : ''}
+                        ${day} ${i === cdi ? '<span class="text-[9px] bg-white text-sky-600 px-1.5 py-0.5 rounded-full uppercase shadow-sm">Hôm nay</span>' : ''}
                     </div>
                     <div class="p-2 flex flex-col gap-2 overflow-y-auto custom-scrollbar min-h-[250px] md:flex-1" id="sch-col-${i}"></div>
                     <div class="p-2 border-t border-gray-200 bg-white rounded-b-xl flex flex-col mt-auto shrink-0">
                         <input type="text" id="sch-in-${i}" placeholder="Thêm việc (Dùng #Tag)..." class="w-full text-xs py-2 px-1 border-b-2 border-gray-100 focus:border-sky-400 focus:outline-none transition-colors font-medium bg-transparent" onkeydown="if(event.key==='Enter') processAddSchedule(${i})">
                     </div>
                 </div>`).join('');
-            // Cuộn tự động đến cột hôm nay trên mobile
             setTimeout(() => { if(window.innerWidth < 768 && grid.children[cdi]) { grid.scrollTo({ left: grid.children[cdi].offsetLeft - 20, behavior: 'smooth' }); } }, 100);
         }
 
         function renderSchedule() {
-            const showCompleted = document.getElementById('toggleCompletedSch').checked;
-            const queryWordsNoAccents = (document.getElementById('schSearchInput')?.value.trim().toLowerCase().split(' ').filter(w => w) || []).map(w => removeAccents(w).replace('#', ''));
+            const toggleEl = document.getElementById('toggleCompletedSch');
+            const showCompleted = toggleEl ? toggleEl.checked : true;
+            const searchInput = document.getElementById('schSearchInput');
+            const queryWordsNoAccents = (searchInput?.value.trim().toLowerCase().split(' ').filter(w => w) || []).map(w => removeAccents(w).replace('#', ''));
             
+            // Render Kanban
             for(let i=0; i<7; i++) {
                 const col = document.getElementById(`sch-col-${i}`); if(!col) continue;
                 let dayTasks = schedules.filter(s => s.day === i && (showCompleted || !s.isCompleted));
@@ -1084,12 +1486,56 @@
                         <div class="flex items-start justify-between">
                             <div class="flex items-start gap-2 pr-6">
                                 <button onclick="toggleScheduleCompletion('${t.id}')" class="mt-0.5 outline-none p-1 -ml-1"><i class="far ${t.isCompleted ? 'text-emerald-500 fa-check-circle' : 'text-gray-300 fa-circle'} text-base"></i></button>
-                                <p class="${t.isCompleted ? 'line-through text-gray-400' : 'text-gray-800'} text-xs font-medium leading-relaxed">${escapeHTML(t.text)}</p>
+                                <p class="${t.isCompleted ? 'line-through text-gray-400' : 'text-gray-800'} text-xs font-medium leading-relaxed break-words">${escapeHTML(t.text)}</p>
                             </div>
-                            <button onclick="deleteDataFn('schedules', '${t.id}')" class="absolute top-2 right-2 text-gray-300 p-1"><i class="fas fa-times text-xs"></i></button>
+                            <button onclick="deleteDataFn('schedules', '${t.id}')" class="absolute top-2 right-2 text-gray-300 p-1 bg-white shadow-sm rounded-full"><i class="fas fa-times text-[10px]"></i></button>
                         </div>
-                        ${t.tags?.length > 0 ? `<div class="ml-6 mt-1 flex flex-wrap gap-1">${t.tags.map(tag => `<span class="text-[8px] font-bold px-1.5 py-0.5 rounded uppercase ${t.isCompleted ? 'bg-gray-200 text-gray-400' : 'bg-sky-100 text-sky-700'}">${tag}</span>`).join('')}</div>` : ''}
+                        ${t.tags?.length > 0 ? `<div class="ml-6 mt-1.5 flex flex-wrap gap-1">${t.tags.map(tag => `<span class="text-[8px] font-bold px-1.5 py-0.5 rounded uppercase ${t.isCompleted ? 'bg-gray-200 text-gray-400' : 'bg-sky-100 text-sky-700'}">${tag}</span>`).join('')}</div>` : ''}
                     </div>`).join('');
+            }
+
+            // Render Timeline
+            const timelineList = document.getElementById('timelineScheduleList');
+            if(timelineList) {
+                let timelineHtml = '<div class="absolute left-[15px] top-2 bottom-2 w-0.5 bg-gray-200 z-0 hidden md:block"></div>';
+                const cd = new Date().getDay(); const currentDayIndex = cd === 0 ? 6 : cd - 1;
+                
+                let hasTasks = false;
+                for(let i=0; i<7; i++) {
+                    let dayTasks = schedules.filter(s => s.day === i && (showCompleted || !s.isCompleted));
+                    if (queryWordsNoAccents.length > 0) dayTasks = dayTasks.filter(s => queryWordsNoAccents.every(qw => removeAccents(s.text.toLowerCase()).includes(qw) || (s.tags && s.tags.some(t => removeAccents(t.toLowerCase()).replace('#', '').includes(qw)))));
+                    dayTasks.sort((a, b) => (a.isCompleted === b.isCompleted) ? 0 : a.isCompleted ? 1 : -1);
+                    
+                    if(dayTasks.length > 0 || i === currentDayIndex) {
+                        hasTasks = true;
+                        const isToday = i === currentDayIndex;
+                        timelineHtml += `
+                        <div class="relative z-10 flex flex-col md:flex-row gap-2 md:gap-4 items-start">
+                            <div class="w-auto md:w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs md:text-[10px] shrink-0 md:border-2 ${isToday ? 'md:bg-sky-500 md:border-sky-200 text-sky-600 md:text-white md:shadow-md' : 'md:bg-white md:border-gray-300 text-gray-700 md:text-gray-500'}">
+                                <span class="md:hidden mr-2"><i class="far fa-calendar-alt"></i></span>${WEEK_DAYS[i]}
+                            </div>
+                            <div class="flex-1 w-full bg-gray-50 rounded-xl p-3 md:p-4 border ${isToday ? 'border-sky-200 shadow-sm bg-sky-50/30' : 'border-gray-100'}">
+                                <h4 class="text-xs font-bold ${isToday ? 'text-sky-600' : 'text-gray-600'} mb-3 flex justify-between uppercase tracking-wider hidden md:flex">${WEEK_DAYS[i]} ${isToday ? '<span class="px-2 py-0.5 bg-sky-100 text-sky-700 rounded-md text-[9px]">HÔM NAY</span>' : ''}</h4>
+                                <div class="flex flex-col gap-2.5">
+                                    ${dayTasks.length === 0 ? '<p class="text-xs text-gray-400 italic">Chưa có công việc</p>' : dayTasks.map(t => `
+                                        <div class="flex items-start justify-between border-b border-gray-200/70 last:border-0 pb-2.5 last:pb-0">
+                                            <div class="flex items-start gap-2.5 pr-3">
+                                                <button onclick="toggleScheduleCompletion('${t.id}')" class="mt-0.5 outline-none p-0.5 transform active:scale-90 transition-transform"><i class="far ${t.isCompleted ? 'text-emerald-500 fa-check-circle' : 'text-gray-300 fa-circle'} text-base md:text-sm"></i></button>
+                                                <div>
+                                                    <p class="${t.isCompleted ? 'line-through text-gray-400' : 'text-gray-800'} text-[13px] md:text-xs font-medium leading-relaxed">${escapeHTML(t.text)}</p>
+                                                    ${t.tags?.length > 0 ? `<div class="mt-1.5 flex flex-wrap gap-1.5">${t.tags.map(tag => `<span class="text-[9px] md:text-[8px] font-bold px-1.5 py-0.5 rounded uppercase ${t.isCompleted ? 'bg-gray-200 text-gray-400' : 'bg-sky-100 text-sky-700'}">${tag}</span>`).join('')}</div>` : ''}
+                                                </div>
+                                            </div>
+                                            <button onclick="deleteDataFn('schedules', '${t.id}')" class="text-gray-300 hover:text-red-400 p-1 bg-white shadow-sm rounded"><i class="fas fa-times text-[11px]"></i></button>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>`;
+                    }
+                }
+                if(!hasTasks) timelineHtml += '<div class="pl-2 md:pl-12 text-xs text-gray-400 italic py-4">Tuần này trống, chưa có lịch trình nào.</div>';
+                timelineList.innerHTML = timelineHtml;
             }
         }
         function toggleScheduleCompletion(id) { const idx = schedules.findIndex(s => s.id === id); if(idx > -1) { schedules[idx].isCompleted = !schedules[idx].isCompleted; window.saveDataFn('schedules', schedules[idx]); } }
@@ -1098,9 +1544,45 @@
             const tags = extractHashtags(textInput.value); const cleanText = textInput.value.replace(/#[\w_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+/g, '').trim();
             window.saveDataFn('schedules', { id: 'SCH_' + Date.now(), day: dayIndex, text: cleanText || '(Không nội dung)', tags, createdAt: new Date().toISOString(), isCompleted: false }); textInput.value = '';
         }
-        function handleSchExcelUpload(e) { /* (Logic Import Excel giữ nguyên như file gốc, ẩn do dài) */ }
+        function downloadSchTemplate() {
+            const ws = XLSX.utils.aoa_to_sheet([ 
+                ["STT", "Thứ", "Nội dung công việc", "Hashtag"], 
+                [1, "Thứ 2", "Họp giao ban đầu tuần", "Họp, QuanTrong"],
+                [2, "Thứ 3", "Dạy Toán lớp 10A1, 10A2", "Dạy_học, Chuyên_môn"],
+                [3, "Thứ 4", "Kiểm tra 15p Vật Lý", "Kiểm_tra"],
+                [4, "Thứ 5", "Dự giờ đồng nghiệp tổ Toán", "Dự_giờ"],
+                [5, "Thứ 6", "Sinh hoạt lớp chủ nhiệm", "Chủ_nhiệm"],
+                [6, "Thứ 7", "Chấm bài thi giữa kỳ", "Chấm_thi"],
+                [7, "CN", "Soạn giáo án cho tuần tới", "Cá_nhân"]
+            ]);
+            ws['!cols'] = [{wch:5}, {wch:10}, {wch:45}, {wch:25}];
+            const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "LichCongTac");
+            XLSX.writeFile(wb, "Mau_Nhap_Lich_Tuan.xlsx");
+        }
+        function handleSchExcelUpload(e) {
+            const file = e.target.files[0]; if(!file) return; const reader = new FileReader();
+            reader.onload = function(evt) {
+                try {
+                    const wb = XLSX.read(evt.target.result, {type: 'binary'}); const rawData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {raw: false}); 
+                    let successCount = 0;
+                    const dayMap = { "thứ 2": 0, "hai": 0, "2": 0, "thứ 3": 1, "ba": 1, "3": 1, "thứ 4": 2, "tư": 2, "tu": 2, "4": 2, "thứ 5": 3, "năm": 3, "nam": 3, "5": 3, "thứ 6": 4, "sáu": 4, "sau": 4, "6": 4, "thứ 7": 5, "bảy": 5, "bay": 5, "7": 5, "chủ nhật": 6, "cn": 6, "chu": 6 };
+                    rawData.forEach(row => {
+                        const dayStr = String(row['Thứ'] || '').trim().toLowerCase(); const text = String(row['Nội dung công việc'] || '').trim(); const tagStr = String(row['Hashtag'] || '').trim();
+                        let dayIndex = -1; for (const key in dayMap) { if (dayStr.includes(key)) { dayIndex = dayMap[key]; break; } }
+                        if(dayIndex !== -1 && text) {
+                            let tags = []; if(tagStr) tags = tagStr.split(/[\s,]+/).filter(t => t !== '').map(t => '#' + (t.startsWith('#') ? t.substring(1) : t).replace(/\s+/g, '_'));
+                            const extraTags = extractHashtags(text); const cleanText = text.replace(/#[\w_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+/g, '').trim();
+                            const finalTags = [...new Set([...tags, ...extraTags])];
+                            window.saveDataFn('schedules', { id: 'SCH_' + Date.now() + Math.random().toString(36).substr(2, 5), day: dayIndex, text: cleanText || text, tags: finalTags, createdAt: new Date().toISOString(), isCompleted: false });
+                            successCount++;
+                        }
+                    });
+                    showToast(`Đã thêm thành công ${successCount} công việc!`, 'success'); e.target.value = ''; renderSchedule();
+                } catch (err) { showToast('Lỗi đọc file Excel!', 'error'); }
+            }; reader.readAsBinaryString(file);
+        }
 
-        // --- Reminders ---
+        // --- REMINDERS ---
         function openReminderModal() { document.getElementById('remId').value=''; document.getElementById('remTitle').value=''; document.getElementById('remSolarDate').value=''; showModal('reminderModal'); }
         function toggleRemType() { const type = document.querySelector('input[name="remType"]:checked').value; document.getElementById('remSolarGroup').style.display = type === 'solar' ? 'block' : 'none'; document.getElementById('remLunarGroup').style.display = type === 'lunar' ? 'block' : 'none'; }
         function saveReminder() {
@@ -1131,24 +1613,54 @@
             if(filterType === 'day') processed = processed.filter(r => r.daysLeft === 0); else if(filterType === 'week') processed = processed.filter(r => r.daysLeft <= 7); else if(filterType === 'month') processed = processed.filter(r => r.daysLeft <= 30);
 
             const grid = document.getElementById('remindersList');
+            if(!grid) return;
             grid.innerHTML = processed.length === 0 ? `<div class="col-span-full py-10 flex flex-col items-center opacity-70"><i class="far fa-calendar-check text-4xl text-gray-300 mb-3 block"></i><p class="text-gray-500 font-medium text-sm">Trống.</p></div>` : processed.map(r => `
-                <div class="p-4 rounded-xl border ${r.daysLeft===0 ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-white'} relative shadow-sm">
+                <div class="p-4 rounded-xl border ${r.daysLeft===0 ? 'border-red-400 bg-red-50 shadow-md' : 'border-gray-200 bg-white hover:shadow-md transition-shadow'} relative">
                     <h4 class="font-bold text-gray-800 pr-10 text-sm leading-tight mb-2">${escapeHTML(r.title)}</h4>
-                    ${r.daysLeft===0 ? '<span class="bg-red-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded uppercase absolute right-3 top-3 animate-pulse">Hôm nay</span>' : `<span class="bg-gray-100 text-gray-600 text-[9px] font-bold px-1.5 py-0.5 rounded absolute right-3 top-3 border border-gray-200">${r.daysLeft} ngày</span>`}
+                    ${r.daysLeft===0 ? '<span class="bg-red-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded uppercase absolute right-3 top-3 animate-pulse shadow-sm">Hôm nay</span>' : `<span class="bg-gray-100 text-gray-600 text-[9px] font-bold px-1.5 py-0.5 rounded absolute right-3 top-3 border border-gray-200">Còn ${r.daysLeft} ngày</span>`}
                     <div class="text-xs font-bold text-indigo-700 bg-indigo-50 p-1.5 rounded"><i class="far fa-calendar text-indigo-400 mr-1"></i> ${r.nextDate.toLocaleDateString('vi-VN', {day:'2-digit', month:'2-digit', year:'numeric'})}</div>
                     <div class="flex items-center justify-between mt-3 pt-2 border-t border-gray-100">
                         <div class="flex gap-1">
-                            <span class="text-[8px] font-black uppercase px-1.5 py-0.5 rounded bg-gray-100">${r.type==='lunar'?'Lịch Âm':'Dương'}</span>
+                            <span class="text-[8px] font-black uppercase px-1.5 py-0.5 rounded ${r.type==='lunar'?'bg-purple-100 text-purple-700':'bg-sky-100 text-sky-700'}">${r.type==='lunar'?'Lịch Âm':'Dương'}</span>
                             <span class="text-[8px] font-black uppercase px-1.5 py-0.5 rounded bg-gray-100">${r.recurring?'Hàng năm':'1 Lần'}</span>
                         </div>
-                        <button onclick="confirmDeleteData('reminders', '${r.id}')" class="text-red-400 p-1"><i class="fas fa-trash-alt text-[10px]"></i></button>
+                        <button onclick="confirmDeleteData('reminders', '${r.id}')" class="text-gray-300 hover:text-red-500 p-1 bg-white rounded shadow-sm"><i class="fas fa-trash-alt text-[10px]"></i></button>
                     </div>
                 </div>`).join('');
         }
-        function handleRemExcelUpload(e) { /* Giữ nguyên logic import gốc */ }
+        function downloadRemTemplate() {
+            const ws = XLSX.utils.aoa_to_sheet([ ["STT", "Họ tên", "Ngày sinh", "Ghi chú"], [1, "Thầy Nguyễn Văn A", "17/08/1983", "Sinh nhật GV"] ]);
+            ws['!cols'] = [{wch:5}, {wch:25}, {wch:15}, {wch:30}];
+            const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "SinhNhat");
+            XLSX.writeFile(wb, "Mau_Nhap_Sinh_Nhat.xlsx");
+        }
+        function handleRemExcelUpload(e) {
+            const file = e.target.files[0]; if(!file) return; const reader = new FileReader();
+            reader.onload = function(evt) {
+                try {
+                    const wb = XLSX.read(evt.target.result, {type: 'binary'}); const rawData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {raw: false}); 
+                    let successCount = 0;
+                    rawData.forEach(row => {
+                        const name = row['Họ tên']; const dobStr = row['Ngày sinh'];
+                        if(name && dobStr) {
+                            const parts = String(dobStr).split(/[\/\-]/);
+                            if(parts.length >= 2) {
+                                const d = parseInt(parts[0]), m = parseInt(parts[1]), y = parts.length >= 3 ? parseInt(parts[2]) : null;
+                                if(!isNaN(d) && !isNaN(m)) {
+                                    const note = row['Ghi chú'] ? ` (${row['Ghi chú']})` : '';
+                                    window.saveDataFn('reminders', { id: 'REM_' + Date.now() + Math.random().toString(36).substr(2, 5), title: `Sinh nhật ${name}${note}`, type: 'solar', day: d, month: m, year: y, recurring: true });
+                                    successCount++;
+                                }
+                            }
+                        }
+                    });
+                    showToast(`Đã thêm thành công ${successCount} lịch sinh nhật!`, 'success'); e.target.value = ''; renderReminders();
+                } catch (err) { showToast('Lỗi định dạng!', 'error'); }
+            }; reader.readAsBinaryString(file);
+        }
 
-        // --- Firebase / JSON Export-Import ---
-        async function initFirebase() { try { loadFromStorage(); renderCurrentTab(); } catch(e) {} } // Simplified for offline demo
+        // --- FIREBASE / EXPORT ---
+        async function initFirebase() { try { loadFromStorage(); renderCurrentTab(); } catch(e) {} } 
         function exportData(type) {
             let data = type === 'teacher' ? teachers : []; if(data.length === 0) return showToast('Không có dữ liệu!', 'error');
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = `Backup_${type}.json`; link.click();
@@ -1167,7 +1679,11 @@
         }
 
         // --- INIT ---
-        document.addEventListener('DOMContentLoaded', () => { startClock(); initFirebase(); switchTab('list'); });
+        document.addEventListener('DOMContentLoaded', () => { 
+            startClock(); 
+            initFirebase(); 
+            switchTab('reminder'); 
+        });
     </script>
 </body>
 </html>
