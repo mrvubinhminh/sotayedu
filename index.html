@@ -531,29 +531,96 @@
                 <!-- Bước 2: Hướng dẫn & Code -->
                 <div class="bg-gray-800 p-4 md:p-5 rounded-xl shadow-sm border border-gray-700 text-gray-200">
                     <div class="flex justify-between items-center mb-3 border-b border-gray-600 pb-2">
-                        <h3 class="text-sm md:text-base font-bold text-white"><i class="fas fa-code text-emerald-400 mr-2"></i>Mã Google Apps Script</h3>
+                        <h3 class="text-sm md:text-base font-bold text-white"><i class="fas fa-code text-emerald-400 mr-2"></i>Mã Google Apps Script (Phiên bản Đa Tab)</h3>
                         <button onclick="copyGasCode()" class="px-2 py-1 md:px-3 md:py-1.5 bg-gray-700 hover:bg-gray-600 text-white text-[10px] md:text-xs font-bold rounded-lg flex items-center transition"><i class="fas fa-copy mr-1"></i> Copy Code</button>
                     </div>
                     <ul class="text-[10px] md:text-xs space-y-1 md:space-y-2 mb-3 md:mb-4 text-gray-300 list-decimal pl-4">
                         <li>Tạo 1 Google Sheets mới, chọn <b>Tiện ích mở rộng > Apps Script</b>.</li>
                         <li>Dán code bên dưới vào và ấn Lưu (Ctrl+S).</li>
-                        <li>Bấm <b>Triển khai > Trình triển khai mới</b>. Loại: <b>Ứng dụng web</b>. Quyền: <b>Bất kỳ ai</b>.</li>
+                        <li>Bấm <b>Triển khai > Trình triển khai mới</b>. Loại: <b>Ứng dụng web</b>. Quyền: <b>Bất kỳ ai</b>. <mark class="bg-amber-500/20 text-amber-200 p-0.5 rounded">QUAN TRỌNG: Nếu update code, phải chọn "Trình triển khai MỚI".</mark></li>
                         <li>Copy "Web app URL" và dán vào ô Kết nối bên trên.</li>
                     </ul>
-                    <textarea id="gasCodeBox" readonly class="w-full h-32 md:h-48 bg-gray-900 text-emerald-400 p-3 rounded-lg font-mono text-[10px] md:text-xs border border-gray-700 focus:outline-none custom-scrollbar whitespace-pre">
+                    <textarea id="gasCodeBox" readonly class="w-full h-40 md:h-64 bg-gray-900 text-emerald-400 p-3 rounded-lg font-mono text-[10px] md:text-xs border border-gray-700 focus:outline-none custom-scrollbar whitespace-pre">
 function doPost(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var data = e.postData.contents;
-  sheet.getRange(1, 1).setValue(data);
-  return ContentService.createTextOutput(JSON.stringify({"status": "success"}))
-    .setMimeType(ContentService.MimeType.JSON);
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var payload = JSON.parse(e.postData.contents);
+
+    // Hàm hỗ trợ: Lưu từng mảng dữ liệu vào từng Sheet riêng biệt
+    function saveCollection(sheetName, dataArray) {
+      var sheet = ss.getSheetByName(sheetName);
+      if (!sheet) { sheet = ss.insertSheet(sheetName); }
+      sheet.clear(); // Xóa dữ liệu cũ
+      
+      if (dataArray && dataArray.length > 0) {
+        // Tạo mảng 2 chiều: [ID, Dữ liệu JSON] lưu theo từng dòng
+        var rows = dataArray.map(function(item) {
+          return [item.id || "no_id", JSON.stringify(item)];
+        });
+        sheet.getRange(1, 1, rows.length, 2).setValues(rows);
+      }
+    }
+
+    // Phân loại và tạo các thư mục (Sheet)
+    if(payload.teachers) saveCollection('Teachers', payload.teachers);
+    if(payload.students) saveCollection('Students', payload.students);
+    if(payload.notes) saveCollection('Notes', payload.notes);
+    if(payload.schedules) saveCollection('Schedules', payload.schedules);
+    if(payload.reminders) saveCollection('Reminders', payload.reminders);
+
+    // Lưu thời gian đồng bộ cuối cùng
+    var metaSheet = ss.getSheetByName('Meta');
+    if(!metaSheet) metaSheet = ss.insertSheet('Meta');
+    metaSheet.clear();
+    metaSheet.getRange(1,1,1,2).setValues([["lastSync", payload.lastSync || new Date().toISOString()]]);
+
+    return ContentService.createTextOutput(JSON.stringify({"status": "success"}))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({"status": "error", "message": error.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 }
 
 function doGet(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var data = sheet.getRange(1, 1).getValue();
-  if(!data) data = "{}";
-  return ContentService.createTextOutput(data).setMimeType(ContentService.MimeType.JSON);
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var result = {};
+
+    // Hàm hỗ trợ: Đọc dữ liệu từ từng Sheet
+    function readCollection(sheetName) {
+      var sheet = ss.getSheetByName(sheetName);
+      if (!sheet) return [];
+      var lastRow = sheet.getLastRow();
+      if (lastRow === 0) return [];
+      
+      var data = sheet.getRange(1, 2, lastRow, 1).getValues(); // Đọc cột B (chứa JSON)
+      var collection = [];
+      for (var i = 0; i < data.length; i++) {
+        if (data[i][0]) {
+          try { collection.push(JSON.parse(data[i][0])); } catch (e) {}
+        }
+      }
+      return collection;
+    }
+
+    result.teachers = readCollection('Teachers');
+    result.students = readCollection('Students');
+    result.notes = readCollection('Notes');
+    result.schedules = readCollection('Schedules');
+    result.reminders = readCollection('Reminders');
+
+    var metaSheet = ss.getSheetByName('Meta');
+    result.lastSync = (metaSheet && metaSheet.getLastRow() > 0) ? metaSheet.getRange(1,2).getValue() : new Date().toISOString();
+
+    return ContentService.createTextOutput(JSON.stringify(result))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({"status": "error", "message": error.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 }</textarea>
                 </div>
             </div>
@@ -1423,58 +1490,96 @@ function doGet(e) {
         function copyGasCode() {
             const codeBox = document.getElementById('gasCodeBox'); codeBox.select(); document.execCommand('copy'); showToast('Đã copy mã Script!');
         }
+        
         async function syncUpToCloud() {
             const url = localStorage.getItem('SMART_SYNC_URL'); if(!url) return showToast('Vui lòng nhập URL Cloud!', 'error');
             showToast('Đang đẩy dữ liệu lên Cloud...', 'success');
             const payload = { teachers, students, notes, schedules, reminders, lastSync: new Date().toISOString() };
             try {
-                const res = await fetch(url, { method: 'POST', body: JSON.stringify(payload), headers: { 'Content-Type': 'text/plain;charset=utf-8' }});
+                // Fetch với text/plain để vượt qua lỗi Preflight CORS của Google Script
+                const res = await fetch(url, { 
+                    method: 'POST', 
+                    body: JSON.stringify(payload), 
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                });
                 const result = await res.json();
-                if(result.status === 'success') showToast('Đã đồng bộ LÊN Cloud thành công!', 'success'); else showToast('Có lỗi từ server!', 'error');
-            } catch (error) { showToast('Lỗi mạng hoặc URL sai!', 'error'); }
+                if(result.status === 'success') {
+                    showToast('Đã đồng bộ LÊN Cloud thành công!', 'success');
+                } else {
+                    showToast('Lỗi từ Server: ' + result.message, 'error');
+                }
+            } catch (error) { 
+                showToast('Lỗi kết nối! Kiểm tra lại mạng hoặc URL.', 'error'); 
+            }
         }
+
         async function syncDownFromCloud() {
             const url = localStorage.getItem('SMART_SYNC_URL'); if(!url) return showToast('Vui lòng nhập URL Cloud!', 'error');
-            openConfirmModal("Tải dữ liệu từ Cloud?", "Dữ liệu trên máy này sẽ bị GHI ĐÈ. Bạn chắc chứ?", async () => {
+            openConfirmModal("Tải dữ liệu từ Cloud?", "Dữ liệu trên máy này sẽ bị GHI ĐÈ bằng dữ liệu từ Cloud. Bạn chắc chứ?", async () => {
                 showToast('Đang tải dữ liệu về...', 'success');
                 try {
-                    const res = await fetch(url); const data = await res.json();
+                    const res = await fetch(url); 
+                    const data = await res.json();
+                    
+                    if(data.status === 'error') {
+                        return showToast('Lỗi từ Server: ' + data.message, 'error');
+                    }
+
                     if (data && typeof data === 'object' && !Array.isArray(data)) {
-                        if (data.teachers) teachers = data.teachers; if (data.students) students = data.students; if (data.notes) notes = data.notes;
-                        if (data.schedules) schedules = data.schedules; if (data.reminders) reminders = data.reminders;
-                        saveToStorage(); renderCurrentTab(); showToast(`Đã khôi phục dữ liệu! (Bản lưu lúc: ${new Date(data.lastSync).toLocaleString('vi-VN')})`, 'success');
-                    } else showToast('Dữ liệu trên Cloud rỗng!', 'error');
-                } catch (error) { showToast('Lỗi mạng hoặc URL sai!', 'error'); }
+                        if (data.teachers) teachers = data.teachers; 
+                        if (data.students) students = data.students; 
+                        if (data.notes) notes = data.notes;
+                        if (data.schedules) schedules = data.schedules; 
+                        if (data.reminders) reminders = data.reminders;
+                        
+                        saveToStorage(); renderCurrentTab(); 
+                        showToast(`Đã khôi phục dữ liệu! (Bản lưu: ${new Date(data.lastSync).toLocaleString('vi-VN')})`, 'success');
+                    } else {
+                        showToast('Dữ liệu trên Cloud rỗng!', 'error');
+                    }
+                } catch (error) { 
+                    showToast('Lỗi kết nối! Kiểm tra lại mạng hoặc URL.', 'error'); 
+                }
             });
         }
 
+        // --- EXPORT/IMPORT JSON CHUNG ---
         function exportData(type) {
-            let data = type === 'teacher' ? teachers : []; if(data.length === 0) return showToast('Trống!', 'error');
+            let data = type === 'teacher' ? teachers : [];
+            if(data.length === 0) return showToast('Không có dữ liệu để xuất!', 'error');
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = `Backup_${type}_${new Date().toISOString().slice(0,10)}.json`; link.click();
+            const link = document.createElement('a'); link.href = URL.createObjectURL(blob); 
+            link.download = `Backup_${type}_${new Date().toISOString().slice(0,10)}.json`; link.click();
         }
+
         function importData(e, type) {
-            const file = e.target.files[0]; if(!file) return; const reader = new FileReader();
+            const file = e.target.files[0]; if(!file) return;
+            const reader = new FileReader();
             reader.onload = function(evt) {
                 try {
                     const json = JSON.parse(evt.target.result);
-                    if(Array.isArray(json) && type === 'teacher') { let c = 0; const ex = new Set(teachers.map(t=>t.id)); json.forEach(i => { if(!ex.has(i.id)) { window.saveDataFn('teachers', i); c++; } }); showToast(`Nhập ${c} hồ sơ!`); }
-                } catch (err) { showToast('JSON lỗi!', 'error'); } e.target.value = '';
-            }; reader.readAsText(file);
+                    if(Array.isArray(json) && type === 'teacher') {
+                        let count = 0; const existIds = new Set(teachers.map(t=>t.id));
+                        json.forEach(item => { if(!existIds.has(item.id)) { window.saveDataFn('teachers', item); count++; } });
+                        showToast(`Nhập thành công ${count} hồ sơ (bỏ qua trùng lặp)!`, 'success');
+                    }
+                } catch (err) { showToast('File JSON không hợp lệ!', 'error'); }
+                e.target.value = '';
+            };
+            reader.readAsText(file);
         }
 
-        function toggleMobileMenu() {
-            // Placeholder cho logic menu vuốt - Đã xử lý bằng bottom nav
-        }
-
-        // ==========================================
-        // KHỞI ĐỘNG HỆ THỐNG
-        // ==========================================
+        // --- KHỞI ĐỘNG HỆ THỐNG ---
         document.addEventListener('DOMContentLoaded', () => {
             updateDateHeader();
-            setInterval(updateDateHeader, 60000); // Cập nhật ngày mỗi 1 phút thay vì 1 giây
+            // Cập nhật ngày tháng Âm/Dương mỗi phút một lần
+            setInterval(updateDateHeader, 60000); 
+            
+            // Tải dữ liệu từ LocalStorage
             loadFromStorage();
-            switchTab('reminder'); // Đặt màn hình mặc định là Nhắc nhở theo yêu cầu
+            
+            // Mở tab Nhắc Nhở mặc định khi vừa vào App
+            switchTab('reminder'); 
         });
     </script>
 </body>
