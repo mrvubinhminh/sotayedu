@@ -120,6 +120,11 @@
                 <span class="text-[10px] md:text-sm font-bold md:font-medium whitespace-nowrap">Sổ Tay</span>
             </button>
 
+            <button onclick="switchTab('timetable')" id="btn-tab-timetable" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-4 md:px-3 py-1.5 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[70px]">
+                <i class="fas fa-table text-lg md:text-xl md:w-6 md:text-center text-pink-400 group-hover:scale-110 transition-transform"></i>
+                <span class="text-[10px] md:text-sm font-bold md:font-medium whitespace-nowrap">TKB</span>
+            </button>
+
             <div class="hidden md:block w-full h-[1px] bg-indigo-800/50 my-1"></div>
 
             <!-- Nhóm Học sinh -->
@@ -173,6 +178,7 @@
                 </div>
                 <div class="flex flex-wrap gap-2 w-full md:w-auto">
                     <button onclick="downloadRemTemplate()" class="flex-1 md:flex-none justify-center px-3 py-2 bg-white text-emerald-600 border border-emerald-200 rounded-lg hover:bg-emerald-50 text-xs md:text-sm font-semibold shadow-sm"><i class="fas fa-download mr-1"></i> Mẫu Excel</button>
+                    <button onclick="openBulkDeleteRemModal()" class="flex-1 md:flex-none justify-center px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 text-xs md:text-sm font-bold shadow-sm"><i class="fas fa-trash-alt mr-1 text-gray-500"></i> Xoá Nhiều</button>
                     <button onclick="document.getElementById('remExcelInput').click()" class="flex-1 md:flex-none justify-center px-3 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 text-xs md:text-sm font-bold shadow-sm"><i class="fas fa-file-excel mr-1"></i> Nhập Excel</button>
                     <input type="file" id="remExcelInput" accept=".xlsx, .xls" class="hidden" onchange="handleRemExcelUpload(event)">
                     <button onclick="openReminderModal()" class="w-full md:w-auto justify-center px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm font-bold shadow-sm"><i class="fas fa-plus mr-1"></i> Thêm Sự Kiện</button>
@@ -237,6 +243,23 @@
                 <!-- LIST TIMELINE (Ẩn mặc định) -->
                 <div class="hidden flex-col gap-4 pb-12 overflow-y-auto h-full px-1" id="weeklyScheduleTimeline">
                      <!-- Javascript generates Timeline here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: THỜI KHOÁ BIỂU -->
+        <div id="timetable-tab" class="hidden tab-content max-w-full mx-auto h-full flex flex-col">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4 bg-white p-4 md:p-0 md:bg-transparent rounded-xl md:rounded-none shadow-sm md:border-none border border-gray-100 shrink-0">
+                <div class="w-full flex justify-between items-center md:block">
+                    <div>
+                        <h2 class="text-xl md:text-2xl font-bold text-gray-800 flex items-center"><i class="fas fa-table text-pink-500 mr-2"></i>Thời Khoá Biểu</h2>
+                        <p class="text-gray-500 text-xs mt-1">Lịch giảng dạy, công việc tự động lưu và đồng bộ.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1 overflow-x-auto overflow-y-auto custom-scrollbar relative w-full h-full pb-4">
+                <div class="flex space-x-3 md:space-x-4 min-w-max items-start snap-x-mandatory" id="timetableGrid">
+                    <!-- JS renders timetable columns here -->
                 </div>
             </div>
         </div>
@@ -361,22 +384,7 @@
                         <button onclick="downloadExcelTemplate()" class="text-indigo-600 hover:text-indigo-800 text-xs md:text-sm font-semibold underline"><i class="fas fa-download mr-1"></i> Tải File Excel Mẫu Trống</button>
                     </div>
                     
-                    <!-- Bảng Preview Data -->
-                    <div id="previewContainer" class="hidden border border-gray-200 rounded-xl overflow-hidden">
-                        <div class="px-3 md:px-4 py-2 md:py-3 bg-gray-100 border-b border-gray-200 flex justify-between items-center">
-                            <h3 class="text-xs md:text-sm font-bold text-gray-800">Xem trước (<span id="previewCount" class="text-emerald-600">0</span> dòng)</h3>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200 text-xs">
-                                <thead class="bg-gray-50" id="previewHeader"></thead>
-                                <tbody class="bg-white divide-y divide-gray-200" id="previewBody"></tbody>
-                            </table>
-                        </div>
-                        <div class="p-3 md:p-4 bg-gray-50 flex justify-end space-x-2 md:space-x-3 border-t border-gray-200">
-                            <button type="button" onclick="cancelImport()" class="px-3 md:px-4 py-1.5 md:py-2 border border-gray-300 text-gray-700 rounded-lg text-xs md:text-sm hover:bg-white font-medium">Hủy</button>
-                            <button type="button" onclick="confirmImport()" class="px-4 md:px-6 py-1.5 md:py-2 bg-emerald-600 text-white rounded-lg text-xs md:text-sm hover:bg-emerald-700 font-bold shadow-sm"><i class="fas fa-save mr-1 md:mr-2"></i> Lưu</button>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -391,9 +399,13 @@
                             <i class="fas fa-file-export md:mr-2 mr-1"></i> Xuất
                         </button>
                         <button onclick="document.getElementById('importFileTeacher').click()" class="flex-1 md:flex-none justify-center px-3 md:px-4 py-1.5 md:py-2 bg-amber-50 text-amber-700 border border-amber-200 rounded-lg text-xs md:text-sm font-semibold hover:bg-amber-100 transition flex items-center">
-                            <i class="fas fa-file-import md:mr-2 mr-1"></i> Nhập
+                            <i class="fas fa-file-import md:mr-2 mr-1"></i> JSON
                         </button>
                         <input type="file" id="importFileTeacher" accept=".json" class="hidden" onchange="importData(event, 'teacher')">
+                        <button onclick="document.getElementById('importExcelTeacher').click()" class="flex-1 md:flex-none justify-center px-3 md:px-4 py-1.5 md:py-2 bg-blue-50 text-blue-700 border border-blue-200 rounded-lg text-xs md:text-sm font-semibold hover:bg-blue-100 transition flex items-center">
+                            <i class="fas fa-file-excel md:mr-2 mr-1"></i> Excel
+                        </button>
+                        <input type="file" id="importExcelTeacher" accept=".xlsx, .xls" class="hidden" onchange="handleTeacherExcelUpload(event)">
                     </div>
                 </div>
                 
@@ -407,10 +419,11 @@
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-4 md:px-5 py-2.5 md:py-3 text-left text-[10px] md:text-xs font-bold text-gray-600 uppercase tracking-wider">Họ và Tên</th>
-                                    <th class="hidden sm:table-cell px-5 py-3 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Ngày Sinh</th>
-                                    <th class="px-4 md:px-5 py-2.5 md:py-3 text-left text-[10px] md:text-xs font-bold text-gray-600 uppercase tracking-wider">Chức vụ</th>
-                                    <th class="px-4 md:px-5 py-2.5 md:py-3 text-right text-[10px] md:text-xs font-bold text-gray-600 uppercase tracking-wider">Thao tác</th>
+                                    <th class="px-4 py-2 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Họ và Tên</th>
+                                    <th class="hidden sm:table-cell px-4 py-2 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Đơn vị</th>
+                                    <th class="hidden sm:table-cell px-4 py-2 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Ngày Sinh</th>
+                                    <th class="hidden sm:table-cell px-4 py-2 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">SĐT</th>
+                                    <th class="px-4 py-2 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody id="profilesTable" class="bg-white divide-y divide-gray-200">
@@ -567,6 +580,7 @@ function doPost(e) {
     if(payload.notes) saveCollection('Notes', payload.notes);
     if(payload.schedules) saveCollection('Schedules', payload.schedules);
     if(payload.reminders) saveCollection('Reminders', payload.reminders);
+    if(payload.timetables) saveCollection('Timetables', payload.timetables);
 
     // Lưu thời gian đồng bộ cuối cùng
     var metaSheet = ss.getSheetByName('Meta');
@@ -610,6 +624,7 @@ function doGet(e) {
     result.notes = readCollection('Notes');
     result.schedules = readCollection('Schedules');
     result.reminders = readCollection('Reminders');
+    result.timetables = readCollection('Timetables');
 
     var metaSheet = ss.getSheetByName('Meta');
     result.lastSync = (metaSheet && metaSheet.getLastRow() > 0) ? metaSheet.getRange(1,2).getValue() : new Date().toISOString();
@@ -653,8 +668,25 @@ function doGet(e) {
                 </div>
                 <div class="p-4 md:p-6 overflow-y-auto flex-1">
                     <input type="hidden" id="noteId">
-                    <input type="text" id="noteTitle" placeholder="Tiêu đề..." class="w-full mb-3 md:mb-4 px-0 py-1.5 md:py-2 border-0 border-b-2 border-gray-200 focus:border-amber-400 font-bold text-lg md:text-xl text-gray-800 outline-none bg-transparent">
+                    <div class="flex items-center gap-2 mb-3 md:mb-4">
+                        <input type="text" id="noteTitle" placeholder="Tiêu đề..." class="flex-1 px-0 py-1.5 md:py-2 border-0 border-b-2 border-gray-200 focus:border-amber-400 font-bold text-lg md:text-xl text-gray-800 outline-none bg-transparent">
+                        <button id="notePinBtn" type="button" onclick="toggleNotePin()" class="w-10 h-10 rounded-full flex items-center justify-center text-gray-300 hover:text-amber-500 hover:bg-amber-50 transition-colors shrink-0">
+                            <i class="fas fa-thumbtack text-xl" id="notePinIcon"></i>
+                        </button>
+                        <input type="hidden" id="noteIsPinned" value="false">
+                    </div>
                     
+                    <div class="mb-4">
+                        <div class="flex gap-2" id="noteColorPicker">
+                            <button type="button" onclick="selectNoteColor('white')" class="note-color-btn w-6 h-6 rounded-full border-2 border-gray-300 ring-offset-2 ring-2 ring-gray-400 bg-white" data-color="white"></button>
+                            <button type="button" onclick="selectNoteColor('yellow')" class="note-color-btn w-6 h-6 rounded-full border-2 border-transparent bg-yellow-100 hover:scale-110 transition-transform" data-color="yellow"></button>
+                            <button type="button" onclick="selectNoteColor('green')" class="note-color-btn w-6 h-6 rounded-full border-2 border-transparent bg-emerald-100 hover:scale-110 transition-transform" data-color="green"></button>
+                            <button type="button" onclick="selectNoteColor('blue')" class="note-color-btn w-6 h-6 rounded-full border-2 border-transparent bg-sky-100 hover:scale-110 transition-transform" data-color="blue"></button>
+                            <button type="button" onclick="selectNoteColor('red')" class="note-color-btn w-6 h-6 rounded-full border-2 border-transparent bg-red-100 hover:scale-110 transition-transform" data-color="red"></button>
+                        </div>
+                        <input type="hidden" id="noteColor" value="white">
+                    </div>
+
                     <div class="mb-3 flex flex-wrap gap-1.5 items-center">
                         <span class="text-[10px] font-bold text-gray-400 uppercase mr-1"><i class="fas fa-bolt text-amber-400"></i> Tag nhanh:</span>
                         <button class="text-[10px] font-bold px-2 py-1 bg-blue-50 text-blue-600 rounded" onclick="insertTag('#CongViec')">#CongViec</button>
@@ -662,7 +694,26 @@ function doGet(e) {
                         <button class="text-[10px] font-bold px-2 py-1 bg-red-50 text-red-600 rounded" onclick="insertTag('#QuanTrong')">#QuanTrong</button>
                     </div>
                     
-                    <textarea id="noteContent" rows="6" placeholder="Nội dung... Gõ #Tag để phân loại tự động." class="w-full h-40 md:h-auto px-3 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 bg-gray-50 text-sm"></textarea>
+                    <textarea id="noteContent" rows="4" placeholder="Nội dung... Gõ #Tag để phân loại tự động." class="w-full px-3 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 bg-gray-50 text-sm mb-3"></textarea>
+                    
+                    <div class="mb-3 border-t border-gray-100 pt-3">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase flex items-center mb-1"><i class="fas fa-check-square mr-1"></i> Công việc con (Checklist)</label>
+                        <div id="noteChecklistContainer" class="mb-2 space-y-1"></div>
+                        <div class="flex gap-2">
+                            <input type="text" id="noteChecklistInput" placeholder="Thêm việc..." class="flex-1 px-2 py-1.5 border border-gray-200 rounded text-xs outline-none focus:border-amber-400">
+                            <button type="button" onclick="addNoteChecklistItem()" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded text-xs font-bold text-gray-600 transition-colors">Thêm</button>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-100 pt-3">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase flex items-center mb-1"><i class="fas fa-link mr-1"></i> Liên kết (Học sinh/Giáo viên)</label>
+                        <div class="flex gap-2 mb-2">
+                            <input type="text" id="noteMentionInput" list="noteMentionList" placeholder="Gõ tên để tìm..." class="flex-1 px-2 py-1.5 border border-gray-200 rounded text-xs outline-none focus:border-amber-400">
+                            <datalist id="noteMentionList"></datalist>
+                            <button type="button" onclick="addNoteMention()" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded text-xs font-bold text-gray-600 transition-colors">Thêm</button>
+                        </div>
+                        <div id="noteMentionsContainer" class="flex flex-wrap gap-1.5"></div>
+                    </div>
                 </div>
                 <div class="px-4 md:px-6 py-3 bg-gray-50 border-t border-gray-100 flex justify-end space-x-3 shrink-0 pb-6 md:pb-3">
                     <button onclick="closeModal('noteModal')" class="px-4 md:px-5 py-2 border border-gray-300 text-gray-700 text-sm rounded-lg hover:bg-white">Hủy</button>
@@ -671,6 +722,34 @@ function doGet(e) {
             </div>
         </div>
 
+        <!-- Modal: Xoá Hàng Loạt Sự Kiện -->
+        <div id="bulkDeleteRemModal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
+            <div class="modal-overlay absolute w-full h-full bg-gray-900/60 backdrop-blur-sm" onclick="closeModal('bulkDeleteRemModal')"></div>
+            <div class="modal-container bg-white w-full md:w-11/12 md:max-w-2xl mx-auto md:rounded-xl shadow-2xl z-50 overflow-hidden flex flex-col h-full md:h-auto max-h-[90vh]">
+                <div class="px-4 md:px-6 py-3 border-b border-gray-100 bg-red-50 text-red-700 flex justify-between items-center shrink-0">
+                    <h3 class="text-base md:text-lg font-bold"><i class="fas fa-trash-alt mr-2"></i>Xoá Nhiều Sự Kiện</h3>
+                    <button onclick="closeModal('bulkDeleteRemModal')" class="text-red-400 hover:text-red-600 p-1"><i class="fas fa-times text-lg"></i></button>
+                </div>
+                <div class="p-3 md:p-4 bg-gray-50 flex gap-2 overflow-x-auto shrink-0 custom-scrollbar">
+                    <button onclick="filterBulkDeleteRem('all', this)" class="bulk-rem-cat px-3 py-1.5 bg-red-600 text-white font-bold rounded shadow-sm text-xs whitespace-nowrap">Tất cả</button>
+                    <button onclick="filterBulkDeleteRem('sinh_nhat', this)" class="bulk-rem-cat px-3 py-1.5 bg-white text-gray-600 border border-gray-200 font-bold rounded shadow-sm text-xs whitespace-nowrap">Sinh nhật</button>
+                    <button onclick="filterBulkDeleteRem('gio', this)" class="bulk-rem-cat px-3 py-1.5 bg-white text-gray-600 border border-gray-200 font-bold rounded shadow-sm text-xs whitespace-nowrap">Giỗ</button>
+                    <button onclick="filterBulkDeleteRem('ngay_quan_trong', this)" class="bulk-rem-cat px-3 py-1.5 bg-white text-gray-600 border border-gray-200 font-bold rounded shadow-sm text-xs whitespace-nowrap">Ngày quan trọng</button>
+                    <button onclick="filterBulkDeleteRem('khac', this)" class="bulk-rem-cat px-3 py-1.5 bg-white text-gray-600 border border-gray-200 font-bold rounded shadow-sm text-xs whitespace-nowrap">Khác</button>
+                </div>
+                <div class="px-4 py-2 border-b border-gray-100 flex justify-between items-center bg-white shrink-0">
+                    <label class="flex items-center text-sm font-bold text-gray-700 cursor-pointer"><input type="checkbox" id="bulkRemSelectAll" onchange="toggleSelectAllBulkRem()" class="mr-2 w-4 h-4 text-red-500 rounded border-gray-300">Chọn tất cả danh sách dưới</label>
+                    <span class="text-xs font-bold text-red-500" id="bulkRemCount">Đã chọn: 0</span>
+                </div>
+                <div class="p-2 md:p-4 overflow-y-auto flex-1 bg-white" id="bulkDeleteRemList">
+                    <!-- Checkbox list -->
+                </div>
+                <div class="px-4 md:px-6 py-3 bg-gray-50 border-t border-gray-100 flex justify-end space-x-3 shrink-0">
+                    <button onclick="closeModal('bulkDeleteRemModal')" class="px-4 py-2 border border-gray-300 text-gray-700 text-sm rounded-lg">Hủy</button>
+                    <button onclick="executeBulkDeleteRem()" class="px-5 py-2 bg-red-600 text-white text-sm font-bold rounded-lg shadow-sm"><i class="fas fa-trash-alt mr-1"></i> Xoá Đã Chọn</button>
+                </div>
+            </div>
+        </div>
         <!-- Modal: Sự kiện & Nhắc nhở -->
         <div id="reminderModal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-50">
             <div class="modal-overlay absolute w-full h-full bg-gray-900/60 backdrop-blur-sm" onclick="closeModal('reminderModal')"></div>
@@ -707,6 +786,21 @@ function doGet(e) {
                             <input type="number" id="remLunarMonth" placeholder="Tháng(1-12)" class="w-1/3 px-2 md:px-3 py-2 border border-gray-300 rounded-lg text-sm bg-gray-50 outline-none">
                             <input type="number" id="remLunarYear" placeholder="Năm (Tùy chọn)" class="w-1/3 px-2 md:px-3 py-2 border border-gray-300 rounded-lg text-sm bg-gray-50 outline-none">
                         </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-[10px] md:text-xs font-bold text-gray-600 mb-1 uppercase">Số điện thoại</label>
+                        <input type="text" id="remPhone" placeholder="090..." class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-gray-50 outline-none focus:border-red-400">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-[10px] md:text-xs font-bold text-gray-600 mb-1 uppercase">Địa chỉ</label>
+                        <input type="text" id="remAddress" placeholder="Số nhà, đường..." class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-gray-50 outline-none focus:border-red-400">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-[10px] md:text-xs font-bold text-gray-600 mb-1 uppercase">Ghi chú</label>
+                        <textarea id="remNote" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-gray-50 outline-none focus:border-red-400 resize-none"></textarea>
                     </div>
                     
                     <label class="flex items-center mb-2 cursor-pointer bg-gray-50 p-2 md:p-3 rounded-lg border border-gray-200">
@@ -754,6 +848,9 @@ function doGet(e) {
         window.notes = [];
         window.schedules = [];
         window.reminders = [];
+        window.timetables = [];
+        window.currentNoteMentions = [];
+        window.currentNoteChecklist = [];
         
         // Mặc định mở Nhắc Nhở đầu tiên theo yêu cầu
         let currentTab = 'reminder'; 
@@ -770,7 +867,7 @@ function doGet(e) {
             if(tabEl) tabEl.classList.remove('hidden');
             
             // Xử lý Active state trên menu Mobile & Desktop
-            const menus = ['list', 'form', 'student-list', 'student-import', 'note', 'schedule', 'reminder', 'settings'];
+            const menus = ['list', 'form', 'student-list', 'student-import', 'note', 'schedule', 'reminder', 'settings', 'timetable'];
             menus.forEach(m => {
                 const btn = document.getElementById(`btn-tab-${m}`);
                 if(btn) {
@@ -783,6 +880,7 @@ function doGet(e) {
                     else if(m==='schedule' && icon) icon.className = 'far fa-calendar-check text-lg md:text-xl md:w-6 md:text-center text-gray-400 md:text-sky-400 group-hover:scale-110 transition-transform';
                     else if(m==='note' && icon) icon.className = 'fas fa-book-open text-lg md:text-xl md:w-6 md:text-center text-gray-400 md:text-amber-400 group-hover:scale-110 transition-transform';
                     else if(m==='student-import' && icon) icon.className = 'fas fa-file-excel text-lg md:text-xl md:w-6 md:text-center text-gray-400 md:text-emerald-500 group-hover:scale-110 transition-transform';
+                    else if(m==='timetable' && icon) icon.className = 'fas fa-table text-lg md:text-xl md:w-6 md:text-center text-gray-400 md:text-pink-400 group-hover:scale-110 transition-transform';
                     else if(icon) icon.classList.add('text-gray-400');
                 }
             });
@@ -800,6 +898,7 @@ function doGet(e) {
                     else if(tabId==='schedule') icon.classList.add('text-sky-500');
                     else if(tabId==='note') icon.classList.add('text-amber-500');
                     else if(tabId==='student-import') icon.classList.add('text-emerald-500');
+                    else if(tabId==='timetable') icon.classList.add('text-pink-500');
                     else icon.classList.add('text-indigo-600', 'md:text-white');
                 }
             }
@@ -812,6 +911,7 @@ function doGet(e) {
             if(currentTab === 'list') renderTeacherList();
             else if(currentTab === 'student-list') renderStudentList();
             else if(currentTab === 'note') renderNotes();
+            else if(currentTab === 'timetable') renderTimetable();
             else if(currentTab === 'schedule') initSchedule();
             else if(currentTab === 'reminder') {
                 const activeFilter = document.querySelector('.rem-filter-btn.bg-white')?.id.replace('btn-filter-', '') || 'month';
@@ -882,6 +982,7 @@ function doGet(e) {
             localStorage.setItem('SMART_NOTES', JSON.stringify(notes));
             localStorage.setItem('SMART_SCHEDULES', JSON.stringify(schedules));
             localStorage.setItem('SMART_REMINDERS', JSON.stringify(reminders));
+            localStorage.setItem('SMART_TIMETABLES', JSON.stringify(timetables));
         }
         function loadFromStorage() {
             teachers = JSON.parse(localStorage.getItem('SMART_TEACHERS') || '[]');
@@ -889,6 +990,7 @@ function doGet(e) {
             notes = JSON.parse(localStorage.getItem('SMART_NOTES') || '[]');
             schedules = JSON.parse(localStorage.getItem('SMART_SCHEDULES') || '[]');
             reminders = JSON.parse(localStorage.getItem('SMART_REMINDERS') || '[]');
+            timetables = JSON.parse(localStorage.getItem('SMART_TIMETABLES') || '[]');
             
             const savedUrl = localStorage.getItem('SMART_SYNC_URL');
             if(savedUrl) {
@@ -969,32 +1071,78 @@ function doGet(e) {
             closeModal('detailModal'); switchTab('form');
         }
 
+        function handleTeacherExcelUpload(e) {
+            const file = e.target.files[0]; if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                try {
+                    const wb = XLSX.read(evt.target.result, {type: 'binary'});
+                    const rawData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "", raw: false, dateNF: 'dd/mm/yyyy' });
+                    if(rawData.length > 0) {
+                        let count = 0;
+                        rawData.forEach(row => {
+                            const keys = Object.keys(row);
+                            const kName = keys.find(k => k.toLowerCase().includes('họ và tên')) || keys[1] || keys[0];
+                            const kGender = keys.find(k => k.toLowerCase().includes('giới tính'));
+                            const kPosition = keys.find(k => k.toLowerCase().includes('nghề nghiệp') || k.toLowerCase().includes('công việc'));
+                            const kDob = keys.find(k => k.toLowerCase().includes('ngày sinh') || k.toLowerCase().includes('năm sinh'));
+                            const kPhone = keys.find(k => k.toLowerCase().includes('điện thoại'));
+                            const kCccd = keys.find(k => k.toLowerCase().includes('cmt') || k.toLowerCase().includes('ccc'));
+                            const kBhyt = keys.find(k => k.toLowerCase().includes('bhyt'));
+                            const kAddress = keys.find(k => k.toLowerCase().includes('số nhà') || k.toLowerCase().includes('tổ'));
+                            const kDept = keys.find(k => k.toLowerCase().includes('đơn vị'));
+
+                            const tName = row[kName]; if(!tName || tName.trim() === '') return;
+                            const t = {
+                                id: 'GV_' + Date.now() + Math.random().toString(36).substr(2, 5),
+                                fullName: String(tName).trim(),
+                                gender: kGender ? String(row[kGender]).trim() : '',
+                                position: kPosition ? String(row[kPosition]).trim() : '',
+                                dob: kDob ? String(row[kDob]).trim() : '',
+                                phone: kPhone ? String(row[kPhone]).trim() : '',
+                                cccd: kCccd ? String(row[kCccd]).trim() : '',
+                                bhyt: kBhyt ? String(row[kBhyt]).trim() : '',
+                                currentAddress: kAddress ? String(row[kAddress]).trim() : '',
+                                department: kDept ? String(row[kDept]).trim() : ''
+                            };
+                            window.saveDataFn('teachers', t);
+                            count++;
+                        });
+                        showToast(`Đã nhập thành công ${count} giáo viên!`, 'success');
+                        renderTeacherList();
+                    } else showToast('File rỗng!', 'error');
+                } catch(error) { showToast('Lỗi định dạng file Excel!', 'error'); }
+                e.target.value = '';
+            };
+            reader.readAsBinaryString(file);
+        }
         function renderTeacherList() {
             const tbody = document.getElementById('profilesTable');
             const emptyState = document.getElementById('emptyTeacherState');
             const search = document.getElementById('searchTeacherInput').value.toLowerCase();
-            const filtered = teachers.filter(t => t.fullName.toLowerCase().includes(search) || t.cccd.includes(search) || (t.position && t.position.toLowerCase().includes(search)));
+            const filtered = teachers.filter(t => (t.fullName || '').toLowerCase().includes(search) || (t.cccd || '').includes(search) || (t.position || '').toLowerCase().includes(search) || (t.department || '').toLowerCase().includes(search) || (t.phone || '').includes(search));
             
             if(filtered.length === 0) { tbody.parentElement.classList.add('hidden'); emptyState.classList.remove('hidden'); } 
             else {
                 tbody.parentElement.classList.remove('hidden'); emptyState.classList.add('hidden');
                 tbody.innerHTML = filtered.map(t => `
                 <tr class="hover:bg-indigo-50/50 transition-colors">
-                    <td class="px-4 md:px-5 py-3 md:py-4">
+                    <td class="px-4 py-3">
                         <div class="flex items-center">
-                            <div class="h-8 w-8 md:h-10 md:w-10 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center shrink-0 uppercase">${t.fullName.charAt(0)}</div>
-                            <div class="ml-2 md:ml-3">
-                                <div class="font-bold text-gray-800 text-xs md:text-sm">${escapeHTML(t.fullName)}</div>
-                                <div class="text-[9px] md:text-[11px] font-medium text-gray-500"><i class="fas fa-id-card mr-1"></i>${escapeHTML(t.cccd)}</div>
+                            <div class="h-8 w-8 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center shrink-0 uppercase">${t.fullName.charAt(0)}</div>
+                            <div class="ml-2">
+                                <div class="font-bold text-gray-800 text-sm">${escapeHTML(t.fullName)}</div>
+                                <div class="text-[10px] text-gray-500 sm:hidden">${escapeHTML(t.department || '')} - ${escapeHTML(t.phone || '')}</div>
                             </div>
                         </div>
                     </td>
-                    <td class="hidden sm:table-cell px-5 py-4 whitespace-nowrap text-sm text-gray-700">${t.dob ? t.dob.split('-').reverse().join('/') : ''}</td>
-                    <td class="px-4 md:px-5 py-3 md:py-4 text-xs md:text-sm text-gray-700 font-medium break-words">${escapeHTML(t.position)}</td>
-                    <td class="px-4 md:px-5 py-3 md:py-4 whitespace-nowrap text-right">
-                        <button onclick="viewTeacher('${t.id}')" class="text-indigo-600 p-1 mr-1 md:mr-2" title="Xem"><i class="fas fa-eye md:text-lg"></i></button>
-                        <button onclick="editProfile('${t.id}')" class="text-amber-500 p-1 mr-1 md:mr-2" title="Sửa"><i class="fas fa-edit md:text-lg"></i></button>
-                        <button onclick="confirmDeleteData('teachers', '${t.id}')" class="text-red-500 p-1" title="Xóa"><i class="fas fa-trash-alt md:text-lg"></i></button>
+                    <td class="hidden sm:table-cell px-4 py-3 text-sm text-gray-700">${escapeHTML(t.department || '')}</td>
+                    <td class="hidden sm:table-cell px-4 py-3 text-sm text-gray-700">${escapeHTML(t.dob || '')}</td>
+                    <td class="hidden sm:table-cell px-4 py-3 text-sm text-gray-700">${escapeHTML(t.phone || '')}</td>
+                    <td class="px-4 py-3 text-right whitespace-nowrap">
+                        <button onclick="viewTeacher('${t.id}')" class="text-indigo-600 p-1 mr-1" title="Xem"><i class="fas fa-eye"></i></button>
+                        <button onclick="editProfile('${t.id}')" class="text-amber-500 p-1 mr-1" title="Sửa"><i class="fas fa-edit"></i></button>
+                        <button onclick="confirmDeleteData('teachers', '${t.id}')" class="text-red-500 p-1" title="Xóa"><i class="fas fa-trash-alt"></i></button>
                     </td>
                 </tr>`).join('');
             }
@@ -1002,20 +1150,24 @@ function doGet(e) {
 
         function viewTeacher(id) {
             const p = teachers.find(x => x.id === id); if(!p) return;
-            document.getElementById('modalMainTitle').innerText = "SƠ YẾU LÝ LỊCH";
-            document.getElementById('printHeader').classList.remove('hidden'); 
+            document.getElementById('modalMainTitle').innerText = "HỒ SƠ GIÁO VIÊN";
+            document.getElementById('printHeader').classList.add('hidden'); 
             
             document.getElementById('modalBody').innerHTML = `
                 <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
-                    <h4 class="text-xs font-bold text-indigo-700 col-span-full border-b pb-1 uppercase">I. CÁ NHÂN</h4>
                     <div class="sm:col-span-2"><dt class="text-[10px] font-bold text-gray-400 uppercase">Họ và Tên</dt><dd class="text-base font-black uppercase">${escapeHTML(p.fullName)}</dd></div>
-                    <div><dt class="text-[10px] font-bold text-gray-400 uppercase">Ngày sinh</dt><dd class="text-sm font-bold">${p.dob ? p.dob.split('-').reverse().join('/') : ''}</dd></div>
-                    <div><dt class="text-[10px] font-bold text-gray-400 uppercase">Số CCCD</dt><dd class="text-sm font-bold">${escapeHTML(p.cccd)}</dd></div>
-                    <div class="sm:col-span-2"><dt class="text-[10px] font-bold text-gray-400 uppercase">Nơi ở hiện nay</dt><dd class="text-sm font-medium">${safeVal(p.currentAddress)}</dd></div>
-                    <h4 class="text-xs font-bold text-indigo-700 mt-2 col-span-full border-b pb-1 uppercase">II. CÔNG TÁC</h4>
-                    <div><dt class="text-[10px] font-bold text-gray-400 uppercase">Trình độ CM</dt><dd class="text-sm font-bold">${escapeHTML(p.degree)}</dd></div>
-                    <div><dt class="text-[10px] font-bold text-gray-400 uppercase">Chức vụ</dt><dd class="text-sm font-bold text-indigo-700">${escapeHTML(p.position)}</dd></div>
-                    ${p.customFields ? p.customFields.map(cf => `<div><dt class="text-[10px] font-bold text-gray-400 uppercase">${escapeHTML(cf.key)}</dt><dd class="text-sm font-medium">${safeVal(cf.val)}</dd></div>`).join('') : ''}
+                    
+                    <div><dt class="text-[10px] font-bold text-gray-400 uppercase">Đơn vị</dt><dd class="text-sm font-bold text-indigo-700">${escapeHTML(p.department || '')}</dd></div>
+                    <div><dt class="text-[10px] font-bold text-gray-400 uppercase">Nghề nghiệp/ Vị trí</dt><dd class="text-sm font-bold">${escapeHTML(p.position || '')}</dd></div>
+                    
+                    <div><dt class="text-[10px] font-bold text-gray-400 uppercase">Ngày sinh</dt><dd class="text-sm font-bold">${escapeHTML(p.dob || '')}</dd></div>
+                    <div><dt class="text-[10px] font-bold text-gray-400 uppercase">Giới tính</dt><dd class="text-sm font-medium">${escapeHTML(p.gender || '')}</dd></div>
+                    
+                    <div><dt class="text-[10px] font-bold text-gray-400 uppercase">Số điện thoại</dt><dd class="text-sm font-medium">${escapeHTML(p.phone || '')}</dd></div>
+                    <div><dt class="text-[10px] font-bold text-gray-400 uppercase">Số nhà / Tổ</dt><dd class="text-sm font-medium">${escapeHTML(p.currentAddress || '')}</dd></div>
+                    
+                    <div><dt class="text-[10px] font-bold text-gray-400 uppercase">Số CMT / CCCD</dt><dd class="text-sm font-medium">${escapeHTML(p.cccd || '')}</dd></div>
+                    <div><dt class="text-[10px] font-bold text-gray-400 uppercase">Số thẻ BHYT</dt><dd class="text-sm font-medium">${escapeHTML(p.bhyt || '')}</dd></div>
                 </dl>`;
             const editBtn = document.getElementById('modalEditBtn');
             editBtn.classList.remove('hidden'); editBtn.onclick = () => editProfile(p.id);
@@ -1027,11 +1179,11 @@ function doGet(e) {
         // ==========================================
         function downloadExcelTemplate() {
             const ws = XLSX.utils.aoa_to_sheet([
-                ["STT", "Mã HS", "Họ Tên", "Ngày Sinh", "Giới Tính", "Điểm Toán", "Điểm Văn"],
-                [1, "HS01", "Nguyễn Văn A", "15/05/2008", "Nam", 8.5, 9.0],
-                [2, "HS02", "Trần Thị B", "22/10/2008", "Nữ", 7.0, 8.5]
+                ["STT", "Mã HS", "Họ Tên", "Ngày Sinh", "Số điện Thoại", "Địa chỉ"],
+                [1, "HS01", "Lâm Đức Tín", "29/3/69", "0903647150", "224 Lô E, chung cư Hùng Vương"],
+                [2, "HS02", "Phạm Thị Thanh Hòa", "20/1/75", "0938095152", "36/10/3 Bùi Tư Toàn"]
             ]);
-            ws['!cols'] = [{wch:5}, {wch:10}, {wch:25}, {wch:12}, {wch:10}, {wch:10}, {wch:10}];
+            ws['!cols'] = [{wch:5}, {wch:10}, {wch:25}, {wch:12}, {wch:15}, {wch:35}];
             const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "DSHocSinh");
             XLSX.writeFile(wb, "Mau_Nhap_Hoc_Sinh.xlsx");
         }
@@ -1053,9 +1205,13 @@ function doGet(e) {
             reader.onload = function(evt) {
                 try {
                     const wb = XLSX.read(evt.target.result, {type: 'binary'});
-                    const rawData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" });
-                    if(rawData.length > 0) { importTempData = rawData; renderExcelPreview(rawData); } else showToast('File rỗng!', 'error');
+                    const rawData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "", raw: false, dateNF: 'dd/mm/yyyy' });
+                    if(rawData.length > 0) { 
+                        importTempData = rawData; 
+                        confirmImport(); 
+                    } else showToast('File rỗng!', 'error');
                 } catch(error) { showToast('Lỗi định dạng!', 'error'); }
+                e.target.value = '';
             };
             reader.readAsBinaryString(file);
         }
@@ -1073,7 +1229,7 @@ function doGet(e) {
                 tbody.appendChild(tr);
             }
         }
-        function cancelImport() { document.getElementById('excelFileInput').value = ''; document.getElementById('fileInfo').classList.add('hidden'); document.getElementById('previewContainer').classList.add('hidden'); importTempData = []; }
+        function cancelImport() { document.getElementById('excelFileInput').value = ''; const fi = document.getElementById('fileInfo'); if(fi) fi.classList.add('hidden'); const pc = document.getElementById('previewContainer'); if(pc) pc.classList.add('hidden'); importTempData = []; }
         function confirmImport() {
             const year = document.getElementById('importYear').value.trim(), classInput = document.getElementById('importClass').value.trim();
             if(importTempData.length === 0) return;
@@ -1146,12 +1302,84 @@ function doGet(e) {
         // ==========================================
         // LOGIC SỔ TAY GHI CHÚ
         // ==========================================
+        
+        function renderNoteMentions() {
+            document.getElementById('noteMentionsContainer').innerHTML = window.currentNoteMentions.map((m, i) => 
+                `<span class="inline-flex items-center px-2 py-1 rounded bg-blue-50 text-blue-600 text-[10px] font-bold">
+                    <i class="fas fa-user mr-1"></i> ${escapeHTML(m.name)} 
+                    <button type="button" onclick="window.currentNoteMentions.splice(${i}, 1); renderNoteMentions()" class="ml-1 text-blue-400 hover:text-blue-700"><i class="fas fa-times"></i></button>
+                </span>`
+            ).join('');
+        }
+        function addNoteMention() {
+            const input = document.getElementById('noteMentionInput'); const val = input.value.trim(); if(!val) return;
+            const match = val.match(/^\[(.*?)\] (.*)$/);
+            if(match) {
+                if(!window.currentNoteMentions.find(m => m.id === match[1])) { window.currentNoteMentions.push({id: match[1], name: match[2].split(' - ')[0]}); renderNoteMentions(); }
+            } else {
+                if(!window.currentNoteMentions.find(m => m.name === val)) { window.currentNoteMentions.push({id: 'CUSTOM', name: val}); renderNoteMentions(); }
+            }
+            input.value = '';
+        }
+        function populateMentionList() {
+            const list = document.getElementById('noteMentionList');
+            let html = '';
+            teachers.forEach(t => html += `<option value="[${t.id}] ${t.name}"></option>`);
+            students.forEach(s => html += `<option value="[${s.id}] ${s.name} - ${s.className}"></option>`);
+            list.innerHTML = html;
+        }
+        function renderNoteChecklist() {
+            document.getElementById('noteChecklistContainer').innerHTML = window.currentNoteChecklist.map((c, i) => 
+                `<div class="flex items-center gap-2 group">
+                    <input type="checkbox" ${c.done ? 'checked' : ''} onchange="window.currentNoteChecklist[${i}].done = this.checked; renderNoteChecklist()" class="w-3.5 h-3.5 text-amber-500 rounded border-gray-300">
+                    <span class="text-xs flex-1 ${c.done ? 'line-through text-gray-400' : 'text-gray-700'}">${escapeHTML(c.text)}</span>
+                    <button type="button" onclick="window.currentNoteChecklist.splice(${i}, 1); renderNoteChecklist()" class="text-gray-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><i class="fas fa-times text-[10px]"></i></button>
+                </div>`
+            ).join('');
+        }
+        function addNoteChecklistItem() {
+            const input = document.getElementById('noteChecklistInput'); const val = input.value.trim(); if(!val) return;
+            window.currentNoteChecklist.push({text: val, done: false}); renderNoteChecklist(); input.value = '';
+        }
+
+        function selectNoteColor(color) {
+            document.getElementById('noteColor').value = color;
+            document.querySelectorAll('.note-color-btn').forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-gray-400');
+                if (btn.dataset.color === color) btn.classList.add('ring-2', 'ring-gray-400');
+            });
+        }
+        function toggleNotePin() {
+            const el = document.getElementById('noteIsPinned');
+            const isPinned = el.value === 'true';
+            el.value = (!isPinned).toString();
+            const icon = document.getElementById('notePinIcon');
+            if (!isPinned) { icon.classList.replace('text-gray-300', 'text-amber-500'); }
+            else { icon.classList.replace('text-amber-500', 'text-gray-300'); }
+        }
+        function togglePinDirectly(id) {
+            const n = notes.find(x => x.id === id);
+            if(n) { n.isPinned = !n.isPinned; window.saveDataFn('notes', n); }
+        }
         function openNoteModal(id = null) {
             document.getElementById('noteTitle').value = ''; document.getElementById('noteContent').value = ''; document.getElementById('noteId').value = '';
+            document.getElementById('noteIsPinned').value = 'false'; document.getElementById('notePinIcon').className = 'fas fa-thumbtack text-xl text-gray-300';
+            selectNoteColor('white');
             document.getElementById('noteModalTitle').innerText = 'Thêm Ghi Chú';
+            window.currentNoteMentions = []; window.currentNoteChecklist = [];
+            populateMentionList(); renderNoteMentions(); renderNoteChecklist();
+            
             if(id) {
                 const n = notes.find(x => x.id === id);
-                if(n) { document.getElementById('noteId').value = n.id; document.getElementById('noteTitle').value = n.title; document.getElementById('noteContent').value = n.content; document.getElementById('noteModalTitle').innerText = 'Sửa Ghi Chú'; }
+                if(n) { 
+                    document.getElementById('noteId').value = n.id; document.getElementById('noteTitle').value = n.title; document.getElementById('noteContent').value = n.content; document.getElementById('noteModalTitle').innerText = 'Sửa Ghi Chú'; 
+                    document.getElementById('noteIsPinned').value = n.isPinned ? 'true' : 'false';
+                    document.getElementById('notePinIcon').className = 'fas fa-thumbtack text-xl ' + (n.isPinned ? 'text-amber-500' : 'text-gray-300');
+                    selectNoteColor(n.color || 'white');
+                    window.currentNoteMentions = n.mentions ? [...n.mentions] : [];
+                    window.currentNoteChecklist = n.checklist ? [...n.checklist] : [];
+                    renderNoteMentions(); renderNoteChecklist();
+                }
             }
             showModal('noteModal'); 
         }
@@ -1159,8 +1387,10 @@ function doGet(e) {
         function extractHashtags(text) { const regex = /#[\w_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+/g; const matches = text.match(regex); return matches ? [...new Set(matches.map(t => t.substring(1).toLowerCase().replace(/\s+/g, '_')))] : []; }
         function saveNote() {
             const title = document.getElementById('noteTitle').value.trim(), content = document.getElementById('noteContent').value.trim();
+            const isPinned = document.getElementById('noteIsPinned').value === 'true';
+            const color = document.getElementById('noteColor').value || 'white';
             if(!content) return showToast("Nội dung trống!", "error");
-            window.saveDataFn('notes', { id: document.getElementById('noteId').value || 'NOTE_' + Date.now(), title, content, tags: extractHashtags(content), updatedAt: new Date().toISOString() });
+            window.saveDataFn('notes', { id: document.getElementById('noteId').value || 'NOTE_' + Date.now(), title, content, color, isPinned, mentions: window.currentNoteMentions, checklist: window.currentNoteChecklist, tags: extractHashtags(content), updatedAt: new Date().toISOString() });
             closeModal('noteModal'); showToast("Đã lưu!");
         }
         const TAG_COLORS = ['bg-indigo-100 text-indigo-700', 'bg-emerald-100 text-emerald-700', 'bg-amber-100 text-amber-700', 'bg-rose-100 text-rose-700', 'bg-sky-100 text-sky-700'];
@@ -1185,16 +1415,33 @@ function doGet(e) {
             if(filtered.length === 0) { grid.classList.add('hidden'); emptyState.classList.remove('hidden', 'flex'); emptyState.classList.add('flex'); } 
             else {
                 grid.classList.remove('hidden'); emptyState.classList.remove('flex'); emptyState.classList.add('hidden');
-                grid.innerHTML = filtered.sort((a,b) => new Date(b.updatedAt) - new Date(a.updatedAt)).map(n => {
+                grid.innerHTML = filtered.sort((a,b) => {
+                    if (a.isPinned && !b.isPinned) return -1;
+                    if (!a.isPinned && b.isPinned) return 1;
+                    return new Date(b.updatedAt) - new Date(a.updatedAt);
+                }).map(n => {
                     const snippet = escapeHTML(n.content.length > 150 ? n.content.substring(0, 150) + '...' : n.content).replace(/\n/g, '<br>');
                     const title = escapeHTML(n.title) || '<i>Không tên</i>';
                     const tagsHtml = n.tags.map(t => `<span onclick="renderNotes('${t}'); event.stopPropagation();" class="inline-block px-1.5 py-0.5 text-[9px] font-bold rounded ${getTagStyle(t)} mr-1 mt-1 cursor-pointer uppercase">#${t}</span>`).join('');
                     const d = new Date(n.updatedAt); const dStr = `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')} - ${d.getHours()}:${d.getMinutes().toString().padStart(2,'0')}`;
-                    return `<div class="bg-white p-4 rounded-xl border border-gray-100 flex flex-col justify-between group shadow-sm hover:shadow cursor-pointer relative" onclick="openNoteModal('${n.id}')">
-                        <div class="absolute top-0 left-0 w-1 h-full bg-amber-400 opacity-0 group-hover:opacity-100"></div>
-                        <div><h4 class="font-bold text-gray-800 text-base mb-1 pr-4">${title}</h4><p class="text-xs text-gray-600 mb-3 line-clamp-4 leading-relaxed">${snippet}</p><div class="flex flex-wrap">${tagsHtml}</div></div>
-                        <div class="mt-3 pt-2 border-t border-gray-50 flex justify-between items-center opacity-60">
-                            <span class="text-[10px] font-semibold text-gray-400"><i class="far fa-clock mr-1"></i> ${dStr}</span>
+                    const colorMap = { 'white': 'bg-white border-gray-200', 'yellow': 'bg-yellow-50 border-yellow-200', 'green': 'bg-emerald-50 border-emerald-200', 'blue': 'bg-sky-50 border-sky-200', 'red': 'bg-red-50 border-red-200' };
+                    const cardClass = colorMap[n.color] || colorMap['white'];
+                    const pinIconClass = n.isPinned ? 'text-amber-500 opacity-100' : 'text-gray-300 opacity-0 group-hover:opacity-100';
+
+
+                        const mentionsHtml = (n.mentions && n.mentions.length > 0) ? `<div class="mt-2 flex flex-wrap gap-1">${n.mentions.map(m => `<span class="inline-block px-1.5 py-0.5 bg-blue-100 text-blue-700 hover:bg-blue-200 transition-colors text-[9px] font-bold rounded" onclick="event.stopPropagation(); if('${m.id}'!=='CUSTOM') openDetailModal('${m.id}')"><i class="fas fa-link mr-1"></i>${escapeHTML(m.name)}</span>`).join('')}</div>` : '';
+                    let checklistHtml = '';
+                    if (n.checklist && n.checklist.length > 0) {
+                        const doneCount = n.checklist.filter(c => c.done).length;
+                        checklistHtml = `<div class="mt-2 mb-1 text-[10px] font-bold text-gray-500 flex items-center"><i class="fas fa-check-square mr-1 text-amber-500"></i> ${doneCount}/${n.checklist.length} hoàn thành</div>`;
+                    }
+                    return `<div class="p-4 rounded-xl border flex flex-col justify-between group shadow-sm hover:shadow cursor-pointer relative ${cardClass} transition-colors" onclick="openNoteModal('${n.id}')">
+                        <button onclick="event.stopPropagation(); togglePinDirectly('${n.id}')" class="absolute top-3 right-3 p-1 transition-opacity ${pinIconClass} z-10 hover:scale-110"><i class="fas fa-thumbtack"></i></button>
+                        <div class="absolute top-0 left-0 w-1 h-full bg-amber-400 opacity-0 group-hover:opacity-100 rounded-l-xl"></div>
+                        <div><h4 class="font-bold text-gray-800 text-base mb-1 pr-6">${title}</h4><p class="text-xs text-gray-600 mb-1 line-clamp-4 leading-relaxed">${snippet}</p>${checklistHtml}${mentionsHtml}<div class="flex flex-wrap mt-2">${tagsHtml}</div></div>
+
+                        <div class="mt-3 pt-2 border-t border-gray-900/5 flex justify-between items-center opacity-60">
+                            <span class="text-[10px] font-semibold text-gray-500"><i class="far fa-clock mr-1"></i> ${dStr}</span>
                             <button onclick="event.stopPropagation(); confirmDeleteData('notes', '${n.id}')" class="text-gray-400 hover:text-red-500 p-1"><i class="fas fa-trash-alt"></i></button>
                         </div></div>`;
                 }).join('');
@@ -1365,7 +1612,7 @@ function doGet(e) {
             reader.onload = function(evt) {
                 try {
                     const wb = XLSX.read(evt.target.result, {type: 'binary'});
-                    const rawData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]); 
+                    const rawData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { raw: false, dateNF: 'dd/mm/yyyy' }); 
                     let c = 0; const dMap = {"2":0,"hai":0,"3":1,"ba":1,"4":2,"tư":2,"tu":2,"5":3,"năm":3,"nam":3,"6":4,"sáu":4,"sau":4,"7":5,"bảy":5,"bay":5,"chủ nhật":6,"chu nhat":6,"cn":6,"chu":6};
                     rawData.forEach(r => {
                         const dStr = String(r['Thứ'] || '').trim().toLowerCase(), txt = String(r['Nội dung công việc'] || '').trim(), tStr = String(r['Hashtag'] || '').trim();
@@ -1385,7 +1632,109 @@ function doGet(e) {
         // ==========================================
         // LOGIC SỰ KIỆN & NHẮC NHỞ
         // ==========================================
-        function openReminderModal() { document.getElementById('remId').value=''; document.getElementById('remTitle').value=''; document.getElementById('remSolarDate').value=''; showModal('reminderModal'); }
+
+        let currentBulkRemFilter = 'all';
+        let bulkSelectedRemIds = new Set();
+        
+        function openBulkDeleteRemModal() {
+            bulkSelectedRemIds.clear();
+            const btn = document.querySelector('.bulk-rem-cat');
+            if(btn) filterBulkDeleteRem('all', btn);
+            showModal('bulkDeleteRemModal');
+        }
+        
+        function filterBulkDeleteRem(cat, btnElement) {
+            currentBulkRemFilter = cat;
+            document.querySelectorAll('.bulk-rem-cat').forEach(btn => btn.className = 'bulk-rem-cat px-3 py-1.5 bg-white text-gray-600 border border-gray-200 font-bold rounded shadow-sm text-xs whitespace-nowrap');
+            if(btnElement) btnElement.className = 'bulk-rem-cat px-3 py-1.5 bg-red-600 text-white font-bold rounded shadow-sm text-xs whitespace-nowrap';
+            else document.querySelector('.bulk-rem-cat').className = 'bulk-rem-cat px-3 py-1.5 bg-red-600 text-white font-bold rounded shadow-sm text-xs whitespace-nowrap';
+            
+            document.getElementById('bulkRemSelectAll').checked = false;
+            renderBulkDeleteRemList();
+        }
+        
+        function getFilteredRemsForBulk() {
+            return reminders.filter(r => {
+                const t = (r.title || '').toLowerCase();
+                if (currentBulkRemFilter === 'sinh_nhat') return t.includes('sinh nhật') || t.includes('sinh nhat');
+                if (currentBulkRemFilter === 'gio') return t.includes('giỗ') || t.includes('gio ');
+                if (currentBulkRemFilter === 'ngay_quan_trong') return t.includes('quan trọng') || t.includes('kỷ niệm') || t.includes('lễ');
+                if (currentBulkRemFilter === 'khac') return !(t.includes('sinh nhật') || t.includes('sinh nhat') || t.includes('giỗ') || t.includes('gio ') || t.includes('quan trọng') || t.includes('kỷ niệm') || t.includes('lễ'));
+                return true;
+            });
+        }
+        
+        function renderBulkDeleteRemList() {
+            const list = getFilteredRemsForBulk();
+            const container = document.getElementById('bulkDeleteRemList');
+            if(list.length === 0) { container.innerHTML = '<p class="text-center text-gray-500 text-sm mt-4">Không có sự kiện nào trong nhóm này.</p>'; updateBulkRemCount(); return; }
+            
+            container.innerHTML = list.map(r => `
+                <label class="flex items-start p-3 border-b border-gray-100 hover:bg-red-50 cursor-pointer rounded transition-colors">
+                    <input type="checkbox" value="${r.id}" ${bulkSelectedRemIds.has(r.id) ? 'checked' : ''} onchange="toggleBulkRemItem(this)" class="mt-1 mr-3 w-4 h-4 text-red-500 rounded border-gray-300">
+                    <div>
+                        <div class="font-bold text-sm text-gray-800">${escapeHTML(r.title)}</div>
+                        <div class="text-xs text-gray-500">${r.type === 'lunar' ? 'Âm lịch' : 'Dương lịch'} - ${r.day}/${r.month}${r.year ? '/' + r.year : ''}</div>
+                    </div>
+                </label>
+            `).join('');
+            updateBulkRemCount();
+        }
+        
+        function toggleBulkRemItem(checkbox) {
+            if(checkbox.checked) bulkSelectedRemIds.add(checkbox.value);
+            else bulkSelectedRemIds.delete(checkbox.value);
+            updateBulkRemCount();
+        }
+        
+        function toggleSelectAllBulkRem() {
+            const isChecked = document.getElementById('bulkRemSelectAll').checked;
+            const list = getFilteredRemsForBulk();
+            if (isChecked) list.forEach(r => bulkSelectedRemIds.add(r.id));
+            else list.forEach(r => bulkSelectedRemIds.delete(r.id));
+            renderBulkDeleteRemList();
+        }
+        
+        function updateBulkRemCount() {
+            document.getElementById('bulkRemCount').innerText = `Đã chọn: ${bulkSelectedRemIds.size}`;
+        }
+        
+        function executeBulkDeleteRem() {
+            if(bulkSelectedRemIds.size === 0) return showToast('Chưa chọn sự kiện nào!', 'error');
+            if(confirm(`Bạn có chắc muốn xoá ${bulkSelectedRemIds.size} sự kiện đã chọn?`)) {
+                reminders = reminders.filter(r => !bulkSelectedRemIds.has(r.id));
+                saveToStorage();
+                if(window.syncUpToCloud) window.syncUpToCloud();
+                closeModal('bulkDeleteRemModal');
+                renderReminders();
+                showToast(`Đã xoá ${bulkSelectedRemIds.size} sự kiện!`);
+            }
+        }
+
+        function openReminderModal(id = null) {
+            document.getElementById('remId').value=''; document.getElementById('remTitle').value=''; document.getElementById('remSolarDate').value='';
+            document.getElementById('remPhone').value=''; document.getElementById('remNote').value='';
+            document.getElementById('remLunarDay').value=''; document.getElementById('remLunarMonth').value=''; document.getElementById('remLunarYear').value='';
+            document.querySelector('input[name="remType"][value="solar"]').checked = true; toggleRemType();
+            
+            if (id) {
+                const r = reminders.find(x => x.id === id);
+                if (r) {
+                    document.getElementById('remId').value = r.id; document.getElementById('remTitle').value = r.title;
+                    document.getElementById('remPhone').value = r.phone || ''; document.getElementById('remAddress').value = r.address || ''; document.getElementById('remNote').value = r.note || '';
+                    if (r.type === 'solar') {
+                        document.querySelector('input[name="remType"][value="solar"]').checked = true;
+                        document.getElementById('remSolarDate').value = `${r.year ? r.year : new Date().getFullYear()}-${r.month.toString().padStart(2,'0')}-${r.day.toString().padStart(2,'0')}`;
+                    } else {
+                        document.querySelector('input[name="remType"][value="lunar"]').checked = true;
+                        document.getElementById('remLunarDay').value = r.day; document.getElementById('remLunarMonth').value = r.month; document.getElementById('remLunarYear').value = r.year || '';
+                    }
+                    document.getElementById('remRecurring').checked = !!r.recurring;
+                    toggleRemType();
+                }
+            }
+            showModal('reminderModal'); 
+        }
         function toggleRemType() {
             const type = document.querySelector('input[name="remType"]:checked').value;
             document.getElementById('remSolarGroup').style.display = type === 'solar' ? 'block' : 'none';
@@ -1403,7 +1752,13 @@ function doGet(e) {
                 day = parseInt(document.getElementById('remLunarDay').value); month = parseInt(document.getElementById('remLunarMonth').value); year = parseInt(document.getElementById('remLunarYear').value) || null;
                 if(!day || !month || day<1 || day>30 || month<1 || month>12) return showToast('Âm lịch không hợp lệ!', 'error');
             }
-            window.saveDataFn('reminders', { id: 'REM_' + Date.now(), title, type, day, month, year, recurring });
+            
+            const phone = document.getElementById('remPhone').value.trim();
+            const address = document.getElementById('remAddress').value.trim();
+            const note = document.getElementById('remNote').value.trim();
+            const rid = document.getElementById('remId').value || 'REM_' + Date.now();
+            window.saveDataFn('reminders', { id: rid, title, type, day, month, year, recurring, phone, address, note });
+
             closeModal('reminderModal'); showToast('Lưu sự kiện thành công!');
         }
 
@@ -1439,18 +1794,19 @@ function doGet(e) {
             grid.innerHTML = processed.length === 0 ? `<div class="col-span-full py-16 flex flex-col items-center justify-center opacity-70"><i class="far fa-calendar-check text-5xl md:text-6xl text-gray-300 mb-4 block"></i><p class="text-gray-500 font-medium text-sm md:text-lg">Không có sự kiện nào.</p></div>`
                 : processed.map(r => {
                 const isToday = r.daysLeft === 0;
-                return `<div class="p-4 md:p-5 rounded-xl border ${isToday ? 'border-red-400 bg-red-50 ring-2 ring-red-100' : 'border-gray-200 bg-white hover:border-red-300'} relative group shadow-sm flex flex-col justify-between">
+                return `<div class="p-4 md:p-5 rounded-xl border ${isToday ? 'border-red-400 bg-red-50 ring-2 ring-red-100' : 'border-gray-200 bg-white hover:border-red-300 cursor-pointer'} relative group shadow-sm flex flex-col justify-between" onclick="openReminderModal('${r.id}')">
                     <div>
                         <div class="flex justify-between items-start mb-2 md:mb-3">
                             <h4 class="font-bold text-gray-800 pr-10 text-base md:text-lg leading-tight">${escapeHTML(r.title)}</h4>
                             ${isToday ? '<span class="bg-red-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full uppercase absolute right-3 top-3 animate-pulse">Hôm nay</span>' : `<span class="bg-gray-100 text-gray-600 text-[9px] font-bold px-1.5 py-0.5 rounded absolute right-3 top-3 border border-gray-200">Còn ${r.daysLeft} ngày</span>`}
                         </div>
                         <div class="text-xs md:text-sm font-bold text-indigo-700 bg-indigo-50/50 p-1.5 md:p-2 rounded border border-indigo-50 flex items-center">
-                            <i class="far fa-calendar text-indigo-400 mr-1.5"></i> ${r.nextDate.toLocaleDateString('vi-VN')}
-                            ${r.year ? `<span class="bg-amber-100 text-amber-700 text-[9px] font-bold px-1.5 py-0.5 rounded ml-2 shadow-sm border border-amber-200">Tuổi: ${r.nextDate.getFullYear() - r.year}</span>` : ''}
+                            <i class="far fa-calendar text-indigo-400 mr-1.5"></i> ${r.nextDate.getDate().toString().padStart(2,'0')}/${(r.nextDate.getMonth()+1).toString().padStart(2,'0')}/${r.nextDate.getFullYear()}
+                            ${(r.year && r.year > 1900) ? `<span class="bg-amber-100 text-amber-700 text-[9px] font-bold px-1.5 py-0.5 rounded ml-2 shadow-sm border border-amber-200">Tuổi: ${r.nextDate.getFullYear() - r.year}</span>` : ''}
                         </div>
                         <div class="text-[10px] md:text-xs font-semibold text-purple-600 mt-2"><i class="fas fa-moon text-purple-400 mr-1.5"></i> ${r.lunarStr}</div>
-                        ${(r.phone || r.note) ? `<div class="mt-2.5 pt-2.5 border-t border-gray-100 space-y-1">
+                        ${(r.phone || r.address || r.note) ? `<div class="mt-2.5 pt-2.5 border-t border-gray-100 space-y-1">
+                            ${r.address ? `<div class="text-[10px] md:text-xs font-medium text-gray-600"><i class="fas fa-map-marker-alt w-4 text-gray-400 text-center"></i> ${escapeHTML(r.address)}</div>` : ''}
                             ${r.phone ? `<div class="text-[10px] md:text-xs font-medium text-gray-600"><i class="fas fa-phone-alt w-4 text-gray-400 text-center"></i> ${escapeHTML(r.phone)}</div>` : ''}
                             ${r.note ? `<div class="text-[10px] md:text-xs font-medium text-gray-600"><i class="fas fa-sticky-note w-4 text-gray-400 text-center"></i> ${escapeHTML(r.note)}</div>` : ''}
                         </div>` : ''}
@@ -1478,10 +1834,11 @@ function doGet(e) {
             const file = e.target.files[0]; if(!file) return; const reader = new FileReader();
             reader.onload = function(evt) {
                 try {
-                    const wb = XLSX.read(evt.target.result, {type: 'binary'}); const rawData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]); let c = 0;
+                    const wb = XLSX.read(evt.target.result, {type: 'binary'}); const rawData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { raw: false, dateNF: 'dd/mm/yyyy' }); let c = 0;
                     rawData.forEach(r => {
                         const name = r['Họ tên'], dobStr = r['Ngày sinh'];
                         const phone = String(r['Số điện thoại'] || '').trim();
+                        const address = String(r['Địa chỉ'] || '').trim();
                         const note = String(r['Ghi chú'] || '').trim();
                         
                         if(name && dobStr) {
@@ -1496,6 +1853,7 @@ function doGet(e) {
                                         day: d, month: m, year: y, 
                                         recurring: true,
                                         phone: phone,
+                                        address: address,
                                         note: note
                                     }); 
                                     c++; 
@@ -1523,7 +1881,7 @@ function doGet(e) {
         async function syncUpToCloud() {
             const url = localStorage.getItem('SMART_SYNC_URL'); if(!url) return showToast('Vui lòng nhập URL Cloud!', 'error');
             showToast('Đang đẩy dữ liệu lên Cloud...', 'success');
-            const payload = { teachers, students, notes, schedules, reminders, lastSync: new Date().toISOString() };
+            const payload = { teachers, students, notes, schedules, reminders, timetables, lastSync: new Date().toISOString() };
             try {
                 // Fetch với text/plain để vượt qua lỗi Preflight CORS của Google Script
                 const res = await fetch(url, { 
@@ -1542,34 +1900,50 @@ function doGet(e) {
             }
         }
 
-        async function syncDownFromCloud() {
-            const url = localStorage.getItem('SMART_SYNC_URL'); if(!url) return showToast('Vui lòng nhập URL Cloud!', 'error');
-            openConfirmModal("Tải dữ liệu từ Cloud?", "Dữ liệu trên máy này sẽ bị GHI ĐÈ bằng dữ liệu từ Cloud. Bạn chắc chứ?", async () => {
-                showToast('Đang tải dữ liệu về...', 'success');
+        async function syncDownFromCloud(isInitialLoad = false) {
+            const url = localStorage.getItem('SMART_SYNC_URL'); if(!url) return !isInitialLoad && showToast('Vui lòng nhập URL Cloud!', 'error');
+            
+            const doSync = async () => {
+                if(!isInitialLoad) showToast('Đang tải & hợp nhất dữ liệu...', 'success');
                 try {
                     const res = await fetch(url); 
                     const data = await res.json();
                     
-                    if(data.status === 'error') {
-                        return showToast('Lỗi từ Server: ' + data.message, 'error');
-                    }
+                    if(data.status === 'error') return !isInitialLoad && showToast('Lỗi từ Server: ' + data.message, 'error');
 
                     if (data && typeof data === 'object' && !Array.isArray(data)) {
-                        if (data.teachers) teachers = data.teachers; 
-                        if (data.students) students = data.students; 
-                        if (data.notes) notes = data.notes;
-                        if (data.schedules) schedules = data.schedules; 
-                        if (data.reminders) reminders = data.reminders;
+                        const merge = (local, cloud) => {
+                            if (!cloud || !Array.isArray(cloud)) return local;
+                            const map = new Map(local.map(i => [i.id, i]));
+                            cloud.forEach(item => {
+                                if (!map.has(item.id)) { local.push(item); map.set(item.id, item); }
+                                else { Object.assign(map.get(item.id), item); }
+                            });
+                            return local;
+                        };
+                        
+                        if (data.teachers) teachers = merge(teachers, data.teachers); 
+                        if (data.students) students = merge(students, data.students); 
+                        if (data.notes) notes = merge(notes, data.notes);
+                        if (data.schedules) schedules = merge(schedules, data.schedules); 
+                        if (data.reminders) reminders = merge(reminders, data.reminders);
+                        if (data.timetables) timetables = merge(timetables, data.timetables);
                         
                         saveToStorage(); renderCurrentTab(); 
-                        showToast(`Đã khôi phục dữ liệu! (Bản lưu: ${new Date(data.lastSync).toLocaleString('vi-VN')})`, 'success');
+                        if(!isInitialLoad) showToast(`Đã hợp nhất dữ liệu! (Bản lưu: ${new Date(data.lastSync).toLocaleString('vi-VN')})`, 'success');
                     } else {
-                        showToast('Dữ liệu trên Cloud rỗng!', 'error');
+                        if(!isInitialLoad) showToast('Dữ liệu trên Cloud rỗng!', 'error');
                     }
                 } catch (error) { 
-                    showToast('Lỗi kết nối! Kiểm tra lại mạng hoặc URL.', 'error'); 
+                    if(!isInitialLoad) showToast('Lỗi kết nối! Kiểm tra lại mạng hoặc URL.', 'error'); 
                 }
-            });
+            };
+
+            if (isInitialLoad) {
+                doSync();
+            } else {
+                openConfirmModal("Tải & Hợp nhất từ Cloud?", "Dữ liệu trên Cloud sẽ được TẢI XUỐNG VÀ BỔ SUNG thêm vào máy này (Không xoá dữ liệu cũ).", doSync);
+            }
         }
 
         // --- EXPORT/IMPORT JSON CHUNG ---
@@ -1598,6 +1972,99 @@ function doGet(e) {
             reader.readAsText(file);
         }
 
+
+        // ==========================================
+        // LOGIC THỜI KHOÁ BIỂU
+        // ==========================================
+        function initTimetableData() {
+            if (timetables.length === 0) {
+                // Initialize 7 days
+                for (let i = 0; i < 7; i++) {
+                    timetables.push({ id: 'TB_' + i, day: i, morning: [['','',''],['','',''],['','',''],['','','']], afternoon: [['','',''],['','',''],['','',''],['','','']], evening: '' });
+                }
+                saveToStorage();
+            } else {
+                // Upgrade old format if necessary
+                let updated = false;
+                timetables.forEach(tb => {
+                    ['morning', 'afternoon'].forEach(period => {
+                        if (tb[period]) {
+                            tb[period] = tb[period].map(val => {
+                                if (typeof val === 'string') { updated = true; return [val, '', '']; }
+                                if (Array.isArray(val) && val.length < 3) { updated = true; return [...val, '', '', ''].slice(0, 3); }
+                                return val;
+                            });
+                        }
+                    });
+                });
+                if(updated) saveToStorage();
+            }
+        }
+
+        function renderTimetable() {
+            initTimetableData();
+            const grid = document.getElementById('timetableGrid');
+            const currentDayIndex = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
+            
+            grid.innerHTML = WEEK_DAYS.map((dayName, index) => {
+                const tb = timetables.find(t => t.day === index) || { morning: ['','','',''], afternoon: ['','','',''], evening: '' };
+                const isToday = index === currentDayIndex;
+                
+                let morningHtml = tb.morning.map((valArr, i) => `
+                    <div class="flex items-start text-xs mb-2">
+                        <span class="w-10 text-pink-600 font-bold shrink-0 mt-1">Tiết ${i+1}</span>
+                        <div class="flex-1 flex flex-col gap-1">
+                            <input type="text" placeholder="Môn học..." value="${escapeHTML(valArr[0])}" onchange="saveTimetable(${index}, 'morning', ${i}, 0, this.value)" class="w-full bg-white border border-gray-200 rounded px-2 py-1 focus:border-pink-400 outline-none">
+                            <input type="text" placeholder="Lớp/Phòng..." value="${escapeHTML(valArr[1])}" onchange="saveTimetable(${index}, 'morning', ${i}, 1, this.value)" class="w-full bg-white border border-gray-200 rounded px-2 py-1 focus:border-pink-400 outline-none">
+                            <input type="text" placeholder="Ghi chú..." value="${escapeHTML(valArr[2])}" onchange="saveTimetable(${index}, 'morning', ${i}, 2, this.value)" class="w-full bg-white border border-gray-200 rounded px-2 py-1 focus:border-pink-400 outline-none">
+                        </div>
+                    </div>
+                `).join('');
+                
+                let afternoonHtml = tb.afternoon.map((valArr, i) => `
+                    <div class="flex items-start text-xs mb-2">
+                        <span class="w-10 text-amber-600 font-bold shrink-0 mt-1">Tiết ${i+1}</span>
+                        <div class="flex-1 flex flex-col gap-1">
+                            <input type="text" placeholder="Môn học..." value="${escapeHTML(valArr[0])}" onchange="saveTimetable(${index}, 'afternoon', ${i}, 0, this.value)" class="w-full bg-white border border-gray-200 rounded px-2 py-1 focus:border-amber-400 outline-none">
+                            <input type="text" placeholder="Lớp/Phòng..." value="${escapeHTML(valArr[1])}" onchange="saveTimetable(${index}, 'afternoon', ${i}, 1, this.value)" class="w-full bg-white border border-gray-200 rounded px-2 py-1 focus:border-amber-400 outline-none">
+                            <input type="text" placeholder="Ghi chú..." value="${escapeHTML(valArr[2])}" onchange="saveTimetable(${index}, 'afternoon', ${i}, 2, this.value)" class="w-full bg-white border border-gray-200 rounded px-2 py-1 focus:border-amber-400 outline-none">
+                        </div>
+                    </div>
+                `).join('');
+
+                return `
+                <div class="w-[85vw] md:w-[260px] flex-shrink-0 flex flex-col bg-gray-50 rounded-xl border ${isToday ? 'border-pink-400 shadow-md ring-1 ring-pink-100' : 'border-gray-200'} overflow-hidden">
+                    <div class="p-3 border-b border-gray-200 font-bold flex justify-between items-center ${isToday ? 'bg-pink-500 text-white' : 'bg-gray-200/50 text-gray-700'}">
+                        ${dayName} ${isToday ? '<span class="text-[9px] bg-white text-pink-600 px-1.5 py-0.5 rounded uppercase font-black">Hôm nay</span>' : ''}
+                    </div>
+                    <div class="p-3 flex flex-col gap-3 flex-1">
+                        <div>
+                            <div class="text-[10px] font-bold text-pink-600 mb-2 uppercase flex items-center"><i class="fas fa-sun mr-1"></i> Buổi Sáng</div>
+                            ${morningHtml}
+                        </div>
+                        <div class="border-t border-gray-200 pt-2">
+                            <div class="text-[10px] font-bold text-amber-600 mb-2 uppercase flex items-center"><i class="fas fa-cloud-sun mr-1"></i> Buổi Chiều</div>
+                            ${afternoonHtml}
+                        </div>
+                        <div class="border-t border-gray-200 pt-2 flex-1 flex flex-col">
+                            <div class="text-[10px] font-bold text-indigo-600 mb-2 uppercase flex items-center"><i class="fas fa-moon mr-1"></i> Buổi Tối (Ghi chú)</div>
+                            <textarea onchange="saveTimetable(${index}, 'evening', null, null, this.value)" class="w-full flex-1 min-h-[60px] bg-white border border-gray-200 rounded px-2 py-1.5 text-xs focus:border-pink-400 outline-none resize-none">${escapeHTML(tb.evening)}</textarea>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function saveTimetable(dayIndex, period, idx, subIdx, val) {
+            initTimetableData();
+            const tb = timetables.find(t => t.day === dayIndex);
+            if(tb) {
+                if (period === 'evening') tb.evening = val;
+                else tb[period][idx][subIdx] = val;
+                window.saveDataFn('timetables', tb);
+            }
+        }
+
         // --- KHỞI ĐỘNG HỆ THỐNG ---
         document.addEventListener('DOMContentLoaded', () => {
             updateDateHeader();
@@ -1606,6 +2073,9 @@ function doGet(e) {
             
             // Tải dữ liệu từ LocalStorage
             loadFromStorage();
+            
+            // Tự động tải từ Cloud về khi vừa mở app (Dữ liệu bổ sung, không xoá)
+            syncDownFromCloud(true);
             
             // Mở tab Nhắc Nhở mặc định khi vừa vào App
             switchTab('reminder'); 
