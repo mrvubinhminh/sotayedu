@@ -100,29 +100,29 @@
     <nav class="fixed bottom-0 left-0 right-0 app-bottom-nav bg-white border-t border-gray-200 z-40 flex overflow-x-auto custom-scrollbar snap-x-mandatory 
                 md:relative md:top-[70px] md:w-64 md:h-[calc(100vh-70px)] md:flex-col md:border-t-0 md:border-r md:bg-indigo-900 md:shrink-0 md:snap-none">
         
-        <div class="flex flex-row md:flex-col w-full px-2 py-2 md:p-4 gap-1 md:gap-4 md:overflow-y-auto">
+        <div class="flex flex-row md:flex-col w-full px-2 py-3 md:p-4 gap-2 md:gap-4 md:overflow-y-auto">
             
             <!-- Nhóm Tiện ích (Ưu tiên Lên đầu theo yêu cầu) -->
             <div class="hidden md:block px-2 text-[10px] font-bold text-indigo-400 uppercase tracking-wider mb-1 mt-2">Tiện ích & Công việc</div>
             
-            <button onclick="switchTab('reminder')" id="btn-tab-reminder" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-4 md:px-3 py-1.5 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[70px]">
-                <i class="fas fa-bell text-lg md:text-xl md:w-6 md:text-center text-red-400 group-hover:scale-110 transition-transform"></i>
-                <span class="text-[10px] md:text-sm font-bold md:font-medium whitespace-nowrap">Nhắc Nhở</span>
+            <button onclick="switchTab('reminder')" id="btn-tab-reminder" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-5 md:px-3 py-2 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[78px]">
+                <i class="fas fa-bell text-2xl md:text-xl md:w-6 md:text-center text-red-400 group-hover:scale-110 transition-transform"></i>
+                <span class="text-[11px] md:text-sm font-bold md:font-medium whitespace-nowrap">Nhắc Nhở</span>
             </button>
             
-            <button onclick="switchTab('schedule')" id="btn-tab-schedule" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-4 md:px-3 py-1.5 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[70px]">
-                <i class="far fa-calendar-check text-lg md:text-xl md:w-6 md:text-center text-sky-400 group-hover:scale-110 transition-transform"></i>
-                <span class="text-[10px] md:text-sm font-bold md:font-medium whitespace-nowrap">Lịch Tuần</span>
+            <button onclick="switchTab('schedule')" id="btn-tab-schedule" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-5 md:px-3 py-2 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[78px]">
+                <i class="far fa-calendar-check text-2xl md:text-xl md:w-6 md:text-center text-sky-400 group-hover:scale-110 transition-transform"></i>
+                <span class="text-[11px] md:text-sm font-bold md:font-medium whitespace-nowrap">Lịch Tuần</span>
             </button>
 
-            <button onclick="switchTab('note')" id="btn-tab-note" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-4 md:px-3 py-1.5 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[70px]">
-                <i class="fas fa-book-open text-lg md:text-xl md:w-6 md:text-center text-amber-400 group-hover:scale-110 transition-transform"></i>
-                <span class="text-[10px] md:text-sm font-bold md:font-medium whitespace-nowrap">Sổ Tay</span>
+            <button onclick="switchTab('note')" id="btn-tab-note" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-5 md:px-3 py-2 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[78px]">
+                <i class="fas fa-book-open text-2xl md:text-xl md:w-6 md:text-center text-amber-400 group-hover:scale-110 transition-transform"></i>
+                <span class="text-[11px] md:text-sm font-bold md:font-medium whitespace-nowrap">Sổ Tay</span>
             </button>
 
-            <button onclick="switchTab('timetable')" id="btn-tab-timetable" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-4 md:px-3 py-1.5 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[70px]">
-                <i class="fas fa-table text-lg md:text-xl md:w-6 md:text-center text-pink-400 group-hover:scale-110 transition-transform"></i>
-                <span class="text-[10px] md:text-sm font-bold md:font-medium whitespace-nowrap">TKB</span>
+            <button onclick="switchTab('timetable')" id="btn-tab-timetable" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-5 md:px-3 py-2 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[78px]">
+                <i class="fas fa-table text-2xl md:text-xl md:w-6 md:text-center text-pink-400 group-hover:scale-110 transition-transform"></i>
+                <span class="text-[11px] md:text-sm font-bold md:font-medium whitespace-nowrap">TKB</span>
             </button>
 
             <div class="hidden md:block w-full h-[1px] bg-indigo-800/50 my-1"></div>
@@ -130,14 +130,14 @@
             <!-- Nhóm Học sinh -->
             <div class="hidden md:block px-2 text-[10px] font-bold text-indigo-400 uppercase tracking-wider mb-1 mt-2">Học Sinh</div>
             
-            <button onclick="switchTab('student-list')" id="btn-tab-student-list" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-4 md:px-3 py-1.5 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[70px]">
-                <i class="fas fa-users text-lg md:text-xl md:w-6 md:text-center md:text-indigo-200 group-hover:scale-110 transition-transform"></i>
-                <span class="text-[10px] md:text-sm font-bold md:font-medium whitespace-nowrap">Học Sinh</span>
+            <button onclick="switchTab('student-list')" id="btn-tab-student-list" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-5 md:px-3 py-2 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[78px]">
+                <i class="fas fa-users text-2xl md:text-xl md:w-6 md:text-center md:text-indigo-200 group-hover:scale-110 transition-transform"></i>
+                <span class="text-[11px] md:text-sm font-bold md:font-medium whitespace-nowrap">Học Sinh</span>
             </button>
             
-            <button onclick="switchTab('student-import')" id="btn-tab-student-import" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-4 md:px-3 py-1.5 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[70px]">
-                <i class="fas fa-file-excel text-lg md:text-xl md:w-6 md:text-center text-emerald-500 group-hover:scale-110 transition-transform"></i>
-                <span class="text-[10px] md:text-sm font-bold md:font-medium whitespace-nowrap">Nhập Điểm</span>
+            <button onclick="switchTab('student-import')" id="btn-tab-student-import" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-5 md:px-3 py-2 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[78px]">
+                <i class="fas fa-file-excel text-2xl md:text-xl md:w-6 md:text-center text-emerald-500 group-hover:scale-110 transition-transform"></i>
+                <span class="text-[11px] md:text-sm font-bold md:font-medium whitespace-nowrap">Nhập Điểm</span>
             </button>
 
             <div class="hidden md:block w-full h-[1px] bg-indigo-800/50 my-1"></div>
@@ -145,21 +145,21 @@
             <!-- Nhóm Nhân sự -->
             <div class="hidden md:block px-2 text-[10px] font-bold text-indigo-400 uppercase tracking-wider mb-1 mt-2">Giáo Viên</div>
 
-            <button onclick="switchTab('list')" id="btn-tab-list" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-4 md:px-3 py-1.5 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[70px]">
-                <i class="fas fa-id-badge text-lg md:text-xl md:w-6 md:text-center md:text-indigo-200 group-hover:scale-110 transition-transform"></i>
-                <span class="text-[10px] md:text-sm font-bold md:font-medium whitespace-nowrap">Hồ Sơ GV</span>
+            <button onclick="switchTab('list')" id="btn-tab-list" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-5 md:px-3 py-2 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[78px]">
+                <i class="fas fa-id-badge text-2xl md:text-xl md:w-6 md:text-center md:text-indigo-200 group-hover:scale-110 transition-transform"></i>
+                <span class="text-[11px] md:text-sm font-bold md:font-medium whitespace-nowrap">Hồ Sơ GV</span>
             </button>
 
-            <button onclick="switchTab('form')" id="btn-tab-form" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-4 md:px-3 py-1.5 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[70px]">
-                <i class="fas fa-user-plus text-lg md:text-xl md:w-6 md:text-center md:text-indigo-200 group-hover:scale-110 transition-transform"></i>
-                <span class="text-[10px] md:text-sm font-bold md:font-medium whitespace-nowrap">Thêm GV</span>
+            <button onclick="switchTab('form')" id="btn-tab-form" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-5 md:px-3 py-2 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[78px]">
+                <i class="fas fa-user-plus text-2xl md:text-xl md:w-6 md:text-center md:text-indigo-200 group-hover:scale-110 transition-transform"></i>
+                <span class="text-[11px] md:text-sm font-bold md:font-medium whitespace-nowrap">Thêm GV</span>
             </button>
 
             <div class="hidden md:block w-full h-[1px] bg-indigo-800/50 my-1 mt-auto"></div>
             
-            <button onclick="switchTab('settings')" id="btn-tab-settings" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-4 md:px-3 py-1.5 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[70px] md:mt-auto">
-                <i class="fas fa-cloud-sync text-lg md:text-xl md:w-6 md:text-center md:text-gray-400 group-hover:scale-110 transition-transform text-indigo-500"></i>
-                <span class="text-[10px] md:text-sm font-bold md:font-medium whitespace-nowrap text-indigo-600 md:text-indigo-200">Đồng Bộ</span>
+            <button onclick="switchTab('settings')" id="btn-tab-settings" class="snap-center-item shrink-0 md:w-full flex flex-col md:flex-row items-center justify-center md:justify-start px-5 md:px-3 py-2 md:py-2.5 rounded-xl md:rounded-lg text-gray-500 md:text-indigo-200 hover:bg-gray-100 md:hover:bg-indigo-800 transition-colors gap-1 md:gap-3 group min-w-[78px] md:mt-auto mt-0">
+                <i class="fas fa-cloud-sync text-2xl md:text-xl md:w-6 md:text-center md:text-gray-400 group-hover:scale-110 transition-transform text-indigo-500"></i>
+                <span class="text-[11px] md:text-sm font-bold md:font-medium whitespace-nowrap text-indigo-600 md:text-indigo-200">Đồng Bộ</span>
             </button>
         </div>
     </nav>
@@ -257,9 +257,10 @@
                     </div>
                 </div>
             </div>
+            <div id="timetableDaySelector" class="flex overflow-x-auto space-x-2 pb-2 mb-2 custom-scrollbar shrink-0 snap-x-mandatory">
+            </div>
             <div class="flex-1 overflow-x-auto overflow-y-auto custom-scrollbar relative w-full h-full pb-4">
-                <div class="flex space-x-3 md:space-x-4 min-w-max items-start snap-x-mandatory" id="timetableGrid">
-                    <!-- JS renders timetable columns here -->
+                <div class="w-full max-w-3xl mx-auto" id="timetableGrid">
                 </div>
             </div>
         </div>
@@ -304,7 +305,7 @@
         <div id="student-list-tab" class="hidden tab-content max-w-7xl mx-auto flex flex-col h-full">
             <div class="bg-white rounded-xl shadow border border-gray-100 overflow-hidden mb-4 flex-shrink-0">
                 <div class="p-4 md:p-5 flex flex-col md:flex-row justify-between gap-3 border-b border-gray-100 bg-gray-50/50 items-start md:items-center">
-                    <h2 class="text-lg md:text-xl font-bold text-gray-800">Quản Lý Học Sinh</h2>
+                    <h2 class="text-2xl md:text-xl font-bold text-gray-800">Quản Lý Học Sinh</h2>
                     <button onclick="requestClearStudents()" class="px-3 md:px-4 py-1.5 md:py-2 bg-red-50 text-red-600 border border-red-200 rounded-lg text-xs md:text-sm font-semibold hover:bg-red-100 transition flex items-center">
                         <i class="fas fa-trash-alt mr-2"></i> Xóa tất cả
                     </button>
@@ -350,7 +351,7 @@
                 <div class="px-4 md:px-6 py-4 md:py-5 border-b border-gray-100 bg-gray-50/50 flex items-center">
                     <i class="fas fa-file-import text-emerald-500 mr-3 text-xl md:text-2xl"></i>
                     <div>
-                        <h2 class="text-lg md:text-xl font-bold text-gray-800">Nhập Danh Sách (Excel)</h2>
+                        <h2 class="text-2xl md:text-xl font-bold text-gray-800">Nhập Danh Sách (Excel)</h2>
                         <p class="text-xs md:text-sm text-gray-500 mt-0.5">Tự động đọc cột theo hàng tiêu đề.</p>
                     </div>
                 </div>
@@ -393,7 +394,7 @@
         <div id="list-tab" class="hidden tab-content max-w-7xl mx-auto">
             <div class="bg-white rounded-xl shadow border border-gray-100 overflow-hidden mb-6">
                 <div class="p-4 md:p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-3 border-b border-gray-100 bg-gray-50/50">
-                    <h2 class="text-lg md:text-xl font-bold text-gray-800">Danh Sách Giáo Viên</h2>
+                    <h2 class="text-2xl md:text-xl font-bold text-gray-800">Danh Sách Giáo Viên</h2>
                     <div class="flex flex-wrap gap-2 w-full md:w-auto">
                         <button onclick="exportData('teacher')" class="flex-1 md:flex-none justify-center px-3 md:px-4 py-1.5 md:py-2 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg text-xs md:text-sm font-semibold hover:bg-emerald-100 transition flex items-center">
                             <i class="fas fa-file-export md:mr-2 mr-1"></i> Xuất
@@ -524,7 +525,7 @@
                 <!-- Hành động Đồng bộ -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                     <div class="bg-indigo-50 p-4 md:p-5 rounded-xl border border-indigo-100 flex flex-col items-center text-center justify-center gap-2 md:gap-3">
-                        <div class="w-10 h-10 md:w-12 md:h-12 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 text-lg md:text-xl"><i class="fas fa-cloud-upload-alt"></i></div>
+                        <div class="w-10 h-10 md:w-12 md:h-12 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 text-2xl md:text-xl"><i class="fas fa-cloud-upload-alt"></i></div>
                         <div>
                             <h4 class="font-bold text-sm md:text-base text-indigo-900">Đẩy Dữ Liệu Lên</h4>
                             <p class="text-[10px] md:text-xs text-indigo-700 mt-0.5 mb-2 md:mb-3">Lưu dữ liệu từ máy này lên Sheet.</p>
@@ -532,7 +533,7 @@
                         <button onclick="syncUpToCloud()" class="w-full px-3 py-2 md:px-4 md:py-2.5 bg-indigo-600 text-white rounded-lg text-sm font-bold hover:bg-indigo-700 shadow-sm"><i class="fas fa-arrow-up mr-1 md:mr-2"></i>Đồng Bộ Lên Cloud</button>
                     </div>
                     <div class="bg-emerald-50 p-4 md:p-5 rounded-xl border border-emerald-100 flex flex-col items-center text-center justify-center gap-2 md:gap-3">
-                        <div class="w-10 h-10 md:w-12 md:h-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 text-lg md:text-xl"><i class="fas fa-cloud-download-alt"></i></div>
+                        <div class="w-10 h-10 md:w-12 md:h-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 text-2xl md:text-xl"><i class="fas fa-cloud-download-alt"></i></div>
                         <div>
                             <h4 class="font-bold text-sm md:text-base text-emerald-900">Tải Dữ Liệu Về</h4>
                             <p class="text-[10px] md:text-xs text-emerald-700 mt-0.5 mb-2 md:mb-3">Lấy dữ liệu mới nhất từ Sheet về.</p>
@@ -648,7 +649,7 @@ function doGet(e) {
             <div class="modal-overlay absolute w-full h-full bg-black/40 backdrop-blur-sm" onclick="closeConfirmModal()"></div>
             <div class="modal-container bg-white w-11/12 max-w-sm mx-auto rounded-xl shadow-2xl z-50 p-6 text-center transform scale-95 transition-transform">
                 <div class="w-12 h-12 md:w-16 md:h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 text-red-500 text-2xl md:text-3xl"><i class="fas fa-exclamation-triangle"></i></div>
-                <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2" id="confirmTitle">Xác nhận</h3>
+                <h3 class="text-2xl md:text-xl font-bold text-gray-800 mb-2" id="confirmTitle">Xác nhận</h3>
                 <p class="text-gray-500 text-xs md:text-sm mb-5 md:mb-6" id="confirmMessage">Chắc chắn muốn xóa?</p>
                 <div class="flex justify-center space-x-2 md:space-x-3">
                     <button onclick="closeConfirmModal()" class="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200">Hủy</button>
@@ -664,12 +665,12 @@ function doGet(e) {
                 <div class="modal-drag-handle"></div>
                 <div class="px-4 md:px-6 py-3 border-b border-gray-100 bg-gray-50 flex justify-between items-center shrink-0">
                     <h3 class="text-base md:text-lg font-bold text-gray-800" id="noteModalTitle">Thêm Ghi Chú</h3>
-                    <button onclick="closeModal('noteModal')" class="text-gray-400 hover:text-gray-600 p-2"><i class="fas fa-times text-lg md:text-xl"></i></button>
+                    <button onclick="closeModal('noteModal')" class="text-gray-400 hover:text-gray-600 p-2"><i class="fas fa-times text-2xl md:text-xl"></i></button>
                 </div>
                 <div class="p-4 md:p-6 overflow-y-auto flex-1">
                     <input type="hidden" id="noteId">
                     <div class="flex items-center gap-2 mb-3 md:mb-4">
-                        <input type="text" id="noteTitle" placeholder="Tiêu đề..." class="flex-1 px-0 py-1.5 md:py-2 border-0 border-b-2 border-gray-200 focus:border-amber-400 font-bold text-lg md:text-xl text-gray-800 outline-none bg-transparent">
+                        <input type="text" id="noteTitle" placeholder="Tiêu đề..." class="flex-1 px-0 py-1.5 md:py-2 border-0 border-b-2 border-gray-200 focus:border-amber-400 font-bold text-2xl md:text-xl text-gray-800 outline-none bg-transparent">
                         <button id="notePinBtn" type="button" onclick="toggleNotePin()" class="w-10 h-10 rounded-full flex items-center justify-center text-gray-300 hover:text-amber-500 hover:bg-amber-50 transition-colors shrink-0">
                             <i class="fas fa-thumbtack text-xl" id="notePinIcon"></i>
                         </button>
@@ -826,7 +827,7 @@ function doGet(e) {
                 <div class="p-5 md:p-8 flex-1 overflow-y-auto" id="modalBodyWrapper">
                     <div class="text-center mb-6 md:mb-8 border-b-2 border-gray-800 pb-2 md:pb-4 print:block hidden" id="printHeader">
                         <h1 class="text-xl md:text-2xl font-bold uppercase" id="modalMainTitle">Sơ Yếu Lý Lịch</h1>
-                        <p class="text-[10px] md:text-sm font-medium text-gray-600 italic">Trích xuất từ SMART ED</p>
+                        <p class="text-[11px] md:text-sm font-medium text-gray-600 italic">Trích xuất từ SMART ED</p>
                     </div>
                     <div id="modalBody" class="mt-2 text-xs md:text-sm text-gray-800"></div>
                 </div>
@@ -876,11 +877,11 @@ function doGet(e) {
                     btn.classList.add('text-gray-500', 'md:text-indigo-200');
                     // Reset icon color on mobile inactive
                     const icon = btn.querySelector('i');
-                    if(m==='reminder' && icon) icon.className = 'fas fa-bell text-lg md:text-xl md:w-6 md:text-center text-gray-400 md:text-red-400 group-hover:scale-110 transition-transform';
-                    else if(m==='schedule' && icon) icon.className = 'far fa-calendar-check text-lg md:text-xl md:w-6 md:text-center text-gray-400 md:text-sky-400 group-hover:scale-110 transition-transform';
-                    else if(m==='note' && icon) icon.className = 'fas fa-book-open text-lg md:text-xl md:w-6 md:text-center text-gray-400 md:text-amber-400 group-hover:scale-110 transition-transform';
-                    else if(m==='student-import' && icon) icon.className = 'fas fa-file-excel text-lg md:text-xl md:w-6 md:text-center text-gray-400 md:text-emerald-500 group-hover:scale-110 transition-transform';
-                    else if(m==='timetable' && icon) icon.className = 'fas fa-table text-lg md:text-xl md:w-6 md:text-center text-gray-400 md:text-pink-400 group-hover:scale-110 transition-transform';
+                    if(m==='reminder' && icon) icon.className = 'fas fa-bell text-2xl md:text-xl md:w-6 md:text-center text-gray-400 md:text-red-400 group-hover:scale-110 transition-transform';
+                    else if(m==='schedule' && icon) icon.className = 'far fa-calendar-check text-2xl md:text-xl md:w-6 md:text-center text-gray-400 md:text-sky-400 group-hover:scale-110 transition-transform';
+                    else if(m==='note' && icon) icon.className = 'fas fa-book-open text-2xl md:text-xl md:w-6 md:text-center text-gray-400 md:text-amber-400 group-hover:scale-110 transition-transform';
+                    else if(m==='student-import' && icon) icon.className = 'fas fa-file-excel text-2xl md:text-xl md:w-6 md:text-center text-gray-400 md:text-emerald-500 group-hover:scale-110 transition-transform';
+                    else if(m==='timetable' && icon) icon.className = 'fas fa-table text-2xl md:text-xl md:w-6 md:text-center text-gray-400 md:text-pink-400 group-hover:scale-110 transition-transform';
                     else if(icon) icon.classList.add('text-gray-400');
                 }
             });
@@ -927,7 +928,7 @@ function doGet(e) {
             const icon = type === 'success' ? 'fa-check-circle text-emerald-500' : (type === 'error' ? 'fa-exclamation-circle text-red-500' : 'fa-info-circle text-amber-500');
             
             toast.className = `p-3 md:p-4 border-l-4 rounded-lg shadow-lg toast-enter ${style} flex items-center font-medium pointer-events-auto text-xs md:text-sm`;
-            toast.innerHTML = `<i class="fas ${icon} text-lg md:text-xl mr-2 md:mr-3"></i> <span>${msg}</span>`;
+            toast.innerHTML = `<i class="fas ${icon} text-2xl md:text-xl mr-2 md:mr-3"></i> <span>${msg}</span>`;
             container.appendChild(toast);
             setTimeout(() => { toast.classList.replace('toast-enter', 'toast-exit'); setTimeout(() => toast.remove(), 300); }, 3000);
         }
@@ -2001,58 +2002,72 @@ function doGet(e) {
             }
         }
 
+        let currentTimetableDayIndex = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
+
+        function setTimetableDay(index) {
+            currentTimetableDayIndex = index;
+            renderTimetable();
+        }
+
         function renderTimetable() {
             initTimetableData();
-            const grid = document.getElementById('timetableGrid');
-            const currentDayIndex = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
             
-            grid.innerHTML = WEEK_DAYS.map((dayName, index) => {
-                const tb = timetables.find(t => t.day === index) || { morning: ['','','',''], afternoon: ['','','',''], evening: '' };
-                const isToday = index === currentDayIndex;
-                
-                let morningHtml = tb.morning.map((valArr, i) => `
-                    <div class="flex items-start text-xs mb-2">
-                        <span class="w-10 text-pink-600 font-bold shrink-0 mt-1">Tiết ${i+1}</span>
-                        <div class="flex-1 flex flex-col gap-1">
-                            <input type="text" placeholder="Môn học..." value="${escapeHTML(valArr[0])}" onchange="saveTimetable(${index}, 'morning', ${i}, 0, this.value)" class="w-full bg-white border border-gray-200 rounded px-2 py-1 focus:border-pink-400 outline-none">
-                            <input type="text" placeholder="Lớp/Phòng..." value="${escapeHTML(valArr[1])}" onchange="saveTimetable(${index}, 'morning', ${i}, 1, this.value)" class="w-full bg-white border border-gray-200 rounded px-2 py-1 focus:border-pink-400 outline-none">
-                            <input type="text" placeholder="Ghi chú..." value="${escapeHTML(valArr[2])}" onchange="saveTimetable(${index}, 'morning', ${i}, 2, this.value)" class="w-full bg-white border border-gray-200 rounded px-2 py-1 focus:border-pink-400 outline-none">
-                        </div>
-                    </div>
-                `).join('');
-                
-                let afternoonHtml = tb.afternoon.map((valArr, i) => `
-                    <div class="flex items-start text-xs mb-2">
-                        <span class="w-10 text-amber-600 font-bold shrink-0 mt-1">Tiết ${i+1}</span>
-                        <div class="flex-1 flex flex-col gap-1">
-                            <input type="text" placeholder="Môn học..." value="${escapeHTML(valArr[0])}" onchange="saveTimetable(${index}, 'afternoon', ${i}, 0, this.value)" class="w-full bg-white border border-gray-200 rounded px-2 py-1 focus:border-amber-400 outline-none">
-                            <input type="text" placeholder="Lớp/Phòng..." value="${escapeHTML(valArr[1])}" onchange="saveTimetable(${index}, 'afternoon', ${i}, 1, this.value)" class="w-full bg-white border border-gray-200 rounded px-2 py-1 focus:border-amber-400 outline-none">
-                            <input type="text" placeholder="Ghi chú..." value="${escapeHTML(valArr[2])}" onchange="saveTimetable(${index}, 'afternoon', ${i}, 2, this.value)" class="w-full bg-white border border-gray-200 rounded px-2 py-1 focus:border-amber-400 outline-none">
-                        </div>
-                    </div>
-                `).join('');
-
-                return `
-                <div class="w-[85vw] md:w-[260px] flex-shrink-0 flex flex-col bg-gray-50 rounded-xl border ${isToday ? 'border-pink-400 shadow-md ring-1 ring-pink-100' : 'border-gray-200'} overflow-hidden">
-                    <div class="p-3 border-b border-gray-200 font-bold flex justify-between items-center ${isToday ? 'bg-pink-500 text-white' : 'bg-gray-200/50 text-gray-700'}">
-                        ${dayName} ${isToday ? '<span class="text-[9px] bg-white text-pink-600 px-1.5 py-0.5 rounded uppercase font-black">Hôm nay</span>' : ''}
-                    </div>
-                    <div class="p-3 flex flex-col gap-3 flex-1">
-                        <div>
-                            <div class="text-[10px] font-bold text-pink-600 mb-2 uppercase flex items-center"><i class="fas fa-sun mr-1"></i> Buổi Sáng</div>
-                            ${morningHtml}
-                        </div>
-                        <div class="border-t border-gray-200 pt-2">
-                            <div class="text-[10px] font-bold text-amber-600 mb-2 uppercase flex items-center"><i class="fas fa-cloud-sun mr-1"></i> Buổi Chiều</div>
-                            ${afternoonHtml}
-                        </div>
-                        <div class="border-t border-gray-200 pt-2 flex-1 flex flex-col">
-                            <div class="text-[10px] font-bold text-indigo-600 mb-2 uppercase flex items-center"><i class="fas fa-moon mr-1"></i> Buổi Tối (Ghi chú)</div>
-                            <textarea onchange="saveTimetable(${index}, 'evening', null, null, this.value)" class="w-full flex-1 min-h-[60px] bg-white border border-gray-200 rounded px-2 py-1.5 text-xs focus:border-pink-400 outline-none resize-none">${escapeHTML(tb.evening)}</textarea>
-                        </div>
-                    </div>
-                </div>`;
+            // Render Tabs
+            let tabsHtml = WEEK_DAYS.map((dayName, index) => {
+                const isActive = index === currentTimetableDayIndex;
+                const isToday = index === (new Date().getDay() === 0 ? 6 : new Date().getDay() - 1);
+                return `<button onclick="setTimetableDay(${index})" class="snap-center-item px-5 py-2 rounded-lg font-bold text-sm whitespace-nowrap transition-colors ${isActive ? 'bg-pink-500 text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:bg-pink-50'} relative">
+                    ${dayName} ${isToday ? '<span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 border-2 border-white rounded-full"></span>' : ''}
+                </button>`;
             }).join('');
+            
+            const selector = document.getElementById('timetableDaySelector');
+            if (selector) selector.innerHTML = tabsHtml;
+
+            // Render Content
+            const grid = document.getElementById('timetableGrid');
+            const tb = timetables.find(t => t.day === currentTimetableDayIndex) || { morning: [['','',''],['','',''],['','',''],['','','']], afternoon: [['','',''],['','',''],['','',''],['','','']], evening: '' };
+            const dayName = WEEK_DAYS[currentTimetableDayIndex];
+            
+            let morningHtml = tb.morning.map((valArr, i) => `
+                <div class="flex flex-col md:flex-row md:items-start text-xs mb-3 bg-white p-3 md:p-4 rounded-xl border border-gray-100 shadow-sm">
+                    <span class="w-full md:w-16 text-pink-600 font-bold mb-2 md:mb-0 md:mt-2.5">Tiết ${i+1}</span>
+                    <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-3 w-full">
+                        <div><input type="text" placeholder="Môn học..." value="${escapeHTML(valArr[0])}" onchange="saveTimetable(${currentTimetableDayIndex}, 'morning', ${i}, 0, this.value)" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:border-pink-400 focus:bg-white outline-none"></div>
+                        <div><input type="text" placeholder="Lớp/Phòng..." value="${escapeHTML(valArr[1])}" onchange="saveTimetable(${currentTimetableDayIndex}, 'morning', ${i}, 1, this.value)" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:border-pink-400 focus:bg-white outline-none"></div>
+                        <div><input type="text" placeholder="Ghi chú..." value="${escapeHTML(valArr[2])}" onchange="saveTimetable(${currentTimetableDayIndex}, 'morning', ${i}, 2, this.value)" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:border-pink-400 focus:bg-white outline-none"></div>
+                    </div>
+                </div>
+            `).join('');
+            
+            let afternoonHtml = tb.afternoon.map((valArr, i) => `
+                <div class="flex flex-col md:flex-row md:items-start text-xs mb-3 bg-white p-3 md:p-4 rounded-xl border border-gray-100 shadow-sm">
+                    <span class="w-full md:w-16 text-amber-600 font-bold mb-2 md:mb-0 md:mt-2.5">Tiết ${i+1}</span>
+                    <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-3 w-full">
+                        <div><input type="text" placeholder="Môn học..." value="${escapeHTML(valArr[0])}" onchange="saveTimetable(${currentTimetableDayIndex}, 'afternoon', ${i}, 0, this.value)" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:border-amber-400 focus:bg-white outline-none"></div>
+                        <div><input type="text" placeholder="Lớp/Phòng..." value="${escapeHTML(valArr[1])}" onchange="saveTimetable(${currentTimetableDayIndex}, 'afternoon', ${i}, 1, this.value)" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:border-amber-400 focus:bg-white outline-none"></div>
+                        <div><input type="text" placeholder="Ghi chú..." value="${escapeHTML(valArr[2])}" onchange="saveTimetable(${currentTimetableDayIndex}, 'afternoon', ${i}, 2, this.value)" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:border-amber-400 focus:bg-white outline-none"></div>
+                    </div>
+                </div>
+            `).join('');
+
+            grid.innerHTML = `
+            <div class="w-full flex flex-col bg-transparent rounded-xl">
+                <div class="flex flex-col flex-1">
+                    <div class="mb-2">
+                        <div class="text-xs md:text-sm font-bold text-pink-600 mb-3 uppercase flex items-center bg-pink-50 inline-block px-3 py-1.5 rounded-lg border border-pink-100"><i class="fas fa-sun mr-2"></i> Buổi Sáng</div>
+                        ${morningHtml}
+                    </div>
+                    <div class="mt-4 mb-2">
+                        <div class="text-xs md:text-sm font-bold text-amber-600 mb-3 uppercase flex items-center bg-amber-50 inline-block px-3 py-1.5 rounded-lg border border-amber-100"><i class="fas fa-cloud-sun mr-2"></i> Buổi Chiều</div>
+                        ${afternoonHtml}
+                    </div>
+                    <div class="flex-1 flex flex-col mt-4 mb-8">
+                        <div class="text-xs md:text-sm font-bold text-indigo-600 mb-3 uppercase flex items-center bg-indigo-50 inline-block px-3 py-1.5 rounded-lg border border-indigo-100"><i class="fas fa-moon mr-2"></i> Buổi Tối (Ghi chú / Công việc)</div>
+                        <textarea onchange="saveTimetable(${currentTimetableDayIndex}, 'evening', null, null, this.value)" class="w-full flex-1 min-h-[120px] bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 outline-none resize-none shadow-sm">${escapeHTML(tb.evening)}</textarea>
+                    </div>
+                </div>
+            </div>`;
         }
 
         function saveTimetable(dayIndex, period, idx, subIdx, val) {
