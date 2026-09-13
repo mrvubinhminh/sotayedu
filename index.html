@@ -181,6 +181,7 @@
                     <button onclick="openBulkDeleteRemModal()" class="flex-1 md:flex-none justify-center px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 text-xs md:text-sm font-bold shadow-sm"><i class="fas fa-trash-alt mr-1 text-gray-500"></i> Xoá Nhiều</button>
                     <button onclick="document.getElementById('remExcelInput').click()" class="flex-1 md:flex-none justify-center px-3 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 text-xs md:text-sm font-bold shadow-sm"><i class="fas fa-file-excel mr-1"></i> Nhập Excel</button>
                     <input type="file" id="remExcelInput" accept=".xlsx, .xls" class="hidden" onchange="handleRemExcelUpload(event)">
+                    <button onclick="openWishModal()" class="w-full md:w-auto justify-center px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 text-sm font-bold shadow-sm"><i class="fas fa-wand-magic-sparkles mr-1"></i> Gửi Lời Chúc</button>
                     <button onclick="openReminderModal()" class="w-full md:w-auto justify-center px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm font-bold shadow-sm"><i class="fas fa-plus mr-1"></i> Thêm Sự Kiện</button>
                 </div>
             </div>
@@ -643,6 +644,63 @@ function doGet(e) {
         </div>
 
         <!-- ================= MODALS ================= -->
+
+        <!-- Modal: Tạo Lời Chúc Sinh Nhật -->
+        <div id="wishModal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-[150]">
+            <div class="modal-overlay absolute w-full h-full bg-gray-900/60 backdrop-blur-sm" onclick="closeModal('wishModal')"></div>
+            <div class="modal-container bg-white w-full md:w-11/12 md:max-w-2xl mx-auto md:rounded-xl shadow-2xl z-50 overflow-hidden flex flex-col h-full md:h-auto max-h-[90vh]">
+                <div class="px-4 md:px-6 py-3 border-b border-gray-100 bg-pink-50 text-pink-700 flex justify-between items-center shrink-0">
+                    <h3 class="text-base md:text-lg font-bold"><i class="fas fa-wand-magic-sparkles mr-2"></i>Tạo Lời Chúc Sinh Nhật</h3>
+                    <button onclick="closeModal('wishModal')" class="text-pink-400 hover:text-pink-600 p-1"><i class="fas fa-times text-lg"></i></button>
+                </div>
+                <div class="p-4 md:p-6 overflow-y-auto flex-1">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-[10px] md:text-xs font-bold text-gray-600 mb-1 uppercase">Tên người nhận</label>
+                            <input type="text" id="wishName" placeholder="VD: Ngọc Anh" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-pink-400 bg-gray-50">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] md:text-xs font-bold text-gray-600 mb-1 uppercase">Mối quan hệ</label>
+                            <select id="wishRelation" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm outline-none focus:border-pink-400 bg-white">
+                                <option value="colleague">Đồng nghiệp (Chúc Thầy/Cô)</option>
+                                <option value="student">Học sinh (Thầy chúc con/em)</option>
+                                <option value="friend">Bạn bè (Mình chúc bạn)</option>
+                                <option value="sibling">Anh/Chị (Em chúc Anh/Chị)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-5">
+                        <label class="block text-[10px] md:text-xs font-bold text-gray-600 mb-2 uppercase">Phong cách lời chúc</label>
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="selectWishStyle('formal')" id="wishStyle_formal" class="wish-style-btn px-3 py-1.5 rounded-lg border-2 border-pink-400 bg-pink-50 text-pink-700 text-xs font-bold transition-all">Trang trọng</button>
+                            <button onclick="selectWishStyle('sincere')" id="wishStyle_sincere" class="wish-style-btn px-3 py-1.5 rounded-lg border-2 border-transparent bg-gray-100 text-gray-600 text-xs font-bold transition-all hover:bg-gray-200">Chân thành</button>
+                            <button onclick="selectWishStyle('funny')" id="wishStyle_funny" class="wish-style-btn px-3 py-1.5 rounded-lg border-2 border-transparent bg-gray-100 text-gray-600 text-xs font-bold transition-all hover:bg-gray-200">Hài hước</button>
+                            <button onclick="selectWishStyle('poetic')" id="wishStyle_poetic" class="wish-style-btn px-3 py-1.5 rounded-lg border-2 border-transparent bg-gray-100 text-gray-600 text-xs font-bold transition-all hover:bg-gray-200">Thơ vần</button>
+                            <button onclick="selectWishStyle('short')" id="wishStyle_short" class="wish-style-btn px-3 py-1.5 rounded-lg border-2 border-transparent bg-gray-100 text-gray-600 text-xs font-bold transition-all hover:bg-gray-200">Ngắn gọn</button>
+                        </div>
+                        <input type="hidden" id="wishStyle" value="formal">
+                    </div>
+                    
+                    <div class="flex justify-center mb-5 border-b border-gray-100 pb-5">
+                        <button onclick="generateWish()" class="px-6 py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-black rounded-xl shadow-lg hover:shadow-pink-500/30 transition-all transform hover:-translate-y-0.5 w-full md:w-auto flex items-center justify-center">
+                            <i class="fas fa-wand-magic-sparkles mr-2 text-xl"></i> Tạo Lời Chúc Mới
+                        </button>
+                    </div>
+
+                    <div class="relative">
+                        <label class="block text-[10px] md:text-xs font-bold text-gray-600 mb-1 uppercase">Kết quả</label>
+                        <textarea id="wishResult" rows="5" class="w-full px-4 py-3 border border-pink-200 rounded-xl text-sm outline-none focus:border-pink-500 bg-pink-50/30 resize-none text-gray-800 leading-relaxed font-medium" placeholder="Lời chúc sẽ hiện ở đây..."></textarea>
+                    </div>
+                </div>
+                <div class="px-4 md:px-6 py-3 bg-gray-50 border-t border-gray-100 flex justify-end space-x-3 shrink-0 pb-6 md:pb-3">
+                    <button onclick="closeModal('wishModal')" class="px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-100">Đóng</button>
+                    <button onclick="copyAndSendZalo()" class="px-5 py-2 bg-blue-500 text-white text-sm font-bold rounded-lg shadow-sm hover:bg-blue-600 transition-colors flex items-center">
+                        <i class="fas fa-copy mr-2"></i> Copy & Gửi Zalo
+                    </button>
+                </div>
+            </div>
+        </div>
+
         
         <!-- Modal Confirm -->
         <div id="confirmModal" class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-[150]">
@@ -765,6 +823,12 @@ function doGet(e) {
                     <div class="mb-4">
                         <label class="block text-[10px] md:text-xs font-bold text-gray-600 mb-1 uppercase">Tên sự kiện *</label>
                         <input type="text" id="remTitle" placeholder="Sinh nhật..." class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-red-400 bg-gray-50 outline-none">
+                        <div class="flex flex-wrap gap-1.5 mt-2">
+                            <span class="text-[10px] font-bold text-gray-400 uppercase mt-1 mr-1"><i class="fas fa-tags text-red-400"></i> Đánh dấu ưu tiên:</span>
+                            <button type="button" onclick="document.getElementById('remTitle').value += (document.getElementById('remTitle').value ? ' ' : '') + '#giỗ'" class="px-2 py-1 bg-red-50 text-red-600 border border-red-200 rounded text-[10px] font-bold hover:bg-red-100 transition shadow-sm">#giỗ</button>
+                            <button type="button" onclick="document.getElementById('remTitle').value += (document.getElementById('remTitle').value ? ' ' : '') + '#người_thân'" class="px-2 py-1 bg-red-50 text-red-600 border border-red-200 rounded text-[10px] font-bold hover:bg-red-100 transition shadow-sm">#người_thân</button>
+                            <button type="button" onclick="document.getElementById('remTitle').value += (document.getElementById('remTitle').value ? ' ' : '') + '#quan_trọng'" class="px-2 py-1 bg-red-50 text-red-600 border border-red-200 rounded text-[10px] font-bold hover:bg-red-100 transition shadow-sm">#quan_trọng</button>
+                        </div>
                     </div>
                     
                     <div class="mb-4">
@@ -1786,7 +1850,20 @@ function doGet(e) {
             const activeBtn = document.getElementById(`btn-filter-${filterType}`);
             if(activeBtn) activeBtn.className = 'snap-center-item rem-filter-btn px-4 py-1.5 text-xs md:text-sm rounded-md bg-white text-red-600 font-bold shadow-sm transition-colors whitespace-nowrap';
             
-            let processed = reminders.map(calculateNextRemDate).filter(r => r !== null).sort((a,b) => a.daysLeft - b.daysLeft);
+            let processed = reminders.map(calculateNextRemDate).filter(r => r !== null);
+            
+            const isPriority = (r) => {
+                const text = ((r.title || '') + ' ' + (r.note || '')).toLowerCase();
+                return text.includes('giỗ') || text.includes('gio ') || text.includes('người thân') || text.includes('nguoi than') || text.includes('quan trọng') || text.includes('quan trong');
+            };
+            
+            processed.sort((a,b) => {
+                const aPrio = isPriority(a);
+                const bPrio = isPriority(b);
+                if (aPrio && !bPrio) return -1;
+                if (!aPrio && bPrio) return 1;
+                return a.daysLeft - b.daysLeft;
+            });
             if(filterType === 'day') processed = processed.filter(r => r.daysLeft === 0);
             else if(filterType === 'week') processed = processed.filter(r => r.daysLeft <= 7);
             else if(filterType === 'month') processed = processed.filter(r => r.daysLeft <= 30);
@@ -1814,7 +1891,10 @@ function doGet(e) {
                     </div>
                     <div class="flex items-center justify-between mt-4 pt-2 border-t border-gray-100">
                         <div class="flex gap-1"><span class="text-[8px] font-black uppercase px-1.5 py-0.5 rounded ${r.type==='lunar'?'bg-purple-100 text-purple-700':'bg-sky-100 text-sky-700'}">${r.type==='lunar'?'Âm':'Dương'}</span><span class="text-[8px] font-black uppercase px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">${r.recurring?'Định kỳ':'1 Lần'}</span></div>
-                        <button onclick="confirmDeleteData('reminders', '${r.id}')" class="text-gray-300 hover:text-red-500 p-1"><i class="fas fa-trash-alt text-xs md:text-sm"></i></button>
+                        <div class="flex items-center gap-2">
+                            ${r.title.toLowerCase().includes('sinh nhật') || r.title.toLowerCase().includes('sinh nhat') ? `<button onclick="event.stopPropagation(); openWishModal('${escapeHTML(r.title)}')" class="px-2 py-1 bg-pink-100 text-pink-600 hover:bg-pink-200 rounded text-[10px] font-bold transition"><i class="fas fa-wand-magic-sparkles mr-1"></i>Chúc</button>` : ''}
+                            <button onclick="event.stopPropagation(); confirmDeleteData('reminders', '${r.id}')" class="text-gray-300 hover:text-red-500 p-1"><i class="fas fa-trash-alt text-xs md:text-sm"></i></button>
+                        </div>
                     </div></div>`;
             }).join('');
         }
@@ -1946,6 +2026,164 @@ function doGet(e) {
                 openConfirmModal("Tải & Hợp nhất từ Cloud?", "Dữ liệu trên Cloud sẽ được TẢI XUỐNG VÀ BỔ SUNG thêm vào máy này (Không xoá dữ liệu cũ).", doSync);
             }
         }
+
+        
+        // ==========================================
+        // LOGIC TẠO LỜI CHÚC
+        // ==========================================
+        const wishTemplates = {
+            colleague: {
+                formal: [
+                    "Nhân dịp sinh nhật, kính chúc Thầy/Cô {name} luôn dồi dào sức khỏe, hạnh phúc và gặt hái được nhiều thành công mới trong sự nghiệp trồng người.",
+                    "Chúc mừng sinh nhật Thầy/Cô {name}. Chúc Thầy/Cô một tuổi mới tràn đầy năng lượng, công tác tốt và luôn giữ mãi ngọn lửa đam mê với nghề giáo.",
+                    "Kính chúc Thầy/Cô {name} sinh nhật vui vẻ, trọn vẹn niềm vui bên gia đình và đạt được nhiều thành tựu rực rỡ trong năm học này."
+                ],
+                sincere: [
+                    "Chúc mừng sinh nhật Thầy/Cô {name}! Cảm ơn Thầy/Cô đã luôn hỗ trợ và đồng hành cùng mọi người. Chúc Thầy/Cô tuổi mới thật nhiều niềm vui và sức khỏe.",
+                    "Gửi ngàn lời chúc tốt đẹp nhất đến Thầy/Cô {name} nhân ngày sinh nhật. Chúc Thầy/Cô luôn giữ nụ cười tươi tắn và bình an trong cuộc sống.",
+                    "Chúc Thầy/Cô {name} một ngày sinh nhật thật ấm áp. Mong rằng những điều tốt đẹp nhất sẽ đến với Thầy/Cô trong tuổi mới."
+                ],
+                funny: [
+                    "Chúc mừng sinh nhật {name}! Chúc đồng chí tuổi mới tiền lương tăng vùn vụt, học sinh ngoan ngoãn và lúc nào cũng tươi trẻ như tuổi 18 nhé!",
+                    "Happy Birthday {name}! Chúc {name} sinh nhật nhận được nhiều quà, đi ăn được bao và đặc biệt là không bao giờ bị deadline giáo án dí!",
+                    "Chúc {name} tuổi mới nhan sắc thăng hạng, tiền tài thăng hoa, và học sinh bớt quậy phá nha! Sinh nhật vui vẻ!"
+                ],
+                poetic: [
+                    "Chúc mừng sinh nhật {name} ta\nTuổi mới hạnh phúc, đậm đà niềm vui\nSự nghiệp tiến tới không lùi\nTiền tài danh vọng ngọt bùi sẻ chia.",
+                    "Sinh nhật vui vẻ nhé {name}\nChúc cho sức khỏe bao la tuyệt vời\nCông danh sự nghiệp gọi mời\nBình an, hạnh phúc một đời an nhiên."
+                ],
+                short: [
+                    "Chúc mừng sinh nhật Thầy/Cô {name}! Chúc vạn sự như ý, sức khỏe dồi dào.",
+                    "Happy Birthday {name}! Chúc mọi điều tốt đẹp nhất sẽ đến với {name}.",
+                    "Chúc {name} sinh nhật vui vẻ, hạnh phúc và thành công!"
+                ]
+            },
+            student: {
+                formal: [
+                    "Thầy/Cô chúc {name} sinh nhật vui vẻ. Chúc con/em tuổi mới ngoan ngoãn, học tập thật tốt và đạt được những mục tiêu đã đề ra.",
+                    "Nhân dịp sinh nhật, Thầy/Cô chúc {name} luôn mạnh khỏe, chăm ngoan và là niềm tự hào của gia đình, thầy cô."
+                ],
+                sincere: [
+                    "Chúc mừng sinh nhật {name}! Thầy/Cô rất tự hào về sự cố gắng của em thời gian qua. Chúc em tuổi mới đầy niềm vui và luôn giữ được tinh thần lạc quan.",
+                    "Thầy/Cô chúc {name} một tuổi mới thật nhiều trải nghiệm đẹp, sức khỏe dồi dào và luôn giữ nụ cười rạng rỡ trên môi."
+                ],
+                funny: [
+                    "Happy Birthday {name}! Thầy/Cô chúc em tuổi mới bớt ngủ gật trong lớp, học bài nhanh thuộc và thi đâu đậu đó nhé!",
+                    "Chúc mừng sinh nhật {name}! Tuổi mới ăn nhiều chóng lớn, bớt nghịch ngợm và điểm 10 bay phấp phới nha!"
+                ],
+                poetic: [
+                    "Tuổi mới chúc {name} thêm ngoan\nHọc hành tiến bộ, hân hoan mỗi ngày\nTương lai rộng mở dang tay\nThành công rực rỡ, vui say ơn đời."
+                ],
+                short: [
+                    "Thầy/Cô chúc {name} sinh nhật vui vẻ, học giỏi và luôn hạnh phúc nhé!",
+                    "Happy Birthday {name}! Chúc em tuổi mới thật nhiều niềm vui."
+                ]
+            },
+            friend: {
+                formal: [
+                    "Chúc mừng sinh nhật {name}. Mình chúc bạn tuổi mới nhiều sức khỏe, công việc thuận lợi và cuộc sống luôn viên mãn.",
+                    "Nhân dịp sinh nhật, gửi lời chúc tốt lành nhất đến {name}. Chúc bạn luôn thành công và hạnh phúc."
+                ],
+                sincere: [
+                    "Chúc mừng sinh nhật {name}! Chúc người bạn của tôi luôn vui vẻ, bình an và đạt được mọi ước mơ nhé. Luôn trân trọng tình bạn này!",
+                    "Sinh nhật vui vẻ nhé {name}. Mong mọi điều may mắn và tuyệt vời nhất sẽ luôn đồng hành cùng bạn."
+                ],
+                funny: [
+                    "Happy Birthday {name}! Tuổi mới bớt tạo nghiệp, bớt lười và sớm có người yêu nha! Sinh nhật vui vẻ!",
+                    "Chúc {name} tuổi mới nhan sắc tỷ lệ thuận với số dư tài khoản nhé! Nhanh nhanh rửa sinh nhật đi nào!"
+                ],
+                poetic: [
+                    "Chúc bạn sinh nhật vui vẻ\nSức khỏe vô song, trẻ mãi không già\nTiền vô như nước sông Đà\nTiền ra nhỏ giọt như cà phê phin."
+                ],
+                short: [
+                    "Chúc {name} sinh nhật siêu vui, siêu hạnh phúc nhé!",
+                    "Happy Birthday {name}! Chúc mọi điều tốt đẹp nhất."
+                ]
+            },
+            sibling: {
+                formal: [
+                    "Em chúc Anh/Chị {name} sinh nhật vui vẻ, bước sang tuổi mới thật nhiều sức khỏe, công việc hanh thông và gia đình luôn hạnh phúc.",
+                    "Kính chúc Anh/Chị {name} một ngày sinh nhật ý nghĩa. Em chúc Anh/Chị luôn vững bước trên con đường sự nghiệp và gặt hái nhiều thành công."
+                ],
+                sincere: [
+                    "Chúc mừng sinh nhật Anh/Chị {name}! Cảm ơn Anh/Chị đã luôn quan tâm và giúp đỡ em. Chúc Anh/Chị tuổi mới luôn bình an và vui vẻ.",
+                    "Gửi đến Anh/Chị {name} những lời chúc tốt đẹp nhất. Em luôn mong Anh/Chị được hạnh phúc và thành công trong mọi việc."
+                ],
+                funny: [
+                    "Happy Birthday Anh/Chị {name}! Tuổi mới chúc đại ca tiền rủng rỉnh đầy túi, bớt nhăn nhó và luôn trẻ trung nhen. Bao giờ khao em đây?",
+                    "Chúc mừng sinh nhật Anh/Chị {name}! Chúc Anh/Chị tuổi mới giàu to để còn bao em đi ăn dài dài nha!"
+                ],
+                poetic: [
+                    "Sinh nhật em chúc {name} ta\nThêm một tuổi mới mặn mà, thành công\nTiền tài sự nghiệp hanh thông\nGia đình hạnh phúc, ấm nồng yêu thương."
+                ],
+                short: [
+                    "Em chúc Anh/Chị {name} sinh nhật vui vẻ, rực rỡ và luôn hạnh phúc!",
+                    "Happy Birthday Anh/Chị {name}! Chúc vạn sự như ý."
+                ]
+            }
+        };
+
+        function selectWishStyle(style) {
+            document.getElementById('wishStyle').value = style;
+            document.querySelectorAll('.wish-style-btn').forEach(btn => {
+                btn.className = 'wish-style-btn px-3 py-1.5 rounded-lg border-2 border-transparent bg-gray-100 text-gray-600 text-xs font-bold transition-all hover:bg-gray-200';
+            });
+            document.getElementById('wishStyle_' + style).className = 'wish-style-btn px-3 py-1.5 rounded-lg border-2 border-pink-400 bg-pink-50 text-pink-700 text-xs font-bold transition-all scale-105 shadow-sm';
+        }
+
+        function openWishModal(name = '') {
+            document.getElementById('wishName').value = name;
+            
+            // Auto detect based on name keywords if possible
+            let relation = 'colleague';
+            let style = 'formal';
+            let cleanName = name;
+            
+            if(name.toLowerCase().includes('sinh nhật ')) cleanName = name.replace(/sinh nhật /i, '').trim();
+            if(name.toLowerCase().includes('hs ') || name.toLowerCase().includes('học sinh ')) {
+                relation = 'student';
+                cleanName = cleanName.replace(/hs /i, '').replace(/học sinh /i, '').trim();
+            }
+            
+            document.getElementById('wishName').value = cleanName;
+            document.getElementById('wishRelation').value = relation;
+            selectWishStyle(style);
+            generateWish();
+
+            showModal('wishModal');
+        }
+
+        function generateWish() {
+            const name = document.getElementById('wishName').value.trim() || 'bạn';
+            const relation = document.getElementById('wishRelation').value;
+            const style = document.getElementById('wishStyle').value;
+
+            const pool = wishTemplates[relation]?.[style];
+            if(!pool || pool.length === 0) {
+                document.getElementById('wishResult').value = "Chưa có mẫu cho tùy chọn này.";
+                return;
+            }
+            
+            let template = pool[Math.floor(Math.random() * pool.length)];
+            let result = template.replace(/\{name\}/g, name);
+            
+            document.getElementById('wishResult').value = result;
+        }
+
+        function copyAndSendZalo() {
+            const text = document.getElementById('wishResult').value.trim();
+            if(!text) return showToast('Vui lòng tạo lời chúc trước!', 'error');
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Đã copy lời chúc!');
+                setTimeout(() => {
+                    window.open('https://chat.zalo.me', '_blank');
+                }, 800);
+            }).catch(err => {
+                showToast('Không thể copy!', 'error');
+            });
+        }
+        // ==========================================
 
         // --- EXPORT/IMPORT JSON CHUNG ---
         function exportData(type) {
