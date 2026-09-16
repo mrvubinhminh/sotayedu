@@ -2032,96 +2032,375 @@ function doGet(e) {
         // LOGIC TẠO LỜI CHÚC
         // ==========================================
         const wishTemplates = {
-            colleague: {
-                formal: [
-                    "Nhân dịp sinh nhật, kính chúc Thầy/Cô {name} luôn dồi dào sức khỏe, hạnh phúc và gặt hái được nhiều thành công mới trong sự nghiệp trồng người.",
-                    "Chúc mừng sinh nhật Thầy/Cô {name}. Chúc Thầy/Cô một tuổi mới tràn đầy năng lượng, công tác tốt và luôn giữ mãi ngọn lửa đam mê với nghề giáo.",
-                    "Kính chúc Thầy/Cô {name} sinh nhật vui vẻ, trọn vẹn niềm vui bên gia đình và đạt được nhiều thành tựu rực rỡ trong năm học này."
-                ],
-                sincere: [
-                    "Chúc mừng sinh nhật Thầy/Cô {name}! Cảm ơn Thầy/Cô đã luôn hỗ trợ và đồng hành cùng mọi người. Chúc Thầy/Cô tuổi mới thật nhiều niềm vui và sức khỏe.",
-                    "Gửi ngàn lời chúc tốt đẹp nhất đến Thầy/Cô {name} nhân ngày sinh nhật. Chúc Thầy/Cô luôn giữ nụ cười tươi tắn và bình an trong cuộc sống.",
-                    "Chúc Thầy/Cô {name} một ngày sinh nhật thật ấm áp. Mong rằng những điều tốt đẹp nhất sẽ đến với Thầy/Cô trong tuổi mới."
-                ],
-                funny: [
-                    "Chúc mừng sinh nhật {name}! Chúc đồng chí tuổi mới tiền lương tăng vùn vụt, học sinh ngoan ngoãn và lúc nào cũng tươi trẻ như tuổi 18 nhé!",
-                    "Happy Birthday {name}! Chúc {name} sinh nhật nhận được nhiều quà, đi ăn được bao và đặc biệt là không bao giờ bị deadline giáo án dí!",
-                    "Chúc {name} tuổi mới nhan sắc thăng hạng, tiền tài thăng hoa, và học sinh bớt quậy phá nha! Sinh nhật vui vẻ!"
-                ],
-                poetic: [
-                    "Chúc mừng sinh nhật {name} ta\nTuổi mới hạnh phúc, đậm đà niềm vui\nSự nghiệp tiến tới không lùi\nTiền tài danh vọng ngọt bùi sẻ chia.",
-                    "Sinh nhật vui vẻ nhé {name}\nChúc cho sức khỏe bao la tuyệt vời\nCông danh sự nghiệp gọi mời\nBình an, hạnh phúc một đời an nhiên."
-                ],
-                short: [
-                    "Chúc mừng sinh nhật Thầy/Cô {name}! Chúc vạn sự như ý, sức khỏe dồi dào.",
-                    "Happy Birthday {name}! Chúc mọi điều tốt đẹp nhất sẽ đến với {name}.",
-                    "Chúc {name} sinh nhật vui vẻ, hạnh phúc và thành công!"
-                ]
+                "colleague": {
+                            "formal": [
+                                        "Nhân dịp sinh nhật, kính chúc Thầy/Cô {name} luôn dồi dào sức khỏe, hạnh phúc và gặt hái được nhiều thành công mới trong sự nghiệp trồng người.",
+                                    "Chúc mừng sinh nhật Thầy/Cô {name}. Chúc Thầy/Cô một tuổi mới tràn đầy năng lượng, công tác tốt và luôn giữ mãi ngọn lửa đam mê với nghề giáo.",
+                                    "Kính chúc Thầy/Cô {name} sinh nhật vui vẻ, trọn vẹn niềm vui bên gia đình và đạt được nhiều thành tựu rực rỡ trong năm học này.",
+                                    "Nhân ngày sinh nhật của Thầy/Cô {name}, kính chúc Thầy/Cô sức khỏe dồi dào, gia đình hạnh phúc và luôn thành công trên con đường sự nghiệp.",
+                                    "Chúc mừng sinh nhật Thầy/Cô {name}. Kính chúc Thầy/Cô tuổi mới vạn sự như ý, công việc thuận buồm xuôi gió và luôn được học sinh yêu quý.",
+                                    "Kính gửi đến Thầy/Cô {name} những lời chúc tốt lành nhất nhân dịp sinh nhật. Chúc Thầy/Cô luôn vững tay chèo trên chuyến đò tri thức.",
+                                    "Chúc Thầy/Cô {name} đón một tuổi mới với nhiều niềm vui và hạnh phúc. Kính chúc Thầy/Cô dồi dào sức khỏe để tiếp tục dìu dắt các thế hệ học trò.",
+                                    "Nhân dịp sinh nhật, kính chúc Thầy/Cô {name} một năm mới tràn ngập niềm vui, sức khỏe dồi dào và gặt hái được nhiều thành công rực rỡ.",
+                                    "Kính chúc Thầy/Cô {name} sinh nhật vui vẻ. Chúc Thầy/Cô luôn giữ được sự nhiệt huyết, tận tâm và đạt được nhiều thành tựu cao quý trong sự nghiệp.",
+                                    "Chúc mừng sinh nhật Thầy/Cô {name}. Kính chúc Thầy/Cô luôn bình an, hạnh phúc và có những bước tiến vượt bậc trong công tác giảng dạy."
+                        ],
+                        "sincere": [
+                                        "Chúc mừng sinh nhật Thầy/Cô {name}! Cảm ơn Thầy/Cô đã luôn hỗ trợ và đồng hành cùng mọi người. Chúc Thầy/Cô tuổi mới thật nhiều niềm vui và sức khỏe.",
+                                    "Gửi ngàn lời chúc tốt đẹp nhất đến Thầy/Cô {name} nhân ngày sinh nhật. Chúc Thầy/Cô luôn giữ nụ cười tươi tắn và bình an trong cuộc sống.",
+                                    "Chúc Thầy/Cô {name} một ngày sinh nhật thật ấm áp. Mong rằng những điều tốt đẹp nhất sẽ đến với Thầy/Cô trong tuổi mới.",
+                                    "Sinh nhật vui vẻ nhé Thầy/Cô {name}! Em/Mình rất may mắn khi được làm việc cùng Thầy/Cô. Chúc Thầy/Cô luôn khỏe mạnh và hạnh phúc.",
+                                    "Chúc mừng sinh nhật Thầy/Cô {name}. Chúc Thầy/Cô một tuổi mới rạng rỡ, nhiều sức khỏe và luôn cảm thấy bình yên bên những người thân yêu.",
+                                    "Nhân ngày sinh nhật, chúc Thầy/Cô {name} mọi điều tốt lành nhất. Cảm ơn sự nhiệt tình và chân thành của Thầy/Cô dành cho đồng nghiệp.",
+                                    "Gửi đến Thầy/Cô {name} lời chúc sinh nhật chân thành nhất. Chúc Thầy/Cô luôn vui vẻ, lạc quan và vượt qua mọi khó khăn trong cuộc sống.",
+                                    "Chúc Thầy/Cô {name} sinh nhật thật nhiều ý nghĩa. Cầu chúc cho Thầy/Cô một đời an yên, công việc thuận lợi và gia đình hạnh phúc.",
+                                    "Happy Birthday Thầy/Cô {name}! Mong rằng tuổi mới này sẽ mang đến cho Thầy/Cô nhiều bất ngờ thú vị và những kỷ niệm thật đẹp.",
+                                    "Chúc mừng sinh nhật Thầy/Cô {name}. Mong rằng mọi dự định của Thầy/Cô trong năm nay đều sẽ trở thành hiện thực và thành công tốt đẹp."
+                        ],
+                        "funny": [
+                                        "Chúc mừng sinh nhật Thầy/Cô {name}! Chúc đồng chí tuổi mới tiền lương tăng vùn vụt, học sinh ngoan ngoãn và lúc nào cũng tươi trẻ như tuổi 18 nhé!",
+                                    "Happy Birthday Thầy/Cô {name}! Chúc {name} sinh nhật nhận được nhiều quà, đi ăn được bao và đặc biệt là không bao giờ bị deadline giáo án dí!",
+                                    "Chúc Thầy/Cô {name} tuổi mới nhan sắc thăng hạng, tiền tài thăng hoa, và học sinh bớt quậy phá nha! Sinh nhật vui vẻ!",
+                                    "Sinh nhật vui vẻ nha Thầy/Cô {name}! Tuổi mới chúc Thầy/Cô tiền vào như nước sông Đà, tiền ra nhỏ giọt như cà phê phin, đánh đâu thắng đó!",
+                                    "Chúc mừng sinh nhật Thầy/Cô {name}. Chúc Thầy/Cô tuổi mới bớt phải thức khuya chấm bài, bớt đau đầu vì học sinh cá biệt và luôn tươi như hoa!",
+                                    "Happy Birthday Thầy/Cô {name}! Chúc Thầy/Cô tuổi mới trẻ trung phơi phới, công việc nhàn nhã mà lương thì vẫn đều đều đặn đặn nha!",
+                                    "Chúc Thầy/Cô {name} sinh nhật thật bùng nổ! Chúc Thầy/Cô sớm đạt chuẩn đại gia ngầm của trường, đi xe hơi xịn và mặc đồ hiệu vèo vèo!",
+                                    "Sinh nhật vui vẻ Thầy/Cô {name} ơi! Chúc Thầy/Cô ăn hoài không béo, lương tháng nào cũng dư giả để khao anh em dài dài nhé!",
+                                    "Happy Birthday Thầy/Cô {name}! Chúc Thầy/Cô một tuổi mới không còn nỗi lo 'sổ đầu bài' và lúc nào cũng được học sinh tung hô như idol!",
+                                    "Chúc mừng sinh nhật Thầy/Cô {name}! Chúc Thầy/Cô tuổi mới nhiều năng lượng để chạy show dạy thêm, tiền đầy túi, tình đầy tim!"
+                        ],
+                        "poetic": [
+                                        "Chúc mừng sinh nhật {name} ta
+Tuổi mới hạnh phúc, đậm đà niềm vui
+Sự nghiệp tiến tới không lùi
+Tiền tài danh vọng ngọt bùi sẻ chia.",
+                                    "Sinh nhật vui vẻ nhé {name}
+Chúc cho sức khỏe bao la tuyệt vời
+Công danh sự nghiệp gọi mời
+Bình an, hạnh phúc một đời an nhiên.",
+                                    "Hôm nay sinh nhật {name} ơi
+Chúc cho cuộc sống rạng ngời niềm vui
+Học trò ngoan ngoãn tới lui
+Đồng nghiệp quý mến, ngọt bùi có nhau.",
+                                    "Chúc {name} sinh nhật vui tươi
+Sức khỏe dồi dào, nụ cười trên môi
+Sự nghiệp phấp phới lên ngôi
+Tiền tài rủng rỉnh, lộc trời ban cho.",
+                                    "Mừng ngày sinh nhật {name} đây
+Chúc cho hạnh phúc đong đầy thiết tha
+Niềm vui trải khắp bao la
+Bình an êm ấm trọn nhà, trọn năm.",
+                                    "Sinh nhật chúc {name} bình an
+Tuổi mới tươi trẻ, ngập tràn niềm vui
+Sầu lo, mệt mỏi đẩy lùi
+Thành công rực rỡ, ngọt bùi thăng hoa.",
+                                    "Chúc {name} thêm tuổi thêm xuân
+Công danh sự nghiệp muôn phần hanh thông
+Tình duyên đẹp tựa đóa hồng
+Gia đình êm ấm, thỏa lòng ước mong.",
+                                    "Ngày sinh nhật đến rồi đây
+Chúc {name} sức khỏe đong đầy không vơi
+Nụ cười rạng rỡ đôi môi
+Niềm tin, hy vọng sáng ngời tương lai.",
+                                    "Chúc {name} sinh nhật hôm nay
+Nhận ngàn lời chúc đong đầy mến thương
+Bình an trên mọi nẻo đường
+Công việc thuận lợi, ngát hương hoa đời.",
+                                    "Sinh nhật vui vẻ {name} nha
+Tuổi mới thêm đẹp, mặn mà nét duyên
+Cuộc sống thanh thản, an nhiên
+Học trò kính trọng, bạn hiền khắc ghi."
+                        ],
+                        "short": [
+                                        "Chúc mừng sinh nhật Thầy/Cô {name}! Chúc vạn sự như ý, sức khỏe dồi dào.",
+                                    "Happy Birthday Thầy/Cô {name}! Chúc mọi điều tốt đẹp nhất sẽ đến với {name}.",
+                                    "Chúc Thầy/Cô {name} sinh nhật vui vẻ, hạnh phúc và thành công!",
+                                    "Mừng sinh nhật Thầy/Cô {name}. Chúc tuổi mới rực rỡ và bình an!",
+                                    "Sinh nhật vui vẻ nhé Thầy/Cô {name}. Chúc Thầy/Cô luôn khỏe mạnh!",
+                                    "Chúc Thầy/Cô {name} tuổi mới tràn đầy niềm vui và may mắn!",
+                                    "Happy Birthday Thầy/Cô {name}! Chúc Thầy/Cô gặt hái nhiều thành công.",
+                                    "Chúc mừng sinh nhật Thầy/Cô {name}. Tuổi mới trọn vẹn niềm vui!",
+                                    "Gửi ngàn lời chúc tốt đẹp nhất tới Thầy/Cô {name} nhân ngày sinh nhật!",
+                                    "Chúc Thầy/Cô {name} sinh nhật thật ấm áp và hạnh phúc bên gia đình."
+                        ]
             },
-            student: {
-                formal: [
-                    "Thầy/Cô chúc {name} sinh nhật vui vẻ. Chúc con/em tuổi mới ngoan ngoãn, học tập thật tốt và đạt được những mục tiêu đã đề ra.",
-                    "Nhân dịp sinh nhật, Thầy/Cô chúc {name} luôn mạnh khỏe, chăm ngoan và là niềm tự hào của gia đình, thầy cô."
-                ],
-                sincere: [
-                    "Chúc mừng sinh nhật {name}! Thầy/Cô rất tự hào về sự cố gắng của em thời gian qua. Chúc em tuổi mới đầy niềm vui và luôn giữ được tinh thần lạc quan.",
-                    "Thầy/Cô chúc {name} một tuổi mới thật nhiều trải nghiệm đẹp, sức khỏe dồi dào và luôn giữ nụ cười rạng rỡ trên môi."
-                ],
-                funny: [
-                    "Happy Birthday {name}! Thầy/Cô chúc em tuổi mới bớt ngủ gật trong lớp, học bài nhanh thuộc và thi đâu đậu đó nhé!",
-                    "Chúc mừng sinh nhật {name}! Tuổi mới ăn nhiều chóng lớn, bớt nghịch ngợm và điểm 10 bay phấp phới nha!"
-                ],
-                poetic: [
-                    "Tuổi mới chúc {name} thêm ngoan\nHọc hành tiến bộ, hân hoan mỗi ngày\nTương lai rộng mở dang tay\nThành công rực rỡ, vui say ơn đời."
-                ],
-                short: [
-                    "Thầy/Cô chúc {name} sinh nhật vui vẻ, học giỏi và luôn hạnh phúc nhé!",
-                    "Happy Birthday {name}! Chúc em tuổi mới thật nhiều niềm vui."
-                ]
+            "student": {
+                            "formal": [
+                                        "Thầy/Cô chúc {name} sinh nhật vui vẻ. Chúc con/em tuổi mới ngoan ngoãn, học tập thật tốt và đạt được những mục tiêu đã đề ra.",
+                                    "Nhân dịp sinh nhật, Thầy/Cô chúc {name} luôn mạnh khỏe, chăm ngoan và là niềm tự hào của gia đình, thầy cô.",
+                                    "Chúc mừng sinh nhật {name}. Thầy/Cô mong em tuổi mới sẽ tiếp tục phát huy năng lực, cố gắng hơn nữa trong học tập và rèn luyện.",
+                                    "Nhân ngày sinh nhật của {name}, Thầy/Cô chúc em luôn giữ vững thành tích học tập tốt và gặt hái nhiều thành công trong năm học mới.",
+                                    "Thầy/Cô chúc {name} bước sang tuổi mới thật nhiều niềm vui, sức khỏe dồi dào và luôn vươn lên đạt kết quả cao trong học tập.",
+                                    "Chúc {name} một tuổi mới trưởng thành hơn, chăm chỉ học hành và luôn là người học sinh gương mẫu để các bạn noi theo.",
+                                    "Sinh nhật vui vẻ nhé {name}. Thầy/Cô chúc em luôn kiên trì theo đuổi ước mơ và không ngừng nỗ lực trên con đường tri thức.",
+                                    "Nhân dịp tuổi mới của {name}, Thầy/Cô chúc em học giỏi, chăm ngoan và luôn đạt được những điểm số xuất sắc như kỳ vọng.",
+                                    "Chúc mừng sinh nhật {name}. Thầy/Cô tin rằng với sự chăm chỉ hiện tại, em sẽ tiến rất xa trong tương lai. Cố gắng lên nhé!",
+                                    "Thầy/Cô gửi lời chúc mừng sinh nhật tốt đẹp nhất đến {name}. Chúc em tuổi mới dồi dào năng lượng để hoàn thành tốt nhiệm vụ học tập."
+                        ],
+                        "sincere": [
+                                        "Chúc mừng sinh nhật {name}! Thầy/Cô rất tự hào về sự cố gắng của em thời gian qua. Chúc em tuổi mới đầy niềm vui và luôn giữ được tinh thần lạc quan.",
+                                    "Thầy/Cô chúc {name} một tuổi mới thật nhiều trải nghiệm đẹp, sức khỏe dồi dào và luôn giữ nụ cười rạng rỡ trên môi.",
+                                    "Sinh nhật vui vẻ nhé {name}. Em là một học sinh rất đặc biệt, Thầy/Cô mong em luôn tự tin vào bản thân và vững bước trên chặng đường sắp tới.",
+                                    "Chúc mừng sinh nhật {name}. Mong rằng tuổi mới sẽ mang đến cho em nhiều niềm vui, có thêm nhiều bạn tốt và luôn hạnh phúc bên gia đình.",
+                                    "Gửi đến {name} những lời chúc ấm áp nhất nhân ngày sinh nhật. Thầy/Cô luôn tin tưởng và ủng hộ em trong mọi quyết định.",
+                                    "Chúc {name} sinh nhật vui vẻ. Tuổi mới, Thầy/Cô mong em sẽ luôn giữ được sự hồn nhiên, vui tươi và khám phá thêm nhiều điều bổ ích.",
+                                    "Happy Birthday {name}! Chúc em một năm mới tràn ngập ánh nắng, những tiếng cười và những kỷ niệm đáng nhớ tuổi học trò.",
+                                    "Nhân dịp sinh nhật, Thầy/Cô chúc {name} luôn khỏe mạnh, vui vẻ và mãi là đứa trò nhỏ dễ thương, ngoan ngoãn trong mắt Thầy/Cô.",
+                                    "Chúc mừng sinh nhật {name}. Thầy/Cô mong em tuổi mới sẽ bớt đi những âu lo, thêm nhiều niềm vui và luôn tỏa sáng theo cách riêng của mình.",
+                                    "Gửi lời chúc mừng sinh nhật chân thành nhất đến {name}. Hãy cứ đam mê và theo đuổi ước mơ của mình nhé, Thầy/Cô luôn ở đây ủng hộ em."
+                        ],
+                        "funny": [
+                                        "Happy Birthday {name}! Thầy/Cô chúc em tuổi mới bớt ngủ gật trong lớp, học bài nhanh thuộc và thi đâu đậu đó nhé!",
+                                    "Chúc mừng sinh nhật {name}! Tuổi mới ăn nhiều chóng lớn, bớt nghịch ngợm và điểm 10 bay phấp phới nha!",
+                                    "Sinh nhật vui vẻ nha {name}! Chúc em tuổi mới cao lên vùn vụt, não nảy số cực nhanh và không bao giờ bị gọi lên bảng trả bài cũ!",
+                                    "Chúc {name} sinh nhật vui nổ trời! Tuổi mới bớt rớt bút, bớt mất tẩy và làm bài kiểm tra lúc nào cũng trúng tủ nha!",
+                                    "Happy Birthday {name}! Chúc em tuổi mới nhan sắc thăng hạng, học hành thăng tiến và đặc biệt là không bị phụ huynh gank lúc đang chơi game!",
+                                    "Chúc mừng sinh nhật {name}. Tuổi mới chúc em ăn hoài không béo, thi hoài không rớt và crush sớm để ý tới mình nha!",
+                                    "Sinh nhật vui vẻ nhé {name}. Chúc em tuổi mới có khả năng hấp thụ kiến thức bằng cách để sách dưới gối khi ngủ!",
+                                    "Happy Birthday {name}! Chúc em một năm bùng nổ, quậy tới bến nhưng nhớ là đừng để bị giám thị bắt nha!",
+                                    "Chúc {name} sinh nhật tràn ngập quà! Tuổi mới chúc em IQ vô cực, giải toán như thần và làm văn thì dài như sớ!",
+                                    "Chúc mừng sinh nhật {name}! Tuổi mới bớt đi học trễ, bớt quên làm bài tập và nhanh chóng trở thành con ngoan trò giỏi nha!"
+                        ],
+                        "poetic": [
+                                        "Tuổi mới chúc {name} thêm ngoan
+Học hành tiến bộ, hân hoan mỗi ngày
+Tương lai rộng mở dang tay
+Thành công rực rỡ, vui say ơn đời.",
+                                    "Chúc {name} sinh nhật hôm nay
+Tuổi mới rực rỡ, hăng say học hành
+Ước mơ vun vút vươn nhanh
+Điểm mười chót vót, rạng danh gia đình.",
+                                    "Ngày sinh nhật của trò ngoan
+Thầy/Cô chúc {name} vạn ngàn niềm vui
+Khó khăn, thử thách đẩy lùi
+Tương lai tươi sáng, ngọt bùi đón chờ.",
+                                    "Chúc em sinh nhật vui tươi
+Sức khỏe dồi dào, nụ cười rạng rỡ
+Tương lai tươi đẹp rộng mở
+Học hành chăm chỉ, không lo điểm nghèo.",
+                                    "Mừng ngày sinh nhật {name} yêu
+Chúc em học giỏi, được nhiều điểm cao
+Tương lai sáng tựa vì sao
+Vui tươi, hạnh phúc, dạt dào niềm tin.",
+                                    "Tuổi mới thêm lớn thêm khôn
+Chúc {name} học giỏi, ôn tồn, chăm ngoan
+Tương lai rộng bước thênh thang
+Công danh rạng rỡ, vẻ vang gia đình.",
+                                    "Sinh nhật chúc {name} bình an
+Nụ cười rạng rỡ, ngập tràn niềm vui
+Sách đèn chăm chỉ không lùi
+Thành tài mai hậu, ngọt bùi sẻ chia.",
+                                    "Hôm nay sinh nhật {name} ta
+Chúc em tuổi mới mặn mà, dễ thương
+Chăm ngoan, học giỏi tới trường
+Tương lai sáng lạn, con đường thênh thang.",
+                                    "Chúc {name} tuổi mới an khang
+Học hành tấn tới, vững vàng bước đi
+Bao nhiêu khó nhọc, gian nguy
+Biến thành sức mạnh, chẳng gì cản ngăn.",
+                                    "Sinh nhật vui vẻ em ơi
+Tuổi mới tươi đẹp, sáng ngời niềm tin
+Chăm ngoan, học giỏi, giữ gìn
+Tình thầy, nghĩa bạn, in sâu trong lòng."
+                        ],
+                        "short": [
+                                        "Thầy/Cô chúc {name} sinh nhật vui vẻ, học giỏi và luôn hạnh phúc nhé!",
+                                    "Happy Birthday {name}! Chúc em tuổi mới thật nhiều niềm vui.",
+                                    "Chúc {name} sinh nhật vui vẻ, chăm ngoan và vâng lời ba mẹ!",
+                                    "Mừng sinh nhật {name}. Chúc em tuổi mới gặt hái nhiều điểm 10!",
+                                    "Sinh nhật vui vẻ nhé {name}. Chúc em luôn khỏe mạnh và tươi tắn!",
+                                    "Thầy/Cô chúc {name} tuổi mới dồi dào sức khỏe, học tập tiến bộ!",
+                                    "Happy Birthday {name}! Chúc em luôn tự tin và thành công.",
+                                    "Chúc mừng sinh nhật {name}. Tuổi mới rạng rỡ và bình an nhé!",
+                                    "Gửi lời chúc tốt đẹp nhất tới {name} nhân ngày sinh nhật!",
+                                    "Chúc {name} sinh nhật thật ấm áp, ngập tràn tiếng cười!"
+                        ]
             },
-            friend: {
-                formal: [
-                    "Chúc mừng sinh nhật {name}. Mình chúc bạn tuổi mới nhiều sức khỏe, công việc thuận lợi và cuộc sống luôn viên mãn.",
-                    "Nhân dịp sinh nhật, gửi lời chúc tốt lành nhất đến {name}. Chúc bạn luôn thành công và hạnh phúc."
-                ],
-                sincere: [
-                    "Chúc mừng sinh nhật {name}! Chúc người bạn của tôi luôn vui vẻ, bình an và đạt được mọi ước mơ nhé. Luôn trân trọng tình bạn này!",
-                    "Sinh nhật vui vẻ nhé {name}. Mong mọi điều may mắn và tuyệt vời nhất sẽ luôn đồng hành cùng bạn."
-                ],
-                funny: [
-                    "Happy Birthday {name}! Tuổi mới bớt tạo nghiệp, bớt lười và sớm có người yêu nha! Sinh nhật vui vẻ!",
-                    "Chúc {name} tuổi mới nhan sắc tỷ lệ thuận với số dư tài khoản nhé! Nhanh nhanh rửa sinh nhật đi nào!"
-                ],
-                poetic: [
-                    "Chúc bạn sinh nhật vui vẻ\nSức khỏe vô song, trẻ mãi không già\nTiền vô như nước sông Đà\nTiền ra nhỏ giọt như cà phê phin."
-                ],
-                short: [
-                    "Chúc {name} sinh nhật siêu vui, siêu hạnh phúc nhé!",
-                    "Happy Birthday {name}! Chúc mọi điều tốt đẹp nhất."
-                ]
+            "friend": {
+                            "formal": [
+                                        "Chúc mừng sinh nhật {name}. Mình chúc bạn tuổi mới nhiều sức khỏe, công việc thuận lợi và cuộc sống luôn viên mãn.",
+                                    "Nhân dịp sinh nhật, gửi lời chúc tốt lành nhất đến {name}. Chúc bạn luôn thành công và hạnh phúc.",
+                                    "Chúc {name} sinh nhật vui vẻ. Cầu chúc cho bạn một năm mới an khang, thịnh vượng và đạt được mọi dự định.",
+                                    "Nhân ngày sinh nhật của bạn, mình chúc {name} dồi dào sức khỏe, gia đình êm ấm và sự nghiệp không ngừng thăng tiến.",
+                                    "Chúc mừng sinh nhật {name}. Kính chúc bạn tuổi mới gặp nhiều may mắn, công việc hanh thông và tài lộc dồi dào.",
+                                    "Gửi đến {name} những lời chúc sinh nhật tốt đẹp nhất. Chúc bạn luôn vững vàng, tự tin và vươn xa hơn nữa trong sự nghiệp.",
+                                    "Chúc {name} một tuổi mới trọn vẹn niềm vui. Mong rằng bạn sẽ gặt hái được nhiều thành tựu lớn trong năm nay.",
+                                    "Nhân dịp tuổi mới của {name}, chúc bạn vạn sự như ý, tỷ sự như mơ và cuộc sống luôn ngập tràn tiếng cười.",
+                                    "Chúc mừng sinh nhật {name}. Chúc bạn có một ngày sinh nhật thật ý nghĩa và một tuổi mới bứt phá, thành công rực rỡ.",
+                                    "Gửi ngàn lời chúc bình an và hạnh phúc đến {name} trong ngày sinh nhật. Chúc bạn luôn mạnh khỏe và thành đạt."
+                        ],
+                        "sincere": [
+                                        "Chúc mừng sinh nhật {name}! Chúc người bạn của tôi luôn vui vẻ, bình an và đạt được mọi ước mơ nhé. Luôn trân trọng tình bạn này!",
+                                    "Sinh nhật vui vẻ nhé {name}. Mong mọi điều may mắn và tuyệt vời nhất sẽ luôn đồng hành cùng bạn.",
+                                    "Gửi đến {name} ngàn lời yêu thương nhân ngày sinh nhật. Cảm ơn bạn vì đã luôn ở bên cạnh mình trong những lúc khó khăn nhất.",
+                                    "Chúc {name} sinh nhật ấm áp bên gia đình và người thân. Mong rằng bạn sẽ luôn giữ được nụ cười tỏa nắng trên môi.",
+                                    "Happy Birthday {name}! Chúc bạn một tuổi mới đầy năng lượng tích cực, luôn lạc quan và tìm thấy được hạnh phúc đích thực.",
+                                    "Nhân ngày sinh nhật, chúc {name} mãi là người bạn tuyệt vời của mình. Chúc bạn luôn khỏe mạnh, an yên và thành công.",
+                                    "Chúc mừng sinh nhật {name}. Mong rằng tuổi mới này sẽ xua tan mọi muộn phiền, mang đến cho bạn thật nhiều niềm vui và hy vọng.",
+                                    "Gửi lời chúc sinh nhật chân thành nhất đến {name}. Chúc bạn một đời bình an, làm việc gì cũng suôn sẻ, thuận lợi.",
+                                    "Sinh nhật vui vẻ nhé {name}. Hãy luôn tự tin vững bước trên con đường bạn đã chọn, mình sẽ luôn ủng hộ bạn.",
+                                    "Chúc {name} một ngày sinh nhật thật đặc biệt và đáng nhớ. Cảm ơn vì sự xuất hiện của bạn trong cuộc đời mình."
+                        ],
+                        "funny": [
+                                        "Happy Birthday {name}! Tuổi mới bớt tạo nghiệp, bớt lười và sớm có người yêu nha! Sinh nhật vui vẻ!",
+                                    "Chúc {name} tuổi mới nhan sắc tỷ lệ thuận với số dư tài khoản nhé! Nhanh nhanh rửa sinh nhật đi nào!",
+                                    "Sinh nhật vui vẻ nha {name}! Chúc mày tuổi mới tiền nhiều như nước, tình nhiều như rác, đánh đâu thắng đó!",
+                                    "Chúc mừng sinh nhật {name}. Tuổi mới chúc mày bớt khùng, bớt ngáo và bớt ăn bám tao lại nha!",
+                                    "Happy Birthday {name}! Chúc mày tuổi mới trẻ khỏe, dẻo dai, nhậu hoài không say, cày hoài không mệt!",
+                                    "Chúc {name} sinh nhật bùng nổ! Chúc mày sớm thoát ế, tìm được bến đỗ bình yên để tao còn được ăn cỗ!",
+                                    "Sinh nhật vui vẻ nhé {name}. Chúc mày tuổi mới vạn sự như ý, tỷ sự như mơ, làm thơ cực giỏi và ăn nói bớt vô duyên!",
+                                    "Happy Birthday {name}! Chúc mày tuổi mới não nhiều nếp nhăn hơn một chút, bớt quên trước quên sau đi nha!",
+                                    "Chúc mừng sinh nhật {name}! Chúc mày tuổi mới tiền xài thả ga, đi du lịch nước ngoài như đi chợ, và nhớ mua quà về cho tao!",
+                                    "Chúc {name} sinh nhật ngập tràn tiếng cười! Tuổi mới chúc mày ăn nhiều không mập, xinh đẹp tuyệt trần và bao tao ăn dài dài!"
+                        ],
+                        "poetic": [
+                                        "Chúc bạn sinh nhật vui vẻ
+Sức khỏe vô song, trẻ mãi không già
+Tiền vô như nước sông Đà
+Tiền ra nhỏ giọt như cà phê phin.",
+                                    "Hôm nay sinh nhật {name} ơi
+Chúc bạn cuộc sống rạng ngời niềm vui
+Sầu lo, mệt mỏi đẩy lùi
+Công danh, sự nghiệp ngọt bùi thăng hoa.",
+                                    "Sinh nhật vui vẻ nhé bạn hiền
+Chúc cho cuộc sống mãi bình yên
+Tiền tài danh vọng luôn kề bước
+Hạnh phúc đong đầy, hết muộn phiền.",
+                                    "Chúc {name} thêm tuổi thêm xinh
+Cơ đồ, sự nghiệp thắm tình nở hoa
+Tình duyên thắm thiết mặn mà
+Gia đình hạnh phúc, thuận hòa yên vui.",
+                                    "Mừng ngày sinh nhật {name} đây
+Chúc cho tài lộc đong đầy sớm mai
+Tương lai rộng mở nối dài
+Bình an, mạnh khỏe, miệt mài vươn lên.",
+                                    "Sinh nhật chúc {name} an khang
+Tuổi mới rạng rỡ, bước đàng thênh thang
+Tiền bạc rủng rỉnh đầy nang
+Niềm vui hạnh phúc, rộn vang tiếng cười.",
+                                    "Chúc {name} sinh nhật thật vui
+Sức khỏe dồi dào, đẩy lùi gian nan
+Tình duyên êm đẹp, nồng nàn
+Công danh sự nghiệp, vững vàng bước đi.",
+                                    "Ngày sinh nhật đến hân hoan
+Chúc {name} mạnh khỏe, bình an trọn đời
+Nụ cười luôn nở trên môi
+Ước mơ bay bổng, rạng ngời tương lai.",
+                                    "Chúc {name} tuổi mới an nhiên
+Không ưu không muộn, hết phiền hết lo
+Sự nghiệp vững chắc như đò
+Tình duyên đẹp đẽ, ấm no tháng ngày.",
+                                    "Sinh nhật vui vẻ nhé bạn
+Chúc cho cuộc sống chứa chan tiếng cười
+Tiền tài rủng rỉnh gấp mười
+Thành công rực rỡ, rạng ngời sắc xuân."
+                        ],
+                        "short": [
+                                        "Chúc {name} sinh nhật siêu vui, siêu hạnh phúc nhé!",
+                                    "Happy Birthday {name}! Chúc mọi điều tốt đẹp nhất.",
+                                    "Chúc bạn {name} sinh nhật vui vẻ, vạn sự như ý!",
+                                    "Mừng sinh nhật {name}. Chúc tuổi mới rực rỡ và thành công!",
+                                    "Sinh nhật vui vẻ nhé {name}. Chúc bạn luôn khỏe mạnh!",
+                                    "Chúc {name} tuổi mới tràn đầy năng lượng và may mắn!",
+                                    "Happy Birthday {name}! Chúc gặt hái nhiều thành công.",
+                                    "Chúc mừng sinh nhật {name}. Tuổi mới trọn vẹn niềm vui!",
+                                    "Gửi ngàn lời chúc tốt lành nhất tới {name} nhân ngày sinh nhật!",
+                                    "Chúc {name} sinh nhật thật ấm áp bên những người thân yêu."
+                        ]
             },
-            sibling: {
-                formal: [
-                    "Em chúc Anh/Chị {name} sinh nhật vui vẻ, bước sang tuổi mới thật nhiều sức khỏe, công việc hanh thông và gia đình luôn hạnh phúc.",
-                    "Kính chúc Anh/Chị {name} một ngày sinh nhật ý nghĩa. Em chúc Anh/Chị luôn vững bước trên con đường sự nghiệp và gặt hái nhiều thành công."
-                ],
-                sincere: [
-                    "Chúc mừng sinh nhật Anh/Chị {name}! Cảm ơn Anh/Chị đã luôn quan tâm và giúp đỡ em. Chúc Anh/Chị tuổi mới luôn bình an và vui vẻ.",
-                    "Gửi đến Anh/Chị {name} những lời chúc tốt đẹp nhất. Em luôn mong Anh/Chị được hạnh phúc và thành công trong mọi việc."
-                ],
-                funny: [
-                    "Happy Birthday Anh/Chị {name}! Tuổi mới chúc đại ca tiền rủng rỉnh đầy túi, bớt nhăn nhó và luôn trẻ trung nhen. Bao giờ khao em đây?",
-                    "Chúc mừng sinh nhật Anh/Chị {name}! Chúc Anh/Chị tuổi mới giàu to để còn bao em đi ăn dài dài nha!"
-                ],
-                poetic: [
-                    "Sinh nhật em chúc {name} ta\nThêm một tuổi mới mặn mà, thành công\nTiền tài sự nghiệp hanh thông\nGia đình hạnh phúc, ấm nồng yêu thương."
-                ],
-                short: [
-                    "Em chúc Anh/Chị {name} sinh nhật vui vẻ, rực rỡ và luôn hạnh phúc!",
-                    "Happy Birthday Anh/Chị {name}! Chúc vạn sự như ý."
-                ]
+            "sibling": {
+                            "formal": [
+                                        "Em chúc Anh/Chị {name} sinh nhật vui vẻ, bước sang tuổi mới thật nhiều sức khỏe, công việc hanh thông và gia đình luôn hạnh phúc.",
+                                    "Kính chúc Anh/Chị {name} một ngày sinh nhật ý nghĩa. Em chúc Anh/Chị luôn vững bước trên con đường sự nghiệp và gặt hái nhiều thành công.",
+                                    "Nhân ngày sinh nhật, em chúc Anh/Chị {name} dồi dào sức khỏe, vạn sự bình an và đạt được mọi tâm nguyện trong cuộc sống.",
+                                    "Chúc mừng sinh nhật Anh/Chị {name}. Chúc Anh/Chị tuổi mới đón nhận nhiều may mắn, tài lộc và gia đạo luôn êm ấm.",
+                                    "Em gửi lời chúc mừng sinh nhật tốt đẹp nhất đến Anh/Chị {name}. Chúc Anh/Chị luôn thành đạt và thăng tiến không ngừng.",
+                                    "Chúc Anh/Chị {name} một tuổi mới ngập tràn niềm vui. Mong rằng mọi khó khăn sẽ qua đi, nhường chỗ cho những thành công rực rỡ.",
+                                    "Nhân dịp tuổi mới của Anh/Chị {name}, em chúc Anh/Chị vạn sự như ý, công việc thuận lợi và sự nghiệp ngày càng thăng hoa.",
+                                    "Chúc mừng sinh nhật Anh/Chị {name}. Chúc Anh/Chị có một ngày sinh nhật trọn vẹn và một năm mới gặt hái nhiều quả ngọt.",
+                                    "Gửi ngàn lời chúc bình an đến Anh/Chị {name} trong ngày sinh nhật. Chúc Anh/Chị luôn khỏe mạnh, kiên cường và thành công.",
+                                    "Em chúc Anh/Chị {name} sinh nhật vui vẻ. Chúc Anh/Chị luôn vững tay lái, sáng suốt trong mọi quyết định để vươn tới đỉnh cao."
+                        ],
+                        "sincere": [
+                                        "Chúc mừng sinh nhật Anh/Chị {name}! Cảm ơn Anh/Chị đã luôn quan tâm và giúp đỡ em. Chúc Anh/Chị tuổi mới luôn bình an và vui vẻ.",
+                                    "Gửi đến Anh/Chị {name} những lời chúc tốt đẹp nhất. Em luôn mong Anh/Chị được hạnh phúc và thành công trong mọi việc.",
+                                    "Sinh nhật vui vẻ nhé Anh/Chị {name}. Cảm ơn Anh/Chị đã luôn là chỗ dựa vững chắc cho em. Chúc Anh/Chị mọi điều viên mãn.",
+                                    "Chúc Anh/Chị {name} một ngày sinh nhật thật ấm áp. Mong rằng những mệt mỏi sẽ vơi đi, nhường chỗ cho tiếng cười và niềm vui.",
+                                    "Happy Birthday Anh/Chị {name}! Chúc Anh/Chị tuổi mới luôn tràn đầy năng lượng tích cực và tìm thấy nhiều niềm vui trong cuộc sống.",
+                                    "Nhân ngày sinh nhật, chúc Anh/Chị {name} luôn giữ được nụ cười rạng rỡ. Em sẽ luôn ủng hộ và đồng hành cùng Anh/Chị.",
+                                    "Chúc mừng sinh nhật Anh/Chị {name}. Mong rằng tuổi mới này sẽ mang lại cho Anh/Chị thật nhiều sức khỏe, bình yên và may mắn.",
+                                    "Gửi lời chúc sinh nhật chân thành nhất đến Anh/Chị {name}. Chúc Anh/Chị một đời an yên, công việc suôn sẻ và gia đình êm ấm.",
+                                    "Sinh nhật vui vẻ nhé Anh/Chị {name}. Hãy cứ là chính mình, tự tin và vững bước, em luôn tự hào về Anh/Chị.",
+                                    "Chúc Anh/Chị {name} một ngày sinh nhật đáng nhớ. Cảm ơn Anh/Chị vì đã là người Anh/Chị tuyệt vời nhất của em."
+                        ],
+                        "funny": [
+                                        "Happy Birthday Anh/Chị {name}! Tuổi mới chúc đại ca tiền rủng rỉnh đầy túi, bớt nhăn nhó và luôn trẻ trung nhen. Bao giờ khao em đây?",
+                                    "Chúc mừng sinh nhật Anh/Chị {name}! Chúc Anh/Chị tuổi mới giàu to để còn bao em đi ăn dài dài nha!",
+                                    "Sinh nhật vui vẻ nha Anh/Chị {name}! Chúc Anh/Chị tuổi mới nhan sắc thăng hạng, tiền bạc thăng hoa và bớt ăn hiếp em lại!",
+                                    "Chúc mừng sinh nhật Anh/Chị {name}. Tuổi mới chúc Anh/Chị bớt già, bớt khó tính và sớm tìm được người rước đi cho em nhờ!",
+                                    "Happy Birthday Anh/Chị {name}! Chúc Anh/Chị tuổi mới tiền vô xồng xộc, tiền ra từ từ, sức khỏe có dư, công danh tấn tới!",
+                                    "Chúc Anh/Chị {name} sinh nhật bùng nổ! Chúc Anh/Chị sớm thành đại gia, mua nhà sắm xe để em còn được ké!",
+                                    "Sinh nhật vui vẻ nhé Anh/Chị {name}. Chúc Anh/Chị tuổi mới vạn sự như ý, làm ăn phát đạt, và nhớ chia phần cho em với nha!",
+                                    "Happy Birthday Anh/Chị {name}! Chúc Anh/Chị tuổi mới bớt lười biếng, siêng năng làm việc để kiếm nhiều tiền bao em đi chơi!",
+                                    "Chúc mừng sinh nhật Anh/Chị {name}! Tuổi mới chúc Anh/Chị ăn nhiều không béo, xinh đẹp tuyệt trần và luôn là cái máy ATM của em!",
+                                    "Chúc Anh/Chị {name} sinh nhật ngập tràn tiếng cười! Tuổi mới chúc Anh/Chị bớt cằn nhằn, thêm dịu dàng và luôn yêu thương em nhất nhà!"
+                        ],
+                        "poetic": [
+                                        "Sinh nhật em chúc {name} ta
+Thêm một tuổi mới mặn mà, thành công
+Tiền tài sự nghiệp hanh thông
+Gia đình hạnh phúc, ấm nồng yêu thương.",
+                                    "Hôm nay sinh nhật Anh/Chị {name}
+Chúc cho cuộc sống ấm êm mọi bề
+Tiền bạc rủng rỉnh tràn trề
+Bình an, mạnh khỏe, tràn trề niềm vui.",
+                                    "Chúc Anh/Chị sinh nhật vui tươi
+Sức khỏe dồi dào, nụ cười trên môi
+Sự nghiệp phấp phới lên ngôi
+Tình duyên đẹp đẽ, lộc trời ban cho.",
+                                    "Mừng ngày sinh nhật Anh/Chị {name}
+Chúc cho hạnh phúc đong đầy thiết tha
+Niềm vui trải khắp bao la
+Công danh xán lạn, trọn nhà yên vui.",
+                                    "Sinh nhật chúc {name} bình an
+Tuổi mới tươi trẻ, ngập tràn niềm vui
+Sầu lo, mệt mỏi đẩy lùi
+Thành công rực rỡ, ngọt bùi thăng hoa.",
+                                    "Chúc Anh/Chị thêm tuổi thêm xuân
+Công danh sự nghiệp muôn phần hanh thông
+Tình duyên đẹp tựa đóa hồng
+Gia đình êm ấm, thỏa lòng ước mong.",
+                                    "Ngày sinh nhật đến rồi đây
+Chúc {name} sức khỏe đong đầy không vơi
+Nụ cười rạng rỡ đôi môi
+Niềm tin, hy vọng sáng ngời tương lai.",
+                                    "Chúc Anh/Chị sinh nhật hôm nay
+Nhận ngàn lời chúc đong đầy mến thương
+Bình an trên mọi nẻo đường
+Công việc thuận lợi, ngát hương hoa đời.",
+                                    "Sinh nhật vui vẻ {name} nha
+Tuổi mới thêm đẹp, mặn mà nét duyên
+Cuộc sống thanh thản, an nhiên
+Thành công, hạnh phúc, mọi miền hoan ca.",
+                                    "Chúc Anh/Chị tuổi mới an khang
+Học hành, sự nghiệp vững vàng bước đi
+Bao nhiêu khó nhọc, gian nguy
+Biến thành sức mạnh, chẳng gì cản ngăn."
+                        ],
+                        "short": [
+                                        "Em chúc Anh/Chị {name} sinh nhật vui vẻ, rực rỡ và luôn hạnh phúc!",
+                                    "Happy Birthday Anh/Chị {name}! Chúc vạn sự như ý.",
+                                    "Chúc Anh/Chị {name} sinh nhật vui vẻ, dồi dào sức khỏe!",
+                                    "Mừng sinh nhật Anh/Chị {name}. Chúc tuổi mới thành công và bình an!",
+                                    "Sinh nhật vui vẻ nhé Anh/Chị {name}. Chúc Anh/Chị luôn tươi trẻ!",
+                                    "Chúc Anh/Chị {name} tuổi mới tràn đầy năng lượng và may mắn!",
+                                    "Happy Birthday Anh/Chị {name}! Chúc gặt hái nhiều tài lộc.",
+                                    "Chúc mừng sinh nhật Anh/Chị {name}. Tuổi mới vạn điều tốt lành!",
+                                    "Gửi lời chúc tốt đẹp nhất tới Anh/Chị {name} nhân ngày sinh nhật!",
+                                    "Chúc Anh/Chị {name} sinh nhật thật ấm áp và ý nghĩa!"
+                        ]
             }
-        };
+};
 
         function selectWishStyle(style) {
             document.getElementById('wishStyle').value = style;
